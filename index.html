@@ -513,6 +513,18 @@ button{font-family:inherit}
 @keyframes lbStamp{0%{transform:translate(-50%,-50%) scale(3) rotate(-15deg);opacity:0}100%{transform:translate(-50%,-50%) scale(1) rotate(-15deg);opacity:1}}
 .lbEv{text-align:center;font-size:3.3cqw;font-weight:900;color:#c0306f;background:#ffe3ef;border-radius:2cqw;padding:1.4cqw;margin-bottom:1cqw}
 .lbI{height:7.5cqw;width:auto;vertical-align:middle}#toast .lbI{height:5cqw}
+#ksWrap{position:relative;display:block}#ksWrap .sbtn{display:block}
+#ksDot{position:absolute;right:1cqw;top:.5cqw;min-width:5.2cqw;height:5.2cqw;border-radius:3cqw;background:#e8264d;color:#fff;font-size:3.4cqw;font-weight:900;text-align:center;line-height:5.2cqw;border:.5cqw solid #fff;display:none;animation:lbPulse 1s ease-in-out infinite;pointer-events:none}
+#ksDot.on{display:block}
+.dmH{font-size:6.2cqw;font-weight:900;color:#8a1050;text-align:center}
+.dmS{text-align:center;font-size:3.1cqw;color:#5a3a20;margin:.5cqw 0 3cqw}
+.dmR{display:flex;align-items:center;gap:2.4cqw;background:#fffaf0;border:.5cqw solid #e2c88f;border-radius:2.6cqw;padding:2cqw 2.4cqw;margin-bottom:2cqw}
+.dmR .tx{flex:1;min-width:0}.dmR .t{font-size:3.8cqw;font-weight:900;color:#3b1a4f}
+.dmR .bar{height:2.2cqw;background:#e9dcc0;border-radius:2cqw;overflow:hidden;margin-top:1.2cqw}.dmR .bar i{display:block;height:100%;background:linear-gradient(90deg,#ff8ab8,#e8264d)}
+.dmR .rw{font-size:3cqw;color:#7a5a30;margin-top:.8cqw;display:flex;align-items:center;gap:1cqw}
+.dmR .btn{font-size:3.4cqw;padding:1.8cqw 3cqw;white-space:nowrap}
+.dmR.done{opacity:.6}.dmR.all{background:linear-gradient(160deg,#fff2c4,#ffd76a);border-color:#e8a020}
+.dmI{height:5cqw;width:auto;vertical-align:middle}
 </style>
 </head>
 <body>
@@ -558,6 +570,7 @@ button{font-family:inherit}
       <img class="sbtn" src="img/btn07_teawase.webp?v=5" alt="手合せ" data-go="friend">
       <img class="sbtn" src="img/btn16_event.webp?v=5" alt="イベント" data-go="event">
       <img class="sbtn" src="img/btn08_seiseki.webp?v=5" alt="成績" data-go="seiseki">
+      <div id="ksWrap"><img class="sbtn" src="img/btn15_tokkun.webp?v=5" alt="今日の特訓" data-go="daily"><div id="ksDot">!</div></div>
     </div>
     <div id="mainMenu">
       <img class="mbtn" src="img/btn04_heya.webp?v=5" alt="部屋" data-go="heya">
@@ -959,11 +972,15 @@ hCat.addEventListener('click',e=>{e.stopPropagation();hCat.classList.remove('boi
     h.style.left=(40+rnd()*20)+'%';h.style.top=(42+rnd()*8)+'%';h.style.animationDelay=(i*.12)+'s';$('home').appendChild(h);setTimeout(()=>h.remove(),1500);}});
 function topRank(){let r=0;Object.values(S.cats).forEach(c=>r=Math.max(r,c.rank));return r;}
 // ---- ログインボーナス（7日でひとまわり・休んでもリセットなし）----
+// ホームにいる間に日付が変わったときや、アプリに戻ってきたときにも出す
+setInterval(()=>{if(cur==='home'&&!document.hidden)loginBonus();},30000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&cur==='home')setTimeout(loginBonus,800);});
 const LOGIN=[{t:'coin',n:500},{t:'gem',n:20},{t:'coin',n:1000},{t:'hp',n:0},{t:'gem',n:30},{t:'coin',n:2000},{t:'gem',n:100}];
 const LB_IC={coin:'<img class="lbI" src="img/btn41_coin.webp?v=5" alt="">',gem:'<img class="lbI" src="img/btn42_gem.webp?v=5" alt="">',hp:'<img class="lbI" src="img/btn44_lightning.webp?v=5" alt="">'};
 function lbName(r){return r.t==='hp'?'体力MAX':(r.t==='coin'?'コイン ':'宝石 ')+fmt(r.n);}
 let lbBusy=false;
-async function loginBonus(force){if(lbBusy||cur!=='home'||$('modal').classList.contains('on'))return;
+async function loginBonus(force){if(lbBusy||cur!=='home'||!S.started&&!Object.keys(S.cats||{}).length)return;
+  if($('modal').classList.contains('on')||document.querySelector('.anim.on,#evMovie.on,#party.on')){setTimeout(()=>loginBonus(force),1500);return;}
   if(!S.login)S.login={last:'',day:0,total:0};const L=S.login,t=today();
   if(!force&&L.last===t)return;
   lbBusy=true;const day=L.day%7;const r=LOGIN[day];const evOn=typeof evOpen==='function'&&evOpen();
@@ -975,12 +992,34 @@ async function loginBonus(force){if(lbBusy||cur!=='home'||$('modal').classList.c
   const p=modal(`<div class="lbH">🎁 ログインボーナス</div><div class="lbS">今日で <b>${L.total}</b> 日目のログインだにゃ！</div><div class="lbG">${cells}</div>${evOn?'<div class="lbEv">🐟 チュール祭ボーナス：チュール +5本</div>':''}`,[{t:'うけとる',c:'gold'}]);
   setTimeout(()=>{const c=document.querySelector('.lbC.now');if(c){c.classList.add('stamp');sfx('don');setTimeout(()=>jingle(day===6?'gachaR':'gachaN'),250);}},500);
   await p;refreshHUD();toast(`${LB_IC[r.t]} ${lbName(r)} をもらった！${evOn?'<br>🐟 チュール +5本':''}`);lbBusy=false;}
-function refreshHome(){refreshHUD();refreshNews();$('hName').textContent=S.name;$('hRank').textContent='最高位 '+RANKS[topRank()];
+// ---- 今日の特訓（デイリー）----
+const DAILY=[{k:'keiko',n:'稽古を3回する',g:3,r:{gem:3}},{k:'bout',n:'取組を2回する',g:2,r:{gem:3}},{k:'chanko',n:'ちゃんこを1回食べる',g:1,r:{coin:500}},{k:'friend',n:'手合せを1回する',g:1,r:{gem:2}}];
+const DAILY_ALL={gem:2};  // 宝石は1日あわせて10個
+function dm(){const t=today();if(!S.daily||S.daily.d!==t)S.daily={d:t,c:{},got:{},all:0};return S.daily;}
+function dailyAdd(k){const D=dm();const m=DAILY.find(x=>x.k===k);if(!m)return;const before=D.c[k]||0;D.c[k]=before+1;save();
+  if(before<m.g&&D.c[k]>=m.g)setTimeout(()=>toast(`🎯 今日の特訓「${m.n}」達成！<br>ホームの「特訓」で受け取ってね`,2200),400);refreshDailyDot();}
+function dailyReady(){const D=dm();let n=DAILY.filter(m=>(D.c[m.k]||0)>=m.g&&!D.got[m.k]).length;if(!D.all&&DAILY.every(m=>D.got[m.k]))n++;return n;}
+function refreshDailyDot(){const e=$('ksDot');if(!e)return;const n=dailyReady();e.textContent=n;e.classList.toggle('on',n>0);}
+function rwHtml(r){return Object.entries(r).map(([k,v])=>`<img class="dmI" src="img/${k==='gem'?'btn42_gem':'btn41_coin'}.webp?v=5" alt="">${k==='gem'?'宝石':'コイン'} ${fmt(v)}`).join('　');}
+function giveRw(r){if(r.gem)S.gem+=r.gem;if(r.coin)S.coin+=r.coin;}
+function openDaily(){const D=dm();const allGot=DAILY.every(m=>D.got[m.k]);
+  let h=`<div class="dmH">🎯 今日の特訓</div><div class="dmS">毎日0時に新しくなるよ。達成したら「うけとる」を押してね</div>`;
+  DAILY.forEach(m=>{const c=Math.min(m.g,D.c[m.k]||0),ok=c>=m.g,got=D.got[m.k];
+    h+=`<div class="dmR${got?' done':''}"><div class="tx"><div class="t">${m.n}　<span style="font-size:3.2cqw;color:#c0306f">${c}/${m.g}</span></div><div class="bar"><i style="width:${c/m.g*100}%"></i></div><div class="rw">${rwHtml(m.r)}</div></div>
+      <div class="btn ${got?'gray':ok?'gold':'gray'}" data-k="${m.k}">${got?'うけとった':ok?'うけとる':'まだ'}</div></div>`;});
+  h+=`<div class="dmR all${D.all?' done':''}"><div class="tx"><div class="t">ぜんぶ達成ボーナス</div><div class="rw">${rwHtml(DAILY_ALL)}</div></div>
+    <div class="btn ${D.all?'gray':allGot?'gold':'gray'}" data-k="all">${D.all?'うけとった':allGot?'うけとる':'まだ'}</div></div>`;
+  modal(h,[{t:'とじる'}]);
+  $('mBox').querySelectorAll('.dmR .btn').forEach(b=>b.onclick=()=>{const k=b.dataset.k;const D=dm();
+    if(k==='all'){if(D.all||!DAILY.every(m=>D.got[m.k]))return;D.all=1;giveRw(DAILY_ALL);jingle('gachaR');toast('ぜんぶ達成ボーナス！<br>'+rwHtml(DAILY_ALL));}
+    else{const m=DAILY.find(x=>x.k===k);if(D.got[k]||(D.c[k]||0)<m.g)return;D.got[k]=1;giveRw(m.r);jingle('gachaN');toast(rwHtml(m.r)+' をもらった！');}
+    save();refreshHUD();refreshDailyDot();openDaily();});}
+function refreshHome(){refreshHUD();refreshDailyDot();refreshNews();$('hName').textContent=S.name;$('hRank').textContent='最高位 '+RANKS[topRank()];
   const b=BASHO[S.basho.i];$('bashoTag').innerHTML=`${b[0]}　${S.basho.day>=7?'千秋楽まで終了':DAYN[S.basho.day]}`+(rookie()?`<br><span style="color:#7ad0ff;font-size:2.9cqw">🔰新弟子期間 あと${ROOKIE_BASHO-(S.stats.bashos||0)}場所：経験2倍・稽古の体力2・取組は体力0</span>`:'');}
 
 // ホームのボタン
 const GO={
-  gift:openGift,help:openHelp,settings:openSettings,banzuke:()=>{drawBanzuke();show('banzuke');},
+  gift:openGift,daily:openDaily,help:openHelp,settings:openSettings,banzuke:()=>{drawBanzuke();show('banzuke');},
   hensei:()=>{renderHensei();show('hensei');},zukan:()=>{renderZukan();show('zukan');},friend:()=>{renderFriend();show('friend');},
   event:()=>{renderEvent();show('event');evMovie();},seiseki:()=>{renderSeiseki();show('seiseki');},
   heya:()=>{renderHeya();show('heya');},shop:()=>{renderShop();show('shop');},keikoPick:()=>{if(!ownIds().length)return;renderKeikoSel();show('keikoSel');},
@@ -1389,7 +1428,7 @@ function renderKeiko(){const id=dId,c=S.cats[id];const B=$('kBody');const cost=k
     e.innerHTML=`<img src="${k.img}" style="width:24cqw;border-radius:2cqw" alt=""><div><div class="t">${k.n}</div><div class="d">${k.d}</div></div><div class="p">⚡${cost}</div>`;
     e.onclick=()=>doKeiko(i);L.appendChild(e);});B.appendChild(L);}
 async function doKeiko(i){const id=dId,c=S.cats[id],k=KEIKO[i];const cost=keikoCost(id);
-  if(!useHP(cost))return;
+  if(!useHP(cost))return;dailyAdd('keiko');
   const mul=(persOf(id)===0?1.3:1)*(1+c.nat/200);const out=[];
   for(const s in k.g){const cap=trainCap(id,c,s);const before=c.t[s];const add=Math.round((k.g[s]+rnd()*2)*mul);c.t[s]=Math.min(cap,c.t[s]+add);
     const d=c.t[s]-before;out.push(d>0?`${STATN[s]} +${d}`:`${STATN[s]} は今のレベルの上限`);}
@@ -1414,7 +1453,7 @@ function renderChanko(){const id=dId,c=S.cats[id];const B=$('cBody');
   CHANKO.forEach((k,i)=>{const e=document.createElement('div');e.className='mItem';const ef=Object.entries(k[2]).map(([a,v])=>a==='exp'?`経験+${v}`:a==='nat'?`なつき+${v}`:a==='hp'?`体力+${v}`:`${STATN[a]}+${v}`).join(' ');
     const im=chankoEl(i);im.style.width='20cqw';e.appendChild(im);e.insertAdjacentHTML('beforeend',`<div><div class="t" style="font-size:4cqw">${k[0]}</div><div class="d">${ef}</div></div><div class="p">🐾${k[1]}</div>`);
     e.onclick=()=>eat(i);L.appendChild(e);});B.appendChild(L);}
-async function eat(i){const id=dId,c=S.cats[id],k=CHANKO[i];if(S.coin<k[1])return toast('コインが足りないにゃ');S.coin-=k[1];
+async function eat(i){const id=dId,c=S.cats[id],k=CHANKO[i];if(S.coin<k[1])return toast('コインが足りないにゃ');S.coin-=k[1];dailyAdd('chanko');
   const mul=persOf(id)===1?1.5:1;const out=[];let ups=0;
   for(const[a,v0] of Object.entries(k[2])){const v=Math.round(v0*mul);
     if(a==='exp'){ups=addExp(id,c,{v});out.push(`経験+${v}`);}
@@ -1491,7 +1530,7 @@ $('bSkip').onclick=e=>{e.stopPropagation();skipBout();};
 $('tachi').onclick=()=>skipBout();
 $('bAuto').onclick=()=>{if(!BT||BT.done)return;BT.auto=true;$('bCtrl').style.visibility='hidden';autoRun();};
 async function finish(win){
-  BT.done=true;const R=BT.R||rnd;
+  BT.done=true;if(!friendMode&&BT.day!=='運営テスト')dailyAdd('bout');const R=BT.R||rnd;
   const learned=win?BT.me.c.waza:BT.opp.c.waza;
   let k=kimarite(BT.last,learned,R);let kname;
   const kc=$('kimaCard');kc.innerHTML='';
@@ -1683,7 +1722,7 @@ async function runFriend(v,host){
       playScripted({me:{id:meD.id,c:meC,name:NAMES[meD.id-1]},opp:{id:opD.id,c:opC,name:NAMES[opD.id-1],style:styleOf(opD.id)},
         bg:BASHO[(v.seed+i)%6][2],day:`手合せ 第${i+1}番　${mine.name} 対 ${their.name}`,script:r,meIsHost:host,meWin,done});});
     if(res)w++;else l++;}
-  const win=w>l;S.stats[win?'fw':'fl']++;
+  const win=w>l;S.stats[win?'fw':'fl']++;dailyAdd('friend');
   if(S.fDay!==today()){S.fDay=today();S.fCnt=0;}
   const canReward=(S.fCnt||0)<3;const rw=canReward?(win?15:5):0;if(canReward){S.fCnt=(S.fCnt||0)+1;S.gem+=rw;}save();
   friendMode=false;
