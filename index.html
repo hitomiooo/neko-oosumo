@@ -1591,7 +1591,7 @@ async function openSettings(){const i=await modal(`<h3>設定</h3>部屋の名�
 // ================= 手合せ（友だち対戦・Firebase）=================
 const FB_CONF={apiKey:"AIzaSyAjFsULSU8JfpdTSGaWvx3gIJu1pn580aA",authDomain:"neko-oosumo.firebaseapp.com",databaseURL:"https://neko-oosumo-default-rtdb.asia-southeast1.firebasedatabase.app",projectId:"neko-oosumo",storageBucket:"neko-oosumo.firebasestorage.app",messagingSenderId:"228949454246",appId:"1:228949454246:web:881df8f72b939bd1ff3367"};
 let fbReady=null,FR=null;
-function loadScript(src){return new Promise((r,j)=>{const s=document.createElement('script');s.src=src;s.onload=r;s.onerror=j;document.head.appendChild(s);});}
+function loadScript(src){return new Promise((r,j)=>{const s=document.createElement('script');s.src=src;s.onload=r;s.onerror=()=>j(new Error('load failed: '+src.split('/').pop()));document.head.appendChild(s);});}
 let fbUid=null;
 function fb(){if(!fbReady)fbReady=(async()=>{await loadScript('https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js');
   await loadScript('https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js');await loadScript('https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js');
@@ -1601,6 +1601,12 @@ function fb(){if(!fbReady)fbReady=(async()=>{await loadScript('https://www.gstat
   if(!au.currentUser)await au.signInAnonymously();
   fbUid=au.currentUser.uid;return firebase.database();})();
   fbReady.catch(()=>{fbReady=null;});return fbReady;}
+function fbErr(e){const c=(e&&(e.code||e.message))||String(e);
+  const M={'auth/operation-not-allowed':'匿名ログインがオフ（Firebase→Authentication→匿名をオン）','auth/admin-restricted-operation':'匿名ログインがオフ（Firebase→Authentication→匿名をオン）',
+   'auth/unauthorized-domain':'このサイトが許可されていない（承認済みドメインに追加）','auth/network-request-failed':'ネットにつながらない','PERMISSION_DENIED':'データベースのルールで止められている',
+   'auth/api-key-not-valid.-please-pass-a-valid-api-key.':'APIキーがちがう','auth/requests-from-referer-are-blocked.':'APIキーの制限でこのサイトが止められている'};
+  for(const k in M)if(c.indexOf(k)>=0)return M[k]+'<br>('+c+')';
+  if(/load/i.test(c))return 'Firebaseの読みこみに失敗（ネットを確認）<br>('+c+')';return c;}
 // ---- クラウドに保存（各自のデータ）----
 let cloudT=null,cloudOK=false;
 function cloudSave(){if(!cloudOK)return;clearTimeout(cloudT);cloudT=setTimeout(async()=>{try{const db=await fb();
@@ -1620,7 +1626,7 @@ function renderFriend(){const B=$('fBody');
   $('fMake').onclick=()=>fStart(true);$('fJoin').onclick=()=>fStart(false);$('fCancel').onclick=fStop;}
 async function fStart(host){const code=($('fCode').value||'').trim();if(code.length<3)return toast('合言葉は3文字以上だにゃ');
   if(!/^[^.#$\[\]\/]+$/.test(code))return toast('記号 . # $ [ ] / は使えないにゃ');
-  $('fSt').textContent='つないでいます…';let db;try{db=await fb();}catch(e){$('fSt').textContent='つながらなかったにゃ（ネットを確認してね）';return;}
+  $('fSt').textContent='つないでいます…';let db;try{db=await fb();}catch(e){console.error(e);$('fSt').innerHTML='つながらなかったにゃ<br><span style="font-size:2.8cqw;opacity:.85">理由：'+fbErr(e)+'</span>';return;}
   const ref=db.ref('rooms/'+code);FR={ref,host,code,started:false};$('fCancel').style.display='';
   const me={name:S.name,team:teamData(),t:Date.now()};
   if(host){await ref.set({host:me,state:'wait'});ref.onDisconnect().remove();$('fSt').innerHTML=`部屋「${code}」を作ったにゃ<br>相手を待っています…`;}
