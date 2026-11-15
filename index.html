@@ -410,7 +410,9 @@ button{font-family:inherit}
 #gOverlay.lv5 .raysBg{background:repeating-conic-gradient(rgba(255,255,255,.75) 0 5deg,rgba(255,215,90,.5) 5deg 10deg,rgba(0,0,0,0) 10deg 16deg);animation-duration:3s}
 #gOverlay.lv1 .raysBg,#gOverlay.lv2 .raysBg{opacity:.45}
 #evBody{z-index:2}
-#event{background:radial-gradient(circle at 50% 30%,#ff9cc2 0%,#b0306e 35%,#4a0f3a 75%,#1c0618)}
+#event{background:#2a0a30 url(img/ev_churu_kv.webp?v=1) center top/cover no-repeat}
+#event::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 0%,transparent 30%,#2a063666 55%,#1c0618cc 100%);pointer-events:none;z-index:1}
+#event .head{position:relative;z-index:3}
 .evHero{text-align:center;color:#fff;margin:2cqw 0 4cqw}
 .evHero .t{font-size:11cqw;font-weight:900;color:#fff4c2;-webkit-text-stroke:.6cqw #8a1050;paint-order:stroke fill;text-shadow:0 1cqw 0 #3a0628;letter-spacing:.06em;animation:evPulse 1.6s ease-in-out infinite}
 @keyframes evPulse{50%{transform:scale(1.05)}}
@@ -528,6 +530,35 @@ button{font-family:inherit}
 .rlL{max-height:58cqh;overflow-y:auto;text-align:left}
 .rlR{display:flex;gap:2.4cqw;padding:1.8cqw 1cqw;border-bottom:.3cqw dashed #d8c39a;font-size:3.3cqw;color:#3b1a4f}
 .rlR .dt{flex:none;width:19cqw;color:#8a6a40;font-size:3cqw;padding-top:.3cqw}.rlR .tx{flex:1;min-width:0;line-height:1.5}
+.evKV{position:relative;margin:1cqw 0 3cqw;border-radius:3.5cqw;overflow:hidden;border:.6cqw solid #e8b84a;box-shadow:0 1cqw 0 #3a0628,0 0 3cqw #ff5aa566}
+.evKV img{display:block;width:100%;aspect-ratio:4/3.3;object-fit:cover;object-position:center 42%}
+.evKV .s{position:absolute;left:0;right:0;bottom:0;padding:5cqw 0 1.6cqw;text-align:center;color:#fff;font-size:3.8cqw;font-weight:900;background:linear-gradient(transparent,#2a0636dd);text-shadow:0 0 1cqw #000}
+.evParty2{display:grid;grid-template-columns:1fr 1fr;gap:2.4cqw;margin:0 0 3cqw;align-items:center}
+.evParty2 img{width:100%;height:33cqw;object-fit:contain;display:block;cursor:pointer;filter:drop-shadow(0 1cqw .8cqw #0007);transition:transform .12s}
+.evParty2 img:active{transform:scale(.95)}
+#evHomeI{position:absolute;right:2cqw;top:50%;transform:translateY(-50%);width:17cqw;cursor:pointer;z-index:2;filter:drop-shadow(0 .5cqw .5cqw #0006)}
+#evTabs .evTI{cursor:pointer;transition:transform .15s,filter .15s;filter:brightness(.72) saturate(.8);position:relative}
+#evTabs .evTI img{width:100%;display:block}
+#evTabs .evTI.on{filter:drop-shadow(0 0 2.4cqw #ffd76a) brightness(1.08);transform:translateY(-1cqw) scale(1.04)}
+#evTabs .evTI.on::after{content:'';position:absolute;left:50%;bottom:-2.4cqw;transform:translateX(-50%);border:1.6cqw solid transparent;border-top-color:#ffe58a}
+#evTabs .evTI:active{transform:scale(.95)}
+.evNav img{height:15cqw;cursor:pointer;filter:drop-shadow(0 .6cqw .5cqw #0006)}
+.evTop{height:46cqw;display:flex;align-items:flex-end;justify-content:center;padding-bottom:2cqw}
+.evTop .s{color:#fff;font-size:3.8cqw;font-weight:900;background:#2a0636cc;border:.4cqw solid #e8b84a;border-radius:5cqw;padding:1cqw 4cqw;text-shadow:0 0 1cqw #000}
+#event .evChuru{background:#2a0636d9;border-radius:5cqw;width:fit-content;margin:0 auto 3cqw;padding:1cqw 5cqw}
+.stI{display:block;width:100%;aspect-ratio:1;background:url(img/stamps.webp?v=2) 0 0/800% 500% no-repeat}
+#bStamp{display:none}#bStamp.on{display:inline-block}
+#stPal{position:absolute;left:2cqw;right:2cqw;bottom:2cqw;z-index:10000;background:#fff8ecf2;border:.6cqw solid #e8b84a;border-radius:4cqw;padding:2.4cqw;display:none;box-shadow:0 1.5cqw 3cqw #0008}
+#stPal.on{display:block}
+#stPal .tabs2{display:flex;gap:2cqw;margin-bottom:2cqw}#stPal .tabs2 div{flex:1;text-align:center;font-weight:900;font-size:3.4cqw;padding:1.2cqw;border-radius:3cqw;background:#e9dcc0;color:#5a3a20;cursor:pointer}
+#stPal .tabs2 div.on{background:#8a1050;color:#fff}
+#stPal .g{display:grid;grid-template-columns:repeat(4,1fr);gap:1.6cqw;max-height:96cqw;overflow-y:auto}#stPal .g .stI{cursor:pointer;border-radius:2cqw}#stPal .g .stI:active{transform:scale(.9)}
+#stPal .x{position:absolute;right:2cqw;top:-5cqw;width:9cqw;height:9cqw;border-radius:50%;background:#8a1050;color:#fff;font-weight:900;font-size:5cqw;text-align:center;line-height:8.4cqw;border:.5cqw solid #fff;cursor:pointer}
+.stPop{position:absolute;z-index:9999;width:40cqw;top:22cqw;pointer-events:none;animation:stPop 2.6s ease-out forwards;filter:drop-shadow(0 1cqw 1cqw #0007)}
+.stPop.me{left:3cqw}.stPop.op{right:3cqw}
+.stPop .who{position:absolute;left:0;right:0;top:-5cqw;text-align:center;font-size:3.2cqw;font-weight:900;color:#fff;text-shadow:0 0 1cqw #000}
+@keyframes stPop{0%{transform:scale(.2) rotate(-10deg);opacity:0}12%{transform:scale(1.12) rotate(3deg);opacity:1}20%{transform:scale(1) rotate(0)}85%{opacity:1}100%{opacity:0;transform:translateY(-4cqw)}}
+.evParty2.one{grid-template-columns:1fr;justify-items:center}.evParty2.one img{width:62%;height:auto}
 </style>
 </head>
 <body>
@@ -589,7 +620,7 @@ button{font-family:inherit}
   <section id="hensei" class="screen panelScreen hide"><div class="head"><img class="back" src="img/btn30_modoru.webp?v=5" alt="戻る">力士編成</div><div class="body" id="hsBody"></div></section>
   <section id="detail" class="screen panelScreen hide"><div class="head"><img class="back" src="img/btn30_modoru.webp?v=5" alt="戻る">力士</div><div class="body" id="dBody"></div></section>
   <section id="shop" class="screen panelScreen hide"><div class="head"><img class="back" src="img/btn30_modoru.webp?v=5" alt="戻る">化粧まわし屋</div><div class="body" id="shBody"></div></section>
-  <section id="event" class="screen hide"><div class="head"><img class="back" src="img/btn30_modoru.webp?v=5" alt="戻る">チュール祭<div class="btn" id="evHome">🏠 ホーム</div></div><div class="body" id="evBody"></div>
+  <section id="event" class="screen hide"><div class="head"><img class="back" src="img/btn30_modoru.webp?v=5" alt="戻る">チュール祭<img id="evHomeI" src="img/btn46_home.webp?v=1" alt="ホーム"></div><div class="body" id="evBody"></div>
     <div id="mini"><img id="miniBack" src="img/btn30_modoru.webp?v=5" alt="戻る"><div class="mHead"><span id="miniLv"></span></div><img class="mStick" src="img/nyao_churu.webp?v=1" alt=""><div class="mTitle">チュールスクラッチ</div><div id="miniGrid"></div><canvas id="miniCv"></canvas><div class="btn" id="miniAll">ぜんぶけずる</div><div id="miniRes"></div></div></section>
   <section id="keikoSel" class="screen panelScreen hide"><div class="head"><img class="back" src="img/btn30_modoru.webp?v=5" alt="戻る">稽古する力士</div><div class="body" id="ksBody"></div></section>
   <section id="keiko" class="screen panelScreen hide"><div class="head"><img class="back" src="img/btn30_modoru.webp?v=5" alt="戻る">稽古</div><div class="body" id="kBody"></div></section>
@@ -634,7 +665,7 @@ button{font-family:inherit}
         <div class="btn blue" data-a="1">組む</div>
         <div class="btn green" data-a="2">引く</div>
       </div>
-      <div class="row row2"><div class="btn gold" id="bAuto">おまかせ</div></div>
+      <div class="row row2"><div class="btn gold" id="bAuto">おまかせ</div><div class="btn" id="bStamp">🐾 スタンプ</div></div>
     </div>
     <div id="bSkip">スキップ ▶▶</div>
     <div id="bigWord"></div>
@@ -667,6 +698,7 @@ button{font-family:inherit}
     <div class="pTop"><img id="pBack" src="img/btn30_modoru.webp?v=5" alt="戻る"><div class="pTit">🎉 チュールパーティー</div><div style="width:15cqw"></div></div>
     <div class="pHint">画面をタップしてもりあげよう！</div>
     <div class="pBot"><div class="btn" id="pNext">次の動画 ▶</div><div class="btn gold" id="pBall">🪩 ミラーボール</div></div></div>
+  <div id="stPal"><div class="x" id="stX">×</div><div class="tabs2"><div data-s="0" class="on">茶トラ</div><div data-s="1">ハチワレ</div><div data-s="2">肉球・相撲</div></div><div class="g" id="stG"></div></div>
   <div id="toast"></div>
 </div></div>
 
@@ -1299,10 +1331,11 @@ function vidPlay(v,tap){tap.classList.remove('on');v.muted=true;v.setAttribute('
 function vidErr(v){const f=(v.currentSrc||v.src||'').split('/').slice(-2).join('/').split('?')[0];
   toast(`動画が読みこめなかったにゃ<br><span style="font-size:3cqw">${f}</span>`);}
 // ---- チュールパーティー会場（動画は音なし・曲はevent.mp3）----
-const PARTY_VIDS=['movie/churu_op.mp4?v=2','movie/dj_meow.mp4?v=1'];let pIdx=0;
-function openParty(){const ov=$('party'),v=$('pVid');ov.classList.add('on');bgm('event');
+const PARTY_SETS={party:{t:'🎉 チュールパーティー会場',v:['movie/churu_op.mp4?v=2']},club:{t:'🎧 チュールビートCLUB',v:['movie/dj_meow.mp4?v=1','movie/churu_op.mp4?v=2']}};let PARTY_VIDS=PARTY_SETS.party.v;let pIdx=0;
+function openParty(kind){const P=PARTY_SETS[kind]||PARTY_SETS.party;PARTY_VIDS=P.v;pIdx=0;$('party').querySelector('.pTit').textContent=P.t;$('pNext').style.display=PARTY_VIDS.length>1?'':'none';
+  const ov=$('party'),v=$('pVid');ov.classList.add('on');bgm('event');
   const play=()=>{v.src=PARTY_VIDS[pIdx%PARTY_VIDS.length];v.onerror=()=>vidErr(v);vidPlay(v,$('pTap'));};
-  v.onended=()=>{pIdx++;play();};play();
+  v.loop=PARTY_VIDS.length===1;v.onended=()=>{pIdx++;play();};play();
   const close=()=>{v.pause();v.removeAttribute('src');v.load();ov.classList.remove('on');ov.querySelectorAll('.fx').forEach(e=>e.remove());};
   $('pBack').onclick=e=>{e.stopPropagation();sfx('tap');close();};
   $('pNext').onclick=e=>{e.stopPropagation();sfx('tap');pIdx++;play();};
@@ -1314,11 +1347,11 @@ function pFx(x,y,ch){const ov=$('party');const f=document.createElement('div');f
   ov.appendChild(f);setTimeout(()=>f.remove(),1700);}
 function renderEvent(){const B=$('evBody');const E=ev();
   if(!evCat||!S.cats[evCat])evCat=S.team[0]||ownIds()[0];
-  B.innerHTML=`<div class="evHero"><div class="t">チュール祭</div><div class="s">🐟 ${EV_START.slice(5).replace('-','/')}〜${EV_END.slice(5).replace('-','/')} 期間限定 🐟</div></div>
+  B.innerHTML=`<div class="evTop"><div class="s">🐟 ${EV_START.slice(5).replace('-','/')}〜${EV_END.slice(5).replace('-','/')} 期間限定 🐟</div></div>
    <div class="evChuru"><i class="cIco"></i> チュール <b>${E.churu}</b> 本</div>
-   <div class="btn evParty" id="evPartyB">🎉 チュールパーティー会場へ</div><div id="evTabs"></div><div id="evPane"></div>`;
-  [['🎟️','スクラッチ','チュールを集める'],['🏆','勝ち抜き','宝石をもらう'],['🎁','交換所','まわしと交換']].forEach((t,k)=>{const e=document.createElement('div');e.className=`evT k${k}`+(k===evTab?' on':'');e.innerHTML=`<div class="ic">${t[0]}</div><div class="nm">${t[1]}</div><div class="sb">${t[2]}</div>`;e.onclick=()=>{evTab=k;sfx('tap');renderEvent();};$('evTabs').appendChild(e);});
-  $('evPartyB').onclick=()=>{sfx('tap');openParty();};
+   <div class="evParty2 one"><img id="evClubB" src="img/btn47_club.webp?v=1" alt="チュールビートCLUBへ"></div><div id="evTabs"></div><div id="evPane"></div>`;
+  [['ev_tab_scratch','スクラッチ'],['ev_tab_kachinuki','勝ち抜き'],['ev_tab_koukan','交換所']].forEach((t,k)=>{const e=document.createElement('div');e.className='evTI'+(k===evTab?' on':'');e.innerHTML=`<img src="img/${t[0]}.webp?v=1" alt="${t[1]}">`;e.onclick=()=>{evTab=k;sfx('tap');renderEvent();};$('evTabs').appendChild(e);});
+  $('evClubB').onclick=()=>{sfx('tap');openParty('club');};
   const P=$('evPane');
   if(!evOpen()){P.innerHTML='<div class="evBox"><b>チュール祭は開催期間外だにゃ</b><br>次の開催をおたのしみに！</div>';}
   else if(evTab===0){
@@ -1347,9 +1380,9 @@ function renderEvent(){const B=$('evBody');const E=ev();
   }
   const nav=document.createElement('div');nav.className='evNav';
   const nb1=document.createElement('div');nb1.className='btn gold';nb1.textContent='🐟 イベントホームへ';nb1.onclick=()=>{sfx('tap');evTab=0;renderEvent();B.scrollTop=0;$('event').querySelector('.body').scrollTop=0;};
-  const nb2=document.createElement('div');nb2.className='btn';nb2.textContent='🏠 ホームへ';nb2.onclick=()=>{sfx('tap');show('home');};
+  const nb2=document.createElement('div');nb2.className='';nb2.innerHTML='<img src="img/btn46_home.webp?v=1" alt="ホームへ">';nb2.onclick=()=>{sfx('tap');show('home');};
   nav.appendChild(nb1);nav.appendChild(nb2);B.appendChild(nav);
-  $('evHome').onclick=e=>{e.stopPropagation();sfx('tap');show('home');};
+  $('evHomeI').onclick=e=>{e.stopPropagation();sfx('tap');show('home');};
   if(!$('event').querySelector('.fl'))for(let i=0;i<12;i++){const f=document.createElement('div');f.className='fl';f.textContent=['🐟','🍡','🐾','🌸'][i%4];
     f.style.left=Math.random()*100+'%';f.style.animationDuration=(6+Math.random()*6)+'s';f.style.animationDelay=(-Math.random()*10)+'s';$('event').appendChild(f);}
 }
@@ -1515,7 +1548,7 @@ async function startBout(o){
   $('bLog').textContent='';setGauge(0);$('kimaCard').classList.remove('on');
   $('bCtrl').style.visibility=o.auto?'hidden':'visible';
   show('bout');
-  $('bSkip').classList.remove('on');$('bSkip').style.display='';$('bAuto').style.display='';
+  $('bSkip').classList.remove('on');$('bSkip').style.display='';$('bAuto').style.display='';if(!friendMode)$('bStamp').classList.remove('on');
   await bw(500);if(!BT.fast){$('tachi').classList.add('on');const td=$('tachi').querySelector('div');td.style.animation='none';void td.offsetWidth;td.style.animation='';sfx('don');}
   await bw(1500);$('tachi').classList.remove('on');BT.busy=false;
   if(o.auto)autoRun();
@@ -1743,7 +1776,7 @@ async function runFriend(v,host){
   friendMode=true;
   const mine=host?v.host:v.guest,their=host?v.guest:v.host;const R=mulberry(v.seed);
   await modal(`<h3>手合せ はじまり！</h3><b>${mine.name}</b><br>VS<br><b>${their.name}</b><br><span class="small" style="color:#5a1d7a">3番勝負・自分で技をえらんで戦うよ<br>10秒えらばないと「押す」になるにゃ</span>`,[{t:'はっけよい',c:'gold'}]);
-  let w=0,l=0;const ref=FR&&FR.ref;
+  let w=0,l=0;const ref=FR&&FR.ref;stStart(ref,host?'h':'g',their.name);
   for(let i=0;i<3;i++){const hm=v.host.team[i%v.host.team.length],gm=v.guest.team[i%v.guest.team.length];
     const hc=fromData(hm),gc=fromData(gm);const meD=host?hm:gm,opD=host?gm:hm,meC=host?hc:gc,opC=host?gc:hc;
     const res=await playLive({ref,host,seed:v.seed,i,hm,hc,gm,gc,
@@ -1754,11 +1787,32 @@ async function runFriend(v,host){
   if(S.fDay!==today()){S.fDay=today();S.fCnt=0;}
   const canReward=(S.fCnt||0)<3;const rw=canReward?(win?15:5):0;if(canReward){S.fCnt=(S.fCnt||0)+1;S.gem+=rw;rlog('手合せのほうび（'+(win?'勝ち':'負け')+'）','💎宝石 '+rw);}save();
   friendMode=false;
-  if(host&&FR){try{FR.ref.remove();}catch(e){}}FR=null;
-  await modal(`<h3>手合せ 結果</h3><div style="font-size:7cqw;font-weight:900;color:${win?'#c0392b':'#2c5ea8'}">${w}勝${l}敗　${win?'勝ち！':'負け…'}</div>${rw?`ほうび：宝石 +${rw}<br><span style="font-size:3.4cqw">今日のほうび あと${3-S.fCnt}回</span>`:'今日のほうびは3回もらったにゃ<br><span style="font-size:3.4cqw">（手合せはこのまま遊べるよ）</span>'}`,[{t:'OK',c:'gold'}]);
+  setTimeout(()=>{stStop();if(host&&ref){try{ref.remove();}catch(e){}}},20000);FR=null;
+  const resH=`<h3>手合せ 結果</h3><div style="font-size:7cqw;font-weight:900;color:${win?'#c0392b':'#2c5ea8'}">${w}勝${l}敗　${win?'勝ち！':'負け…'}</div>${rw?`ほうび：宝石 +${rw}<br><span style="font-size:3.4cqw">今日のほうび あと${3-S.fCnt}回</span>`:'今日のほうびは3回もらったにゃ<br><span style="font-size:3.4cqw">（手合せはこのまま遊べるよ）</span>'}`;
+  while(true){const k=await modal(resH+'<div class="small" style="margin-top:2cqw;color:#5a1d7a">スタンプであいさつしよう</div>',[{t:'OK',c:'gold'},{t:'🐾 スタンプ',c:'blue'}]);
+    if(k!==1)break;stRender();$('stPal').classList.add('on');await new Promise(r=>{const iv=setInterval(()=>{if(!$('stPal').classList.contains('on')){clearInterval(iv);r();}},150);});await sleep(1200);}
   show('home');}
 // ---- 手合せ：自分で戦う（スキップなし・10秒で自動「押す」）----
 const LIVE_SEC=10;
+// ---- 手合せスタンプ ----
+const STAMP_SETS=[[0,12],[12,24],[24,37]];
+const STAMP_N=['よろしくお願いします！','手合わせたのむにゃ！','やるぞー！','勝負！','よろしく！','がんばろう！','いい勝負を！','ファイト！','また対戦しよう！','ありがとうございました！','すごい！','おつかれさま！',
+ 'よろしくお願いします！','対戦お願いします！','やるぞー！','勝負！','よろしく！','がんばろう！','いい勝負を！','ファイト！','また対戦しよう！','ありがとうございました！','すごい！','おつかれさま！',
+ '肉球','肉球キラキラ','肉球ハート','肉球ドン','肉球ふりふり','肉球バーン','俺のチュール…','どすこい！','ごっつぁんです！','ちゃんこ食べた？','どすこい！','ごっつぁんです！','ちゃんこ食べた？'];
+let stSet=0,stLast=0,stSeen=null,stRef=null,stMyRole='h';
+function stEl(i){const d=document.createElement('div');d.className='stI';d.style.backgroundPosition=`${(i%8)/7*100}% ${Math.floor(i/8)/4*100}%`;d.title=STAMP_N[i]||'';return d;}
+function stRender(){const g=$('stG');g.innerHTML='';const [a0,a1]=STAMP_SETS[stSet];for(let i=a0;i<a1;i++){const e=stEl(i);e.onclick=ev_=>{ev_.stopPropagation();stSend(i);};g.appendChild(e);}
+  $('stPal').querySelectorAll('.tabs2 div').forEach(t=>t.classList.toggle('on',+t.dataset.s===stSet));}
+$('stPal').querySelectorAll('.tabs2 div').forEach(t=>t.onclick=e=>{e.stopPropagation();stSet=+t.dataset.s;stRender();});
+$('stX').onclick=e=>{e.stopPropagation();$('stPal').classList.remove('on');};
+$('bStamp').onclick=e=>{e.stopPropagation();sfx('tap');stRender();$('stPal').classList.toggle('on');};
+function stShow(i,mine,name){const w=document.createElement('div');w.className='stPop '+(mine?'me':'op');const e=stEl(i);w.appendChild(e);
+  w.insertAdjacentHTML('afterbegin',`<div class="who">${mine?'あなた':(name||'あいて')}</div>`);stage.appendChild(w);sfx(mine?'tap':'rare');setTimeout(()=>w.remove(),2700);}
+async function stSend(i){const now=Date.now();if(now-stLast<1500)return toast('ちょっと待ってにゃ');stLast=now;$('stPal').classList.remove('on');
+  if(stRef){try{await stRef.push({r:stMyRole,i,t:now});}catch(e){stShow(i,true);}}else stShow(i,true);}
+function stStart(ref,role,oppName){stRef=ref?ref.child('st'):null;stMyRole=role;stSeen=new Set();$('bStamp').classList.add('on');
+  if(stRef){stRef.on('value',snap=>{const v=snap.val()||{};for(const k in v){if(stSeen.has(k))continue;stSeen.add(k);const x=v[k];if(Date.now()-(x.t||0)>15000)continue;stShow(x.i,x.r===stMyRole,oppName);}});}}
+function stStop(){try{if(stRef)stRef.off();}catch(e){}stRef=null;$('bStamp').classList.remove('on');$('stPal').classList.remove('on');}
 async function playLive(o){const role=o.host?'h':'g',oth=o.host?'g':'h',sgn=o.host?1:-1;
   BT={me:o.me,opp:o.opp,g:0,n:0,busy:true,live:true,done:false};
   $('bout').style.backgroundImage=`url(img/dohyo_${o.bg}.webp?v=5)`;const stM=stats(o.me.id,o.me.c),stO=stats(o.opp.id,o.opp.c);
