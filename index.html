@@ -209,7 +209,7 @@ button{font-family:inherit}
 #gBtns{position:absolute;left:0;right:0;top:72%;display:flex;flex-direction:column;align-items:center;gap:2.6cqw}
 #gBtns .btn{width:76cqw;font-size:5cqw;padding:2.6cqw}
 #gRate{position:absolute;right:3cqw;top:15cqw;font-size:3.2cqw;padding:1cqw 2.6cqw}
-#gOverlay{position:absolute;inset:0;z-index:30;background:rgba(12,3,18,.94);display:none;flex-direction:column;align-items:center;justify-content:center}
+#gOverlay{position:absolute;inset:0;z-index:30;background:#0c0312;display:none;flex-direction:column;align-items:center;justify-content:center}
 #gOverlay.on{display:flex}
 #gCaps{width:40cqw;aspect-ratio:1;border-radius:50%;position:relative;cursor:pointer}
 #gCaps:before{content:"";position:absolute;inset:0;border-radius:50%;background:linear-gradient(180deg,var(--c1) 50%,#fff 50%);box-shadow:0 0 6cqw var(--c1),inset -2cqw -2cqw 4cqw rgba(0,0,0,.25)}
@@ -222,7 +222,7 @@ button{font-family:inherit}
 #gResult.on{display:block}
 .gOne{width:62cqw;margin:0 auto;position:relative;animation:cardIn .5s cubic-bezier(.2,.9,.3,1.3)}
 @keyframes cardIn{from{transform:rotateY(90deg) scale(.6);opacity:0}to{transform:none;opacity:1}}
-.gTen{display:grid;grid-template-columns:repeat(5,1fr);gap:1.6cqw}
+.gTen{display:grid;grid-template-columns:repeat(5,1fr);gap:5cqw 1.6cqw}
 .gTen .gc{position:relative;animation:cardIn .4s cubic-bezier(.2,.9,.3,1.3) both}
 .gLab{color:#fff3c4;font-weight:900;font-size:5cqw;margin-top:2cqw}
 .gStar{font-size:4cqw;font-weight:900;margin-top:1cqw}
@@ -381,6 +381,34 @@ button{font-family:inherit}
 .moneyTbl{text-align:left;font-size:3.6cqw;line-height:1.6}
 .moneyTbl b{color:#5a1d7a}
 .moneyTbl .h{font-weight:900;color:#c0392b;margin-top:2cqw}
+
+#gReveal{display:none;text-align:center;width:100%;padding:0 4cqw;position:relative;z-index:2}
+#gReveal.on{display:block}
+#gCount{position:absolute;top:4cqw;left:0;right:0;text-align:center;color:#fff3c4;font-size:4.4cqw;font-weight:900;font-family:sans-serif}
+#gSkipBtn{position:absolute;right:3cqw;bottom:4cqw;font-size:3.8cqw;padding:1.4cqw 3.4cqw;z-index:5}
+#gCaps.fast{animation:wob .18s ease-in-out infinite}
+.gNext{color:#fff;font-size:3.8cqw;font-weight:900;margin-top:2cqw;animation:blink 1.2s infinite}
+.nw{color:#ff6f7f;font-weight:900}
+.rbWrap{margin-bottom:2cqw;animation:rbIn .5s cubic-bezier(.3,1.7,.5,1)}
+@keyframes rbIn{from{transform:scale(3);opacity:0}to{transform:none;opacity:1}}
+.rbSub{color:#fff3c4;font-size:3.6cqw;font-weight:900;margin-top:.6cqw;letter-spacing:.1em}
+.rb{display:inline-block;font-family:"Arial Black","Hiragino Sans",sans-serif;font-weight:900;font-style:italic;line-height:1;padding:.6cqw 2cqw;border-radius:2cqw;font-size:3.4cqw;-webkit-text-stroke:.25cqw rgba(0,0,0,.55);paint-order:stroke fill;letter-spacing:.05em}
+.rb.big{font-size:13cqw;padding:1.4cqw 5cqw;border-radius:4cqw;-webkit-text-stroke:.6cqw rgba(0,0,0,.5)}
+.rb1{background:linear-gradient(#c9a07a,#7a5232);color:#fff;border:.4cqw solid #e8cfb0}
+.rb2{background:linear-gradient(#f2f6ff,#9aa7c0);color:#fff;border:.4cqw solid #fff}
+.rb3{background:linear-gradient(#fff3a0,#e8a812 55%,#b8700a);color:#fff;border:.4cqw solid #fff7cf;box-shadow:0 0 3cqw rgba(255,210,80,.9)}
+.rb4{background:linear-gradient(90deg,#ff6fd0,#ffd34d,#7ad0ff,#b07bd8);background-size:300% 100%;color:#fff;border:.4cqw solid #fff;box-shadow:0 0 4cqw rgba(255,130,220,.9);animation:rainbow 2s linear infinite}
+.rb5{background:linear-gradient(90deg,#fff,#ffe9a0,#fff,#ffd6f0,#fff);background-size:300% 100%;color:#c0392b;border:.5cqw solid #ffd34d;box-shadow:0 0 5cqw #fff,0 0 3cqw #ffd34d;animation:rainbow 1.5s linear infinite}
+.rbWrap .rb5{-webkit-text-stroke:.4cqw #fff}
+@keyframes rainbow{to{background-position:300% 0}}
+.gTen .gc .rb{position:absolute;left:50%;bottom:-1.5cqw;transform:translateX(-50%);font-size:2.8cqw;padding:.3cqw 1.2cqw;z-index:3}
+.gcN{color:#fff3c4;font-size:2.4cqw;font-weight:900;margin-top:2.4cqw;font-family:sans-serif}
+.gSum{margin-top:2cqw;color:#fff;font-size:4cqw;font-weight:900}
+.gSum .rb{vertical-align:middle}
+#gOverlay.lv3 .raysBg{background:repeating-conic-gradient(rgba(255,215,90,.5) 0 7deg,rgba(255,215,90,0) 7deg 18deg)}
+#gOverlay.lv4 .raysBg{background:repeating-conic-gradient(rgba(255,120,220,.55) 0 6deg,rgba(120,210,255,.4) 6deg 12deg,rgba(0,0,0,0) 12deg 18deg);animation-duration:5s}
+#gOverlay.lv5 .raysBg{background:repeating-conic-gradient(rgba(255,255,255,.75) 0 5deg,rgba(255,215,90,.5) 5deg 10deg,rgba(0,0,0,0) 10deg 16deg);animation-duration:3s}
+#gOverlay.lv1 .raysBg,#gOverlay.lv2 .raysBg{opacity:.45}
 </style>
 </head>
 <body>
@@ -461,7 +489,7 @@ button{font-family:inherit}
     <div id="gOverlay">
       <div class="raysBg"></div>
       <div id="gCaps"></div>
-      <div id="gTapMsg">タップしてあける！</div>
+      <div id="gCount"></div><div id="gTapMsg">タップしてあける！</div><div id="gReveal"></div><div id="gSkipBtn" class="btn gray">スキップ ▶▶</div>
       <div id="gResult"></div>
     </div>
   </section>
@@ -892,35 +920,68 @@ function gain(id){let res;if(!S.cats[id]){S.cats[id]=newCat();res='new';}
   S.dex[id]=true;if(S.team.length<3&&!S.team.includes(id))S.team.push(id);return res;}
 const tierCol=t=>t>=20?5:t>=16?4:t>=11?3:t>=6?2:1;
 const CAPC=['','#c08850','#dfe6f5','#ffd34d','#ff6fd0','#ffffff'];
-async function doGacha(n){
+const RARE=['','N','R','SR','SSR','UR'];
+const RARE_TXT=['','ノーマル','レア','スーパーレア','ダブルスーパーレア','ウルトラレア'];
+function rareBadge(t,big){const k=tierCol(t);return `<span class="rb rb${k}${big?' big':''}">${RARE[k]}</span>`;}
+let gSkip=false;
+function gWait(ms){return new Promise(r=>{const t0=Date.now();const iv=setInterval(()=>{if(gSkip||Date.now()-t0>=ms){clearInterval(iv);r();}},30);});}
+function gTap(el){return new Promise(r=>{if(gSkip)return r();const f=()=>{el.removeEventListener('click',f);clearInterval(iv);r();};el.addEventListener('click',f);const iv=setInterval(()=>{if(gSkip){clearInterval(iv);el.removeEventListener('click',f);r();}},50);});}
+async function doGacha(n){const opt={};
   const cost=n===1?10:100;if(S.gem<cost)return;S.gem-=cost;S.stats.pulls+=n;
-  const ids=[];for(let i=0;i<n;i++)ids.push(pull());
-  if(n===10&&!ids.some(id=>tierOf(id)>=6)){ids[9]=(pickTier(6)-1)*5+1+Math.floor(rnd()*5);}
+  const BAND=[null,[1,5],[6,10],[11,15],[16,19],[20,20]];
+  const ids=[];for(let i=0;i<n;i++){if(opt.force){const b=BAND[opt.force];const t=b[0]+Math.floor(rnd()*(b[1]-b[0]+1));ids.push((t-1)*5+1+Math.floor(rnd()*5));}else ids.push(pull());}
+  if(n===10&&!opt.force&&!ids.some(id=>tierOf(id)>=6)){ids[9]=(pickTier(6)-1)*5+1+Math.floor(rnd()*5);}
   const res=ids.map(id=>gain(id));save();
   const best=Math.max(...ids.map(tierOf));
-  // 演出
+  // ガチャ機がゆれる
   const gm=$('gMachine'),gi=$('gImg');gi.src='img/gacha_anim.webp?v=5';gm.classList.remove('shake');void gm.offsetWidth;gm.classList.add('shake');sfx('don');
   await sleep(1200);gi.src='img/gacha_machine.webp?v=5';
-  const ov=$('gOverlay'),cap=$('gCaps');ov.classList.add('on');$('gResult').classList.remove('on');$('gResult').innerHTML='';
-  cap.style.display='';$('gTapMsg').style.display='';cap.className='wob';cap.style.setProperty('--c1',CAPC[tierCol(best)]);
-  await new Promise(r=>cap.onclick=r);cap.onclick=null;cap.className='open';jingle(best>=11?'gachaR':'gachaN');await sleep(450);
-  cap.style.display='none';$('gTapMsg').style.display='none';
-  const R=$('gResult');R.classList.add('on');
+  const ov=$('gOverlay'),cap=$('gCaps'),R=$('gResult'),one=$('gReveal');ov.classList.add('on');ov.className='on';
+  R.classList.remove('on');R.innerHTML='';gSkip=false;$('gSkipBtn').style.display=n>1?'':'none';
+  // 1匹ずつ
+  for(let i=0;i<n&&!gSkip;i++){
+    const id=ids[i],t=tierOf(id),k=tierCol(t);
+    one.classList.remove('on');one.innerHTML='';ov.className='on lv'+k;
+    $('gCount').textContent=n>1?`${i+1} / ${n}`:'';
+    cap.style.display='';cap.className='wob';cap.style.setProperty('--c1',CAPC[k]);
+    $('gTapMsg').style.display='';$('gTapMsg').textContent='タップしてあける！';
+    await gTap(ov);if(gSkip)break;
+    // レアほどためる
+    if(k>=3){cap.className='wob fast';$('gTapMsg').textContent=k>=5?'……！？':k>=4?'こ、これは…！':'おっ…？';sfx('don');await gWait(k>=5?1500:k>=4?1100:700);if(gSkip)break;}
+    cap.className='open';jingle(k>=3?'gachaR':'gachaN');if(k>=4)shake('shake');
+    await gWait(430);cap.style.display='none';$('gTapMsg').style.display='none';
+    const resTxt=res[i]==='new'?'<span class="nw">NEW！</span> あたらしい力士が入門した！':res[i]==='star'?'かさなって☆が上がった！':'☆最大なので宝石5個に';
+    one.innerHTML=`<div class="rbWrap">${rareBadge(t,true)}<div class="rbSub">${RARE_TXT[k]}</div></div>
+      <div class="gOne glow${k}"></div>
+      <div class="gStar" style="color:${CAPC[k]}">${'★'.repeat(Math.min(t,10))}${t>10?'+'+(t-10):''}　★${t}</div>
+      <div class="gLab">No.${String(id).padStart(3,'0')} ${NAMES[id-1]}</div><div class="small">${resTxt}</div>
+      <div class="gNext">${i<n-1?'タップでつぎへ ▶':'タップで結果へ'}</div>`;
+    one.querySelector('.gOne').appendChild(catCard(id));
+    one.classList.add('on');
+    await gWait(350);await gTap(ov);
+  }
+  // まとめ
+  gSkip=false;$('gSkipBtn').style.display='none';one.classList.remove('on');one.innerHTML='';cap.style.display='none';$('gTapMsg').style.display='none';$('gCount').textContent='';
+  ov.className='on lv'+tierCol(best);
+  R.classList.add('on');
   const lab=r=>r==='new'?'<span class="newb">NEW</span>':'';
-  if(n===1){const id=ids[0],t=tierOf(id);
-    const w=document.createElement('div');w.className='gOne glow'+tierCol(t);w.appendChild(catCard(id));w.insertAdjacentHTML('beforeend',lab(res[0]));R.appendChild(w);
-    R.insertAdjacentHTML('beforeend',`<div class="gStar" style="color:${CAPC[tierCol(t)]}">${'★'.repeat(Math.min(t,10))}${t>10?'+'+(t-10):''}（★${t}）</div><div class="gLab">${NAMES[id-1]}</div>
-      <div class="small">${res[0]==='new'?'あたらしい力士が入門した！':res[0]==='star'?'かさなって★が上がった！（成長の上限アップ）':'★が最大なので宝石5個になった'}</div>`);
+  if(n===1){const id=ids[0],t=tierOf(id),k=tierCol(t);
+    R.insertAdjacentHTML('beforeend',`<div class="rbWrap">${rareBadge(t,true)}</div>`);
+    const w=document.createElement('div');w.className='gOne glow'+k;w.appendChild(catCard(id));w.insertAdjacentHTML('beforeend',lab(res[0]));R.appendChild(w);
+    R.insertAdjacentHTML('beforeend',`<div class="gLab">${NAMES[id-1]}（★${t}）</div>`);
   }else{const g=document.createElement('div');g.className='gTen';
-    ids.forEach((id,i)=>{const c=document.createElement('div');c.className='gc glow'+tierCol(tierOf(id));c.style.animationDelay=(i*.12)+'s';c.appendChild(catCard(id));c.insertAdjacentHTML('beforeend',lab(res[i]));g.appendChild(c);});
+    ids.forEach((id,i)=>{const t=tierOf(id);const c=document.createElement('div');c.className='gc glow'+tierCol(t);c.style.animationDelay=(i*.08)+'s';c.appendChild(catCard(id));
+      c.insertAdjacentHTML('beforeend',lab(res[i])+rareBadge(t)+`<div class="gcN">★${t}</div>`);g.appendChild(c);});
     R.appendChild(g);const nn=res.filter(r=>r==='new').length;
-    R.insertAdjacentHTML('beforeend',`<div class="gLab">あたらしい力士 ${nn}匹！</div><div class="small">いちばんレア：★${best}</div>`);}
+    const cnt=[0,0,0,0,0,0];ids.forEach(id=>cnt[tierCol(tierOf(id))]++);
+    R.insertAdjacentHTML('beforeend',`<div class="gLab">あたらしい力士 ${nn}匹！</div><div class="gSum">${[5,4,3,2,1].filter(k=>cnt[k]).map(k=>rareBadge(k===5?20:k===4?16:k===3?11:k===2?6:1)+`×${cnt[k]}`).join('　')}</div>`);}
   const b=document.createElement('div');b.className='mBtns';
-  const ok=document.createElement('div');ok.className='btn gold';ok.textContent='OK';ok.onclick=()=>{ov.classList.remove('on');renderGacha();};b.appendChild(ok);R.appendChild(b);
+  const ok=document.createElement('div');ok.className='btn gold';ok.textContent='OK';ok.onclick=e=>{e.stopPropagation();ov.className='';renderGacha();};b.appendChild(ok);R.appendChild(b);
 }
+$('gSkipBtn').onclick=e=>{e.stopPropagation();gSkip=true;};
 $('g1').onclick=()=>doGacha(1);$('g10').onclick=()=>doGacha(10);
 $('gRate').onclick=()=>{let h='<h3>出る確率（1回あたり）</h3><table style="width:100%;font-size:3.4cqw;border-collapse:collapse">';
-  for(let k=0;k<20;k++)h+=`<tr style="border-bottom:1px solid #d9c49a"><td>★${k+1}</td><td>No.${String(k*5+1).padStart(3,'0')}〜${String(k*5+5).padStart(3,'0')}</td><td style="text-align:right">${(TIER_W[k]*100).toFixed(3)}%</td></tr>`;
+  for(let k=0;k<20;k++)h+=`<tr style="border-bottom:1px solid #d9c49a"><td>${rareBadge(k+1)} ★${k+1}</td><td>No.${String(k*5+1).padStart(3,'0')}〜${String(k*5+5).padStart(3,'0')}</td><td style="text-align:right">${(TIER_W[k]*100).toFixed(3)}%</td></tr>`;
   modal(h+'</table><div style="font-size:3.2cqw;margin-top:2cqw">100回で★16以上が1匹かならず出ます。<br>10連では★6以上が1匹かならず出ます。</div>');};
 
 // ================= 図鑑 =================
@@ -930,7 +991,7 @@ function renderZukan(){const B=$('zBody');B.innerHTML='';const have=Object.keys(
   const tabs=document.createElement('div');tabs.className='tabs';['★1-5','★6-10','★11-15','★16-20'].forEach((t,i)=>{const e=document.createElement('div');e.className='tab'+(i===zTab?' on':'');e.textContent=t;e.onclick=()=>{zTab=i;renderZukan();};tabs.appendChild(e);});B.appendChild(tabs);
   const g=document.createElement('div');g.className='grid';
   for(let id=zTab*25+1;id<=zTab*25+25;id++){const own=!!S.dex[id];const c=document.createElement('div');c.className='cell r'+tierCol(tierOf(id));
-    c.innerHTML=`<span class="no">${String(id).padStart(3,'0')}</span><span class="st">★${tierOf(id)}</span>`;const cc=catCard(id,own?'':'sil');c.appendChild(cc);
+    c.innerHTML=`<span class="no">${String(id).padStart(3,'0')}</span><span class="st">${RARE[tierCol(tierOf(id))]} ★${tierOf(id)}</span>`;const cc=catCard(id,own?'':'sil');c.appendChild(cc);
     c.insertAdjacentHTML('beforeend',`<div class="lab">${own?NAMES[id-1]:'？？？'}</div>`);
     c.onclick=()=>{if(own)openDetail(id);else toast('まだ出会っていない力士だにゃ');};g.appendChild(c);}
   B.appendChild(g);}
