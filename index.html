@@ -600,6 +600,62 @@ button{font-family:inherit}
 .adv .tip b{color:#c0306f}
 .adv .lgd{font-size:2.6cqw;color:#7a5a30;text-align:right}
 .recBan{background:#fff2c4;border:.5cqw solid #e8a020;border-radius:2.4cqw;padding:2cqw 2.4cqw;margin:1cqw 0 2.4cqw;font-size:3.3cqw;color:#3b1a4f;line-height:1.55}.recBan b{color:#c0306f}
+/* ステータスバー（和風デザイン） */
+.gwH{margin:2cqw 0 1.4cqw!important}
+.gwH .lg{white-space:nowrap;font-size:2.3cqw!important;gap:1.2cqw!important}
+.gwH .gwTi{display:inline-flex;align-items:center;width:42cqw;height:8cqw;background:url(img/ui_growtitle.webp?v=1) left center/auto 100% no-repeat;padding-left:11cqw;font-size:3.6cqw;color:#ffe9a8;text-shadow:0 .3cqw 0 #3a0a2a;letter-spacing:.05em}
+.gw{margin:1.2cqw 0!important;padding-bottom:1.2cqw;border-bottom:.3cqw solid #ffffff12}
+.gw b{width:18cqw!important;height:7cqw;background:url(img/ui_statlabel.webp?v=1) left center/100% 100% no-repeat;display:flex;align-items:center;justify-content:center;padding-left:5.6cqw;padding-right:1.6cqw;font-size:3.3cqw;color:#ffe9a8;text-shadow:0 .3cqw 0 #3a0a2a}
+.gw .g{height:5.2cqw!important;border-radius:3cqw!important;border:.6cqw solid #e8b84a!important;box-shadow:inset 0 0 0 .3cqw #6a3a10,0 0 1cqw #e8b84a55;background:#1e0828!important}
+.gw .g .bs{background:linear-gradient(#d2b2f5,#a77ee0 60%,#9068cc)!important}
+.gw .g .tr{background:linear-gradient(#fff1a0,#ffc93a 45%,#ff8a1c)!important;box-shadow:inset -.4cqw 0 0 #c05a00}
+.gw .g .rm{background:repeating-linear-gradient(-45deg,#ffffff30 0 1.1cqw,transparent 1.1cqw 2.2cqw)!important;border-left:none!important}
+.gw span{color:#fff6d8}
+.gw b span{width:auto!important;text-align:center!important;font-size:3.3cqw!important;font-family:inherit!important;color:#ffe9a8!important;line-height:1}.gw span small{color:#ffe9a8!important;font-weight:900}
+.gwN{border-top:.3cqw dashed #e8b84a88;padding-top:1.6cqw;margin-top:.6cqw!important}
+.gwTot{display:flex;justify-content:flex-end;margin:2.4cqw 0 1cqw}
+.gwTot span{display:inline-flex;align-items:center;justify-content:center;width:40cqw;height:7.8cqw;background:url(img/ui_total.webp?v=1) center/100% 100% no-repeat;padding-left:8cqw;font-size:4.6cqw;font-weight:900;color:#ffe9a8;text-shadow:0 .3cqw 0 #3a0a2a}
+/* 力士画面（デザイン画像の上に配置） */
+#detail .head{display:none}#detail #dBody{padding:0!important}
+.dTpl{position:relative;width:100%;aspect-ratio:960/1637;background:url(img/ui_detail_bg.webp?v=2) center/100% 100% no-repeat;container-type:inline-size;color:#fff3d6;font-weight:700}
+.dTpl>*{position:absolute;box-sizing:border-box}
+.dTpl .tBack{display:flex;align-items:center;justify-content:center;font-size:5cqw;font-weight:900;color:#ffe9a8;cursor:pointer;text-shadow:0 .3cqw 0 #2a0620}
+.dTpl .tBack::before{content:'◀';margin-right:1.2cqw;color:#ffd34d;font-size:3.6cqw}
+.dTpl .tTitle{display:flex;align-items:center;justify-content:center;font-size:7.4cqw;font-weight:900;color:#ffe9a8;letter-spacing:.3em;text-shadow:0 .4cqw 0 #2a0620}
+.dTpl .tFig{display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+.dTpl .tFig>*{max-height:100%}
+.dTpl .tNo{display:flex;align-items:center;font-size:3.4cqw;color:#fff;line-height:1;white-space:nowrap}
+.dTpl .tNm{display:flex;align-items:center;overflow:hidden}.dTpl .tNm span{font-size:6.4cqw;font-weight:900;color:#fff;line-height:1;white-space:nowrap;text-shadow:0 .4cqw .6cqw #000a}
+.dTpl .tInfo .nm{font-size:7.2cqw;font-weight:900;color:#fff;line-height:1.15;text-shadow:0 .4cqw .6cqw #000a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dTpl .tRank{display:flex;align-items:center;justify-content:center;font-size:4.2cqw;font-weight:900;color:#5a2a00}
+.dTpl .tTx{font-size:3.4cqw;line-height:4.98cqw;color:#fff;white-space:nowrap;text-shadow:0 0 .8cqw #1a0420,0 .3cqw .4cqw #1a0420}.dTpl .tTx.lv{font-size:3.8cqw;line-height:4cqw}
+.dTpl .tTx .sm{font-size:2.8cqw;color:#f0e2ff}.dTpl .tTx .ht{color:#ff4d7d}.dTpl .tTx .ke{color:#ff9cd8}
+.dTpl .tExp{border-radius:2cqw;overflow:hidden}.dTpl .tExp i{display:block;height:100%;background:linear-gradient(90deg,#7ee6ff,#b07cf0)}
+.dTpl .tLab{display:flex;align-items:center;justify-content:center;font-size:3.2cqw;font-weight:900;color:#ffe9a8;text-shadow:0 .3cqw 0 #2a0620;white-space:nowrap}
+.dTpl .tLab.big{font-size:3.6cqw;letter-spacing:.05em}
+.dTpl .tLg{display:flex;justify-content:flex-end;align-items:center;gap:2cqw;font-size:2.7cqw;white-space:nowrap}
+.dTpl .tLg i{display:inline-block;width:2.6cqw;height:2.4cqw;border-radius:.5cqw;margin-right:.8cqw;vertical-align:-.3cqw}
+.dTpl .tLg .a{background:#b48be0}.dTpl .tLg .b{background:#ffd34d}.dTpl .tLg .c{border:.35cqw dashed #ffd34d}
+.dTpl .tBar{display:flex;border-radius:4cqw;overflow:hidden}
+.dTpl .tBar i{display:block;height:100%}
+.dTpl .tBar .bs{background:linear-gradient(#e2c8ff,#b48be0 55%,#9a72d4)}
+.dTpl .tBar .tr{background:linear-gradient(#fff3a8,#ffcc3a 45%,#ff8a1c)}
+.dTpl .tBar .rm{background:repeating-linear-gradient(-45deg,#ffffff38 0 1.2cqw,transparent 1.2cqw 2.4cqw)}
+.dTpl .tVal{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;line-height:1}
+.dTpl .tVal b{font-size:3.9cqw;font-weight:900;color:#fff;font-family:sans-serif}.dTpl .tVal small{font-size:2.5cqw;margin-top:.4cqw;color:#ffe9a8;font-weight:900}
+.dTpl .tNote{font-size:3cqw;line-height:1.5;color:#fff}
+.dTpl .tTot{display:flex;align-items:center;justify-content:center;font-size:5cqw;font-weight:900;color:#ffe9a8;text-shadow:0 .3cqw 0 #2a0620}
+.dTpl .tBtn{cursor:pointer;transition:transform .1s;filter:drop-shadow(0 .8cqw .6cqw #0008)}.dTpl .tBtn img{width:100%;height:100%;display:block;object-fit:fill}
+.dTpl .tBtn .tag{position:absolute;right:-1.4cqw;top:-1.6cqw;background:#e8264d;color:#fff;font-size:2.4cqw;font-weight:900;padding:.2cqw 1.6cqw;border-radius:3cqw;border:.4cqw solid #fff;white-space:nowrap;z-index:2}
+.dTpl .tBtn.on{filter:drop-shadow(0 0 1.4cqw #ffe27a) drop-shadow(0 .8cqw .6cqw #0008)}
+.dTpl .tBtn:active{transform:scale(.96)}
+.dTpl .tBtn span{flex:1;text-align:center;white-space:nowrap}
+.dTpl .tBtn em{font-style:normal;font-size:3.6cqw}
+.dTpl .tBtn.long{font-size:3.7cqw}
+.dTpl .tBtn.gold{color:#5a1a08;text-shadow:0 .3cqw 0 #fff3b0}
+.dTpl .tBtn.red,.dTpl .tBtn.blue,.dTpl .tBtn.green{color:#fff;text-shadow:0 .35cqw 0 #0008,0 0 1cqw #0006}
+.dTpl .tBtn span:only-child{flex:none}
+.dWz{padding:3cqw 4cqw 6cqw}
 </style>
 </head>
 <body>
@@ -1270,39 +1326,57 @@ let dId=3;
 function openDetail(id){dId=id;renderDetail();show('detail');}
 function renderDetail(){const id=dId,c=S.cats[id];const B=$('dBody');B.innerHTML='';if(!c)return;
   const st=stats(id,c),p=PERS[persOf(id)];
-  const top=document.createElement('div');top.className='dTop';const im=document.createElement('div');im.className='dImg';
-  const fig=catFigure(id,c.rank);fig.style.width=GROW_IDS.includes(id)?'86%':fig.style.width;im.appendChild(fig);top.appendChild(im);
-  top.insertAdjacentHTML('beforeend',`<div class="dInfo"><div class="small">No.${String(id).padStart(3,'0')}　★${tierOf(id)}　${'☆'.repeat(c.star)}</div>
-    <div class="dName">${NAMES[id-1]}</div><div class="dRank">${RANKS[c.rank]}</div>
-    <div class="dLine">Lv ${c.lv} / ${lvCap(c)}<div class="exp"><i style="width:${Math.min(100,c.exp/needExp(c.lv)*100)}%"></i></div></div>
-    <div class="dLine">性格：<b>${p.n}</b><br><span style="font-size:2.8cqw">${p.d}</span></div>
-    <div class="dLine">取り口：${STYLE[styleOf(id)].n}</div>
-    <div class="dLine">なつき度：<span style="color:#ff7fb0">${'❤'.repeat(Math.round(c.nat/20))}${'♡'.repeat(5-Math.round(c.nat/20))}</span> ${c.nat}</div>
-    <div class="dLine">通算 ${c.w}勝${c.l}敗</div>${keshoOf(c)?`<div class="dLine" style="color:#ff9cd8">化粧まわし「${keshoOf(c)[0]}」<br><span style="font-size:2.8cqw">${keshoDesc(c.kesho)}</span></div>`:''}</div>`);
-  if(keshoOf(c)){const ke=keshoEl(c.kesho);ke.style.cssText+='position:absolute;left:0;top:0;width:12cqw;filter:drop-shadow(0 0 1cqw #ffd34d)';im.style.position='relative';im.appendChild(ke);}
-  B.appendChild(top);
-  const bars=document.createElement('div');bars.className='bars';
-  bars.insertAdjacentHTML('beforeend',growthHTML(id,c));
-  bars.insertAdjacentHTML('beforeend',`<div class="small" style="text-align:right">総合力 ${power(st)}</div>`);B.appendChild(bars);
-  const acts=document.createElement('div');acts.className='acts';
-  const mk=(t,cl,fn)=>{const e=document.createElement('div');e.className='btn '+cl;e.textContent=t;e.onclick=fn;acts.appendChild(e);};
-  mk(keshoOf(c)?'化粧まわしを変える':'化粧まわしをつける','gold',()=>openKeshoPick(id));
-  mk('稽古する','red',()=>{renderKeiko();show('keiko');});mk('ちゃんこ','gold',()=>{renderChanko();show('chankoS');});
+  // 960x1637 のデザイン画像の上に、座標(px)で配置する
+  const P=(x,y,w,h)=>`left:${x/9.6}%;top:${y/16.37}%;width:${w/9.6}%;${h?`height:${h/16.37}%;`:''}`;
+  const T=document.createElement('div');T.className='dTpl';
+  const kp=keshoOf(c);const heart=Math.round(c.nat/20);
+  let h=`<div class="tBack" style="${P(40,22,185,70)}">戻る</div><div class="tTitle" style="${P(330,22,300,72)}">力士</div>
+  <div class="tFig" style="${P(60,160,380,550)}"></div>
+  <div class="tNo" style="${P(492,130,420,46)}">No.${String(id).padStart(3,'0')}　★${tierOf(id)}　${'☆'.repeat(c.star)}</div>
+  <div class="tNm" style="${P(492,176,420,66)}"><span>${NAMES[id-1]}</span></div>
+  <div class="tRank" style="${P(492,250,156,52)}">${RANKS[c.rank]}</div>
+  <div class="tTx lv" style="${P(492,322,420,40)}">Lv ${c.lv} / ${lvCap(c)}</div>
+  <div class="tExp" style="${P(490,373,402,16)}"><i style="width:${Math.min(100,c.exp/needExp(c.lv)*100)}%"></i></div>
+  <div class="tTx" style="${P(492,398,420,330)}">
+    <div>性格：<b>${p.n}</b></div><div class="sm">${p.d}</div>
+    <div>取り口：${STYLE[styleOf(id)].n}</div>
+    <div>なつき度：<span class="ht">${'❤'.repeat(heart)}${'♡'.repeat(5-heart)}</span> ${c.nat}</div>
+    <div>通算 ${c.w}勝${c.l}敗</div>
+    ${kp?`<div class="ke">化粧まわし「${kp[0]}」</div><div class="sm ke">${keshoDesc(c.kesho)}</div>`:''}</div>
+  <div class="tLab big" style="${P(90,744,160,48)}">育ち具合</div>
+  <div class="tLg" style="${P(420,752,500,36)}"><span><i class="a"></i>もとの力</span><span><i class="b"></i>稽古</span><span><i class="c"></i>まだ伸びる</span></div>`;
+  let mx=0;const rows=['pow','spd','wt','tec'].map(k=>{const t=c.t[k]||0,cap=trainCap(id,c,k),base=st[k]-t;mx=Math.max(mx,base+Math.max(cap,t));return{k,t,cap,base,v:st[k]};});
+  rows.forEach((r,n)=>{const y=[814,885,957,1028][n];const pc=x=>x/mx*100;
+    h+=`<div class="tLab" style="${P(84,y+4,84,44)}">${STATN[r.k]}</div>
+    <div class="tBar" style="${P(193,y+7,491,34)}"><i class="bs" style="width:${pc(r.base)}%"></i><i class="tr" style="width:${pc(r.t)}%"></i><i class="rm" style="width:${pc(Math.max(0,r.cap-r.t))}%"></i></div>
+    <div class="tVal" style="${P(700,y-2,215,58)}"><b>${r.v}</b><small>稽古 ${r.t}/${r.cap}</small></div>`;});
+  const full=rows.filter(r=>r.t>=r.cap).map(r=>STATN[r.k]);
+  h+=`<div class="tNote" style="${P(100,1104,815,70)}">${full.length?`${full.join('・')}は今のレベルでは稽古しきったよ。取組やちゃんこでレベルを上げると、また伸ばせる。`:'点線のところまで、稽古でまだ伸ばせるよ。'}</div>
+  <div class="tTot" style="${P(640,1150,270,62)}">総合力 ${power(st)}</div>`;
   const petLeft=Math.max(0,c.pet+10*60000-Date.now());
-  mk(petLeft?`なでる（あと${Math.ceil(petLeft/60000)}分）`:'なでる','blue',()=>pet(id));
-  mk(S.team.includes(id)?'出場からはずす':'出場させる','green',()=>{const k=S.team.indexOf(id);if(k>=0){if(S.team.length<=1)return toast('1匹は出場させてね');S.team.splice(k,1);}else{if(S.team.length>=3)return toast('出場は3匹まで。編成で入れかえてね');S.team.push(id);}save();renderDetail();});
-  B.appendChild(acts);
-  B.insertAdjacentHTML('beforeend',`<div class="sec">覚えた決まり手（${c.waza.length}）</div>`);
+  const inTeam=S.team.includes(id);
+  const BT_=[[48,1250,'dbtn_kesho','ke',''],[492,1250,'dbtn_keiko','kei',''],[48,1352,'dbtn_chanko','ch',''],[492,1352,'dbtn_naderu','pet',petLeft?`あと${Math.ceil(petLeft/60000)}分`:''],[270,1454,'dbtn_shutsujo','team',inTeam?'✓出場中':'']];
+  BT_.forEach(b=>h+=`<div class="tBtn${b[4]&&b[3]==='team'?' on':''}" data-k="${b[3]}" style="${P(b[0],b[1],420,80)}"><img src="img/${b[2]}.webp?v=1" alt="">${b[4]?`<span class="tag">${b[4]}</span>`:''}</div>`);
+  T.innerHTML=h;
+  const fig=catFigure(id,c.rank);fig.style.width=GROW_IDS.includes(id)?'86%':'72%';T.querySelector('.tFig').appendChild(fig);
+  if(kp){const ke=keshoEl(c.kesho);ke.className+=' tKe';ke.style.cssText+=P(52,190,130,180)+'position:absolute;';T.appendChild(ke);}
+  requestAnimationFrame(()=>{const sp=T.querySelector('.tNm span');if(sp){const box=T.querySelector('.tNm').clientWidth;let fs=6.4;while(sp.scrollWidth>box&&fs>3.6){fs-=.3;sp.style.fontSize=fs+'cqw';}}});
+  T.querySelector('.tBack').onclick=e=>{e.stopPropagation();sfx('tap');goBack();};
+  const A={ke:()=>openKeshoPick(id),kei:()=>{renderKeiko();show('keiko');},ch:()=>{renderChanko();show('chankoS');},pet:()=>pet(id),
+    team:()=>{const k=S.team.indexOf(id);if(k>=0){if(S.team.length<=1)return toast('1匹は出場させてね');S.team.splice(k,1);toast('出場からはずしたよ');}else{if(S.team.length>=3)return toast('出場は3匹まで。編成で入れかえてね');S.team.push(id);toast('出場させたよ');}save();renderDetail();}};
+  T.querySelectorAll('.tBtn').forEach(b=>b.onclick=()=>{sfx('tap');A[b.dataset.k]();});
+  B.appendChild(T);
+  B.insertAdjacentHTML('beforeend',`<div class="dWz"><div class="sec">覚えた決まり手（${c.waza.length}）</div></div>`);const W=B.lastChild;
   const wl=document.createElement('div');wl.className='wazaList';
-  if(!c.waza.length)B.insertAdjacentHTML('beforeend','<div class="small" style="margin-top:2cqw">「ぶつかり稽古」で決まり手を覚えるよ</div>');
-  c.waza.forEach(i=>{const e=wazaEl(i);e.style.width='100%';e.title=WAZA[i];wl.appendChild(e);});B.appendChild(wl);}
+  if(!c.waza.length)W.insertAdjacentHTML('beforeend','<div class="small" style="margin-top:2cqw">「ぶつかり稽古」で決まり手を覚えるよ</div>');
+  c.waza.forEach(i=>{const e=wazaEl(i);e.style.width='100%';e.title=WAZA[i];wl.appendChild(e);});W.appendChild(wl);}
 function pet(id){const c=S.cats[id];if(Date.now()-c.pet<10*60000)return toast('さっきなでたばかりだにゃ');
   c.pet=Date.now();const kp=keshoOf(c);const v=(persOf(id)===2?10:5)+(kp?(kp[6]==='nat'?3:kp[6]==='nat2'?6:0):0);c.nat=Math.min(100,c.nat+v);save();sfx('tap');
   toast(`ゴロゴロ…♡<br>なつき度 +${v}`);renderDetail();}
 
 // ---- 化粧まわし屋 ----
 // ---- 力士工房（中に工房が増えていく）----
-const KOUBOU=[{k:'shop',img:'kb_mawashi',d:'化粧まわしを買う・つける'},{k:'hanko',img:'kb_hanko',d:'手合せスタンプを手に入れる'},{k:'chankoSel',css:'ちゃんこ',d:'ちゃんこ鍋を食べさせる'}];
+const KOUBOU=[{k:'shop',img:'kb_mawashi',d:'化粧まわしを買う・つける'},{k:'hanko',img:'kb_hanko',d:'手合せスタンプを手に入れる'},{k:'chankoSel',img:'kb_chanko',d:'ちゃんこ鍋を食べさせる'}];
 function renderKoubou(){const B=$('kbBody');B.innerHTML=`<div class="kbIntro">いろんな工房がそろう、力士のための工房街だにゃ</div><div class="kbGrid">${KOUBOU.map(x=>`<div class="kb" data-k="${x.k}">${x.css?`<div class="kbCss"><div class="chk" style="background-position:0% 0%"></div><div class="rb">${x.css}</div></div>`:`<img src="img/${x.img}.webp?v=1" alt="">`}<div class="d">${x.d}</div></div>`).join('')}</div><div class="kbSoon">🐾 ほかの工房も じゅんび中…</div>`;
   B.querySelectorAll('.kb').forEach(e=>e.onclick=()=>{sfx('tap');GO[e.dataset.k]();});}
 // ---- 判子工房：手合せスタンプを手に入れる ----
@@ -1565,11 +1639,29 @@ async function doKeiko(i){const id=dId,c=S.cats[id],k=KEIKO[i];const cost=keikoC
   $('aRes').insertAdjacentHTML('beforeend','<div class="small" style="margin-top:2cqw">タップでもどる</div>');}
 
 // ---- ちゃんこ ----
+// ちゃんこの親方のおすすめ：いま一番役に立つ鍋を、値段も見て決める
+function recommendChanko(id,c){tickHP();const need={exp:0,nat:0,hp:0,pow:0,spd:0,wt:0,tec:0};let why='';
+  const rk=recommendKeiko(id,c);const LA=S.lastAdvice;let key=null;
+  if(LA&&LA.id===id&&LA.i>=0&&Date.now()-LA.t<36e5)key=Object.keys(KEIKO_OF).find(x=>KEIKO_OF[x]===LA.i);
+  if(!key&&rk)key=rk.k;
+  const room=k=>Math.max(0,trainCap(id,c,k)+10-(c.t[k]||0));
+  const capped=['pow','spd','wt','tec'].filter(k=>(c.t[k]||0)>=trainCap(id,c,k)).length;
+  if(S.hp<HP_MAX*.3){need.hp=12;why='体力が少ないから、';}
+  else if(capped>=2||!rk){need.exp=3;why='稽古しきった力が多いから、まずレベル上げ。';}
+  else if(c.nat<25){need.nat=8;why='なつき度が低いから、';}
+  if(key&&room(key)>0){need[key]+=2.5;if(!why)why=`${STATN[key]}をのばしたいから、`;}
+  for(const k of ['pow','spd','wt','tec'])if(room(k)>0)need[k]+=.4;need.exp+=.6;
+  const val={exp:.12,nat:.35,hp:.1,pow:1,spd:1,wt:1,tec:1};
+  let best=null;CHANKO.forEach((k,i)=>{let sc=0;for(const[a,v]of Object.entries(k[2])){let vv=v;if(val[a]===1)vv=Math.min(v,room(a));if(a==='hp')vv=Math.min(v,HP_MAX-S.hp);if(a==='nat')vv=Math.min(v,100-c.nat);sc+=vv*val[a]*need[a];}
+    sc=sc/Math.sqrt(k[1]);if(S.coin<k[1])sc*=.25;if(!best||sc>best.sc)best={i,sc};});
+  if(!best||best.sc<=0)return null;best.why=why;return best;}
 function renderChanko(){const id=dId,c=S.cats[id];const B=$('cBody');
-  B.innerHTML=`<div class="sum">${NAMES[id-1]}に食べさせる　コイン ${fmt(S.coin)}</div>`;const L=document.createElement('div');L.className='menuList';
-  CHANKO.forEach((k,i)=>{const e=document.createElement('div');e.className='mItem';const ef=Object.entries(k[2]).map(([a,v])=>a==='exp'?`経験+${v}`:a==='nat'?`なつき+${v}`:a==='hp'?`体力+${v}`:`${STATN[a]}+${v}`).join(' ');
-    const im=chankoEl(i);im.style.width='20cqw';e.appendChild(im);e.insertAdjacentHTML('beforeend',`<div><div class="t" style="font-size:4cqw">${k[0]}</div><div class="d">${ef}</div></div><div class="p">🐾${k[1]}</div>`);
-    e.onclick=()=>eat(i);L.appendChild(e);});B.appendChild(L);}
+  B.innerHTML=`<div class="sum">${NAMES[id-1]}に食べさせる　コイン ${fmt(S.coin)}</div>`;
+  const rc=recommendChanko(id,c);if(rc){const bn=document.createElement('div');bn.className='tip recBan';bn.innerHTML=`👴 親方：${rc.why}<b>「${CHANKO[rc.i][0]}」</b>がおすすめだにゃ`;B.appendChild(bn);}
+  const L=document.createElement('div');L.className='menuList';
+  CHANKO.forEach((k,i)=>{const e=document.createElement('div');e.className='mItem'+(rc&&rc.i===i?' rec':'');const ef=Object.entries(k[2]).map(([a,v])=>a==='exp'?`経験+${v}`:a==='nat'?`なつき+${v}`:a==='hp'?`体力+${v}`:`${STATN[a]}+${v}`).join(' ');
+    const im=chankoEl(i);im.style.width='20cqw';e.appendChild(im);e.insertAdjacentHTML('beforeend',`<div><div class="t" style="font-size:4cqw">${k[0]}${rc&&rc.i===i?' <span class="recB">親方のおすすめ</span>':''}</div><div class="d">${ef}</div></div><div class="p">🐾${k[1]}</div>`);
+    e.onclick=()=>eat(i);if(rc&&rc.i===i)L.prepend(e);else L.appendChild(e);});B.appendChild(L);}
 async function eat(i){const id=dId,c=S.cats[id],k=CHANKO[i];if(S.coin<k[1])return toast('コインが足りないにゃ');S.coin-=k[1];dailyAdd('chanko');
   const mul=persOf(id)===1?1.5:1;const out=[];let ups=0;
   for(const[a,v0] of Object.entries(k[2])){const v=Math.round(v0*mul);
@@ -1634,9 +1726,9 @@ const KEIKO_OF={pow:1,wt:0,spd:2,tec:3};          // その力を一番のばす
 const ACT_W=[{pow:1,wt:.6,spd:.2,tec:0},{pow:.6,tec:.8,wt:.4,spd:0},{spd:1,tec:.6,pow:.2,wt:0}]; // 技ごとに効く力
 function growthHTML(id,c){const st=stats(id,c);let mx=0;const rows=[];
   for(const k of ['pow','spd','wt','tec']){const t=c.t[k]||0,cap=trainCap(id,c,k),base=st[k]-t;mx=Math.max(mx,base+Math.max(cap,t));rows.push({k,t,cap,base,v:st[k]});}
-  let h=`<div class="gwH">育ち具合<span class="lg"><span><i style="background:#9b7bb8"></i>生まれつき＋Lv</span><span><i style="background:#ffd34d"></i>稽古</span><span><i style="border:.3cqw dashed #ffd76a"></i>まだ伸びる</span></span></div>`;
+  let h=`<div class="gwH"><span class="gwTi">育ち具合</span><span class="lg"><span><i style="background:#9b7bb8"></i>もとの力</span><span><i style="background:#ffd34d"></i>稽古</span><span><i style="border:.3cqw dashed #ffd76a"></i>まだ伸びる</span></span></div>`;
   rows.forEach(r=>{const pct=x=>x/mx*100,rm=Math.max(0,r.cap-r.t);
-    h+=`<div class="gw"><b>${STATN[r.k]}</b><div class="g"><i class="bs" style="width:${pct(r.base)}%"></i><i class="tr" style="width:${pct(r.t)}%"></i><i class="rm" style="width:${pct(rm)}%"></i></div><span>${r.v}<small>稽古 ${r.t}/${r.cap}</small></span></div>`;});
+    h+=`<div class="gw"><b><span>${STATN[r.k]}</span></b><div class="g"><i class="bs" style="width:${pct(r.base)}%"></i><i class="tr" style="width:${pct(r.t)}%"></i><i class="rm" style="width:${pct(rm)}%"></i></div><span>${r.v}<small>稽古 ${r.t}/${r.cap}</small></span></div>`;});
   const full=rows.filter(r=>r.t>=r.cap).map(r=>STATN[r.k]);
   h+=`<div class="gwN">${full.length?`🔒 ${full.join('・')}は今のレベルでは稽古しきったよ。取組やちゃんこでレベルを上げると、また伸ばせる。`:'点線のところまで、稽古でまだ伸ばせるよ。'}</div>`;
   return h;}
