@@ -364,7 +364,7 @@ button{font-family:inherit}
 .btn{white-space:nowrap}
 .cell .lab{text-overflow:ellipsis}
 .dName{word-break:keep-all;overflow-wrap:anywhere}
-.ksh{aspect-ratio:230/300;background:url(img/kesho.webp?v=1) no-repeat;background-size:500% 400%}
+.ksh{aspect-ratio:230/300;background:url(img/kesho.webp?v=3) no-repeat;background-size:500% 500%}
 .shopBtn{display:flex;align-items:center;justify-content:center;gap:1cqw;background:linear-gradient(#7a2a9e,#3f0f5c);border:.7cqw solid #e8b84a;border-radius:4cqw;padding:.6cqw 1.4cqw;color:#fff3c4;font-weight:900;font-size:3.2cqw;line-height:1.15;text-align:left;box-shadow:inset 0 0 0 .4cqw #8a3bb0}
 .kItem{display:flex;gap:3cqw;align-items:center;background:linear-gradient(#3e1656,#250a35);border:.5cqw solid #8a5cb0;border-radius:3cqw;padding:2cqw 3cqw;margin-bottom:2.4cqw;color:#fff3c4}
 .kItem .ksh{width:20cqw;flex-shrink:0}
@@ -409,6 +409,44 @@ button{font-family:inherit}
 #gOverlay.lv4 .raysBg{background:repeating-conic-gradient(rgba(255,120,220,.55) 0 6deg,rgba(120,210,255,.4) 6deg 12deg,rgba(0,0,0,0) 12deg 18deg);animation-duration:5s}
 #gOverlay.lv5 .raysBg{background:repeating-conic-gradient(rgba(255,255,255,.75) 0 5deg,rgba(255,215,90,.5) 5deg 10deg,rgba(0,0,0,0) 10deg 16deg);animation-duration:3s}
 #gOverlay.lv1 .raysBg,#gOverlay.lv2 .raysBg{opacity:.45}
+#evBody{z-index:2}
+#event{background:radial-gradient(circle at 50% 30%,#ff9cc2 0%,#b0306e 35%,#4a0f3a 75%,#1c0618)}
+.evHero{text-align:center;color:#fff;margin:2cqw 0 4cqw}
+.evHero .t{font-size:11cqw;font-weight:900;color:#fff4c2;-webkit-text-stroke:.6cqw #8a1050;paint-order:stroke fill;text-shadow:0 1cqw 0 #3a0628;letter-spacing:.06em;animation:evPulse 1.6s ease-in-out infinite}
+@keyframes evPulse{50%{transform:scale(1.05)}}
+.evHero .s{font-size:3.8cqw;font-weight:900;margin-top:1cqw;text-shadow:0 0 1cqw #000}
+.evRew{display:grid;grid-template-columns:repeat(4,1fr);gap:2cqw;background:rgba(40,6,30,.55);border:.5cqw solid #ffd34d;border-radius:3cqw;padding:2.4cqw}
+.evRew .ksh{width:100%;filter:drop-shadow(0 0 1.4cqw rgba(255,210,80,.8))}
+.evRew .n{color:#fff3c4;font-size:2.5cqw;font-weight:900;text-align:center;margin-top:.6cqw;line-height:1.25}
+.evBox{background:rgba(255,250,240,.93);border-radius:3cqw;padding:3cqw;margin-top:4cqw;color:#3a0628;font-size:3.7cqw;line-height:1.6}
+.evBox b{color:#b0306e}
+.fl{position:absolute;z-index:1;font-size:5cqw;pointer-events:none;animation:evFall linear infinite;opacity:.8}
+@keyframes evFall{from{transform:translateY(-10cqh) rotate(0)}to{transform:translateY(110cqh) rotate(360deg)}}
+.evChuru{text-align:center;color:#fff;font-size:5cqw;font-weight:900;margin:-1cqw 0 3cqw;text-shadow:0 0 1cqw #000}
+.evChuru b{color:#ffd34d;font-size:7cqw}
+.evList{display:flex;flex-direction:column;gap:2cqw;margin-top:3cqw}
+.evRow{display:flex;align-items:center;gap:3cqw;background:rgba(40,6,30,.75);border:.5cqw solid #ff9cc2;border-radius:3cqw;padding:2cqw 3cqw;color:#fff3c4}
+.evRow.boss{border-color:#ffd34d;box-shadow:0 0 2cqw rgba(255,210,80,.7);background:rgba(80,20,10,.8)}
+.evRow .lv{min-width:10cqw;text-align:center;font-weight:900;color:#ffd34d;font-size:4cqw}
+.evRow .t{font-size:4.4cqw;font-weight:900}
+.evRow .d{font-size:3cqw;color:#ffd6e5}
+.evRow .btn{margin-left:auto;font-size:3.8cqw;padding:1.4cqw 3cqw;flex-shrink:0}
+.evRow>div:nth-child(2){min-width:0;flex:1}
+.evMe{display:flex;align-items:center;gap:3cqw;background:rgba(255,250,240,.93);border-radius:3cqw;padding:2cqw 3cqw;margin-top:3cqw;color:#3a0628}
+.evMe .body85{width:18cqw}.evMe .t{font-weight:900;font-size:4.4cqw}.evMe .d{font-size:3.2cqw}.evMe .btn{margin-left:auto;font-size:3.6cqw;padding:1.2cqw 3cqw}
+#mini{position:absolute;inset:0;z-index:20;display:none;flex-direction:column;align-items:center;background:radial-gradient(circle at 50% 40%,#ffd6e5,#d44c8a 55%,#4a0f3a)}
+#mini.on{display:flex}
+.mHead{display:flex;justify-content:space-around;width:100%;padding:16cqw 3cqw 3cqw;color:#fff;font-size:5cqw;font-weight:900;text-shadow:0 0 1cqw #000}
+.mHead b{color:#ffd34d;font-size:7cqw}
+#miniGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:3cqw;width:92cqw;margin-top:4cqw}
+.hole{aspect-ratio:1;border-radius:50%;background:radial-gradient(ellipse at 50% 80%,#5a1a3a 40%,#8a2a5a 70%,#c45a8a);box-shadow:inset 0 -2cqw 3cqw rgba(0,0,0,.5);position:relative;overflow:hidden;cursor:pointer}
+.hole .mc{position:absolute;left:8%;width:84%;bottom:-6%;animation:popUp .18s ease-out}
+.hole .mc.zz{filter:grayscale(.6) brightness(.85)}
+@keyframes popUp{from{transform:translateY(70%)}to{transform:none}}
+.hole .bub{position:absolute;right:2%;top:2%;background:#fff;border-radius:3cqw;padding:.4cqw 1.4cqw;font-size:4cqw;box-shadow:0 .5cqw 1cqw rgba(0,0,0,.3)}
+.hole.good{box-shadow:0 0 0 1cqw #ffd34d,0 0 4cqw #ffd34d}
+.hole.bad{box-shadow:0 0 0 1cqw #3d6fd0}
+#miniStart{position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-size:14cqw;font-weight:900;color:#fff4c2;-webkit-text-stroke:.8cqw #8a1050;paint-order:stroke fill}
 </style>
 </head>
 <body>
@@ -469,6 +507,8 @@ button{font-family:inherit}
   <section id="hensei" class="screen panelScreen hide"><div class="head"><img class="back" src="img/btn30_modoru.webp?v=5" alt="戻る">力士編成</div><div class="body" id="hsBody"></div></section>
   <section id="detail" class="screen panelScreen hide"><div class="head"><img class="back" src="img/btn30_modoru.webp?v=5" alt="戻る">力士</div><div class="body" id="dBody"></div></section>
   <section id="shop" class="screen panelScreen hide"><div class="head"><img class="back" src="img/btn30_modoru.webp?v=5" alt="戻る">化粧まわし屋</div><div class="body" id="shBody"></div></section>
+  <section id="event" class="screen hide"><div class="head"><img class="back" src="img/btn30_modoru.webp?v=5" alt="戻る">チュール祭</div><div class="body" id="evBody"></div>
+    <div id="mini"><div class="mHead"><span id="miniLv"></span><span>⏱ <b id="miniTime">20</b></span><span>🍡 <b id="miniScore">0</b></span></div><div id="miniGrid"></div><div id="miniStart"></div></div></section>
   <section id="keikoSel" class="screen panelScreen hide"><div class="head"><img class="back" src="img/btn30_modoru.webp?v=5" alt="戻る">稽古する力士</div><div class="body" id="ksBody"></div></section>
   <section id="keiko" class="screen panelScreen hide"><div class="head"><img class="back" src="img/btn30_modoru.webp?v=5" alt="戻る">稽古</div><div class="body" id="kBody"></div></section>
   <section id="chankoS" class="screen panelScreen hide"><div class="head"><img class="back" src="img/btn30_modoru.webp?v=5" alt="戻る">ちゃんこ</div><div class="body" id="cBody"></div></section>
@@ -579,12 +619,13 @@ const KESHO=[
  ['桜吹雪',800,5,0,0,0,''],['富士の波',1200,6,4,0,0,''],['金龍',3000,10,0,0,0,''],['猛虎',1500,6,6,0,0,''],['鯉の滝登り',1200,5,0,0,0,'exp'],
  ['大鷲',1500,6,0,0,6,''],['桜の城',1200,5,0,5,0,''],['藤の花',1000,5,0,0,0,'nat'],['牡丹',1000,5,0,0,0,'coin'],['昇り龍',2500,8,0,4,0,''],
  ['千客万来',2000,4,0,0,0,'coin2'],['麒麟',3500,12,0,0,0,''],['観音',2800,8,0,0,0,'nat2'],['破邪顕正',3200,9,6,0,0,''],['金鯱',4000,13,0,0,0,''],
- ['家紋',1800,7,0,6,0,''],['獅子舞',2200,8,0,0,6,''],['鶴亀',3000,7,0,0,0,'exp2'],['歌舞伎',3600,10,0,4,4,''],['芸妓',5000,15,0,0,0,'']];
+ ['家紋',1800,7,0,6,0,''],['獅子舞',2200,8,0,0,6,''],['鶴亀',3000,7,0,0,0,'exp2'],['歌舞伎',3600,10,0,4,4,''],['芸妓',5000,15,0,0,0,''],
+ ['チュール祭・まぐろかつお',0,12,4,0,0,'exp','ev'],['チュール祭・ささみ',0,12,0,0,4,'coin','ev'],['チュール祭・まぐろ海鮮',0,12,0,4,0,'nat','ev'],['チュール祭・とりささみほたて',0,14,0,0,0,'exp2','ev']];
 const OMAKE={exp:'経験+20%',exp2:'経験+40%',coin:'取組のコイン+20%',coin2:'取組のコイン+50%',nat:'なつき度が上がりやすい',nat2:'なつき度がぐんと上がりやすい'};
 function keshoOf(c){return c&&c.kesho!=null&&c.kesho>=0?KESHO[c.kesho]:null;}
 function keshoMul(c,a){const k=keshoOf(c);if(!k)return 1;return 1+(k[2]+[k[3],k[4],k[5]][a])/100;}
 function keshoDesc(i){const k=KESHO[i];const t=[`強さ+${k[2]}%`];if(k[3])t.push(`押す+${k[3]}%`);if(k[4])t.push(`組む+${k[4]}%`);if(k[5])t.push(`引く+${k[5]}%`);if(k[6])t.push(OMAKE[k[6]]);return t.join('・');}
-function keshoEl(i){const d=document.createElement('div');d.className='ksh';d.style.backgroundPosition=`${(i%5)/4*100}% ${Math.floor(i/5)/3*100}%`;return d;}
+function keshoEl(i){const d=document.createElement('div');d.className='ksh';d.style.backgroundPosition=`${(i%5)/4*100}% ${Math.floor(i/5)/4*100}%`;return d;}
 function keshoOwner(i){return ownIds().find(id=>S.cats[id].kesho===i);}
 const BASHO=[['初場所','一月・東京','01_hatsu'],['春場所','三月・大阪','02_haru'],['夏場所','五月・東京','03_natsu'],['名古屋場所','七月・愛知','04_nagoya'],['秋場所','九月・東京','05_aki'],['九州場所','十一月・福岡','06_kyushu']];
 const DAYN=['初日','二日目','三日目','四日目','五日目','六日目','千秋楽'];
@@ -594,7 +635,7 @@ const HP_MAX=100,HP_SEC=120,BOUT_HP=5,KEIKO_HP=10;
 // ================= セーブ =================
 const KEY='nyanko_oozumou_v1';
 let S;
-function newSave(){return{kesho:[],coin:500,gem:0,hp:HP_MAX,hpAt:Date.now(),cats:{},team:[],dex:{},pity:0,basho:{i:0,day:0,rec:{}},
+function newSave(){return{ev:null,kesho:[],coin:500,gem:0,hp:HP_MAX,hpAt:Date.now(),cats:{},team:[],dex:{},pity:0,basho:{i:0,day:0,rec:{}},
   name:'にゃんこ部屋',started:false,gift:'',stats:{w:0,l:0,yusho:0,pulls:0,bashos:0,fw:0,fl:0},sound:true,bgm:true};}
 function load(){try{const j=localStorage.getItem(KEY);S=j?Object.assign(newSave(),JSON.parse(j)):newSave();}catch(e){S=newSave();}}
 function save(){S.updatedAt=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}if(typeof cloudSave==='function')cloudSave();}
@@ -686,7 +727,7 @@ function sfx(type){
 
 // ================= 音楽 =================
 // mp3：タイトル・ホーム・取組・優勝　／　コードで作る曲：稽古・ガチャ・ジングル
-const BGM_FILE={title:'bgm/title.mp3',friend:'bgm/title.mp3',home:'bgm/home.mp3',bout:'bgm/bout.mp3',victory:'bgm/victory.mp3'};
+const BGM_FILE={event:'bgm/event.mp3',title:'bgm/title.mp3',friend:'bgm/title.mp3',home:'bgm/home.mp3',bout:'bgm/bout.mp3',victory:'bgm/victory.mp3'};
 const SEQ_BGM={keiko:1,gacha:1};
 let musGain=null,bgmEl=null,bgmGain=null,seqGain=null,sfxBus=null,curBgm=null,seqTimer=null,friendMode=false;
 function musicInit(){
@@ -722,7 +763,7 @@ function bgm(name){
 }
 function stopSeqSoon(){fadeTo(seqGain,0,.4);setTimeout(()=>{if(!SEQ_BGM[curBgm])stopSeq();},450);}
 function duck(on){fadeTo(musGain,on?.25:1,on?.15:.6);}
-const SCREEN_BGM={title:'title',home:'home',zukan:'home',heya:'home',hensei:'home',detail:'home',chankoS:'home',keikoSel:'home',shop:'home',seiseki:'home',banzuke:'home',basho:'home',friend:'home',keiko:'keiko',gacha:'gacha'};
+const SCREEN_BGM={title:'title',home:'home',zukan:'home',heya:'home',hensei:'home',detail:'home',chankoS:'home',keikoSel:'home',event:'event',shop:'home',seiseki:'home',banzuke:'home',basho:'home',friend:'home',keiko:'keiko',gacha:'gacha'};
 function screenBgm(id){if(id==='bout')bgm(friendMode?'friend':'bout');else if(SCREEN_BGM[id])bgm(SCREEN_BGM[id]);}
 
 // ---- 楽器（WebAudio）----
@@ -852,13 +893,13 @@ function refreshHome(){refreshHUD();refreshNews();$('hName').textContent=S.name;
 const GO={
   gift:openGift,help:openHelp,settings:openSettings,banzuke:()=>{drawBanzuke();show('banzuke');},
   hensei:()=>{renderHensei();show('hensei');},zukan:()=>{renderZukan();show('zukan');},friend:()=>{renderFriend();show('friend');},
-  event:()=>modal('<h3>イベント</h3>イベントは準備中だにゃ。<br>おたのしみに！'),seiseki:()=>{renderSeiseki();show('seiseki');},
+  event:()=>{renderEvent();show('event');},seiseki:()=>{renderSeiseki();show('seiseki');},
   heya:()=>{renderHeya();show('heya');},shop:()=>{renderShop();show('shop');},keikoPick:()=>{if(!ownIds().length)return;renderKeikoSel();show('keikoSel');},
   basho:()=>{renderBasho();show('basho');},gacha:()=>{renderGacha();show('gacha');}
 };
 document.querySelectorAll('#home [data-go]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();sfx('tap');GO[b.dataset.go]();}));
 $('bzBack').addEventListener('click',e=>{e.stopPropagation();show('home');});
-const RENDER={shop:()=>renderShop(),zukan:renderZukan,heya:renderHeya,hensei:renderHensei,detail:()=>renderDetail(),basho:renderBasho,seiseki:renderSeiseki,gacha:renderGacha};
+const RENDER={event:()=>renderEvent(),shop:()=>renderShop(),zukan:renderZukan,heya:renderHeya,hensei:renderHensei,detail:()=>renderDetail(),basho:renderBasho,seiseki:renderSeiseki,gacha:renderGacha};
 
 // ---- お金・体力の説明 ----
 function moneyInfo(kind){sfx('tap');
@@ -1049,12 +1090,13 @@ function pet(id){const c=S.cats[id];if(Date.now()-c.pet<10*60000)return toast('�
 
 // ---- 化粧まわし屋 ----
 function renderShop(){const B=$('shBody');if(!S.kesho)S.kesho=[];
-  B.innerHTML=`<div class="sum">コイン 🐾${fmt(S.coin)}　持っている ${S.kesho.length}/20<br><span class="small">化粧まわしをつけた力士は、取組で強くなる（勝ちやすくなる）よ</span></div>`;
+  B.innerHTML=`<div class="sum">コイン 🐾${fmt(S.coin)}　持っている ${S.kesho.length}/${KESHO.length}<br><span class="small">化粧まわしをつけた力士は、取組で強くなる（勝ちやすくなる）よ</span></div>`;
   KESHO.forEach((k,i)=>{const own=S.kesho.includes(i);const who=keshoOwner(i);
     const e=document.createElement('div');e.className='kItem';e.appendChild(keshoEl(i));
     e.insertAdjacentHTML('beforeend',`<div style="min-width:0"><div class="t">${k[0]}</div><div class="d">${keshoDesc(i)}${who?`<br><span style="color:#ffd96a">${NAMES[who-1]}がつけている</span>`:''}</div></div>`);
     const r=document.createElement('div');r.className='r';
     if(own){const b=document.createElement('div');b.className='btn blue';b.textContent='つける';b.onclick=()=>pickCatFor(i);r.appendChild(b);}
+    else if(k[7]==='ev'){const b=document.createElement('div');b.className='btn gray';b.style.fontSize='3cqw';b.textContent='チュール祭で もらえる';b.onclick=()=>{renderEvent();show('event');};r.appendChild(b);}
     else{const b=document.createElement('div');b.className='btn gold';b.textContent=`🐾${fmt(k[1])}`;if(S.coin<k[1])b.setAttribute('disabled','');b.onclick=()=>buyKesho(i);r.appendChild(b);}
     e.appendChild(r);B.appendChild(e);});}
 async function buyKesho(i){const k=KESHO[i];if(S.coin<k[1])return toast('コインが足りないにゃ');
@@ -1081,6 +1123,105 @@ function openKeshoPick(id){if(!S.kesho||!S.kesho.length){toast('化粧まわし�
   const sh=document.createElement('div');sh.className='btn gold';sh.textContent='お店へ';sh.onclick=()=>{$('modal').classList.remove('on');renderShop();show('shop');};row.appendChild(sh);
   const c=document.createElement('div');c.className='btn gray';c.textContent='とじる';c.onclick=()=>$('modal').classList.remove('on');row.appendChild(c);B.appendChild(row);
   $('modal').classList.add('on');}
+// ---- チュール祭 ----
+// ===== チュール祭 =====
+const EV_START='2026-11-15',EV_END='2026-11-30';
+const MINI_PLAYS=3,STAGE_COST=3;
+const STAGES=[
+ {n:'ちびっこ',rank:0,churu:1,gem:5,first:10},
+ {n:'ふつう',rank:2,churu:2,gem:10,first:20},
+ {n:'つよい',rank:4,churu:4,gem:20,first:40},
+ {n:'すごい',rank:7,churu:7,gem:35,first:80},
+ {n:'チュール大王',rank:9,churu:12,gem:60,first:150,boss:true}];
+const MINI=[
+ {n:'かんたん',time:20,show:1500,gap:850,max:1,sleep:0,mul:1},
+ {n:'ふつう',time:20,show:1200,gap:700,max:2,sleep:.15,mul:1.2},
+ {n:'むずかしい',time:20,show:950,gap:560,max:2,sleep:.25,mul:1.5},
+ {n:'げきむず',time:20,show:780,gap:460,max:3,sleep:.3,mul:2},
+ {n:'にゃんこ神',time:20,show:620,gap:380,max:3,sleep:.35,mul:2.5}];
+const EV_SHOP=[
+ {n:'宝石 30',cost:10,f:()=>{S.gem+=30;}},
+ {n:'宝石 100',cost:30,f:()=>{S.gem+=100;}},
+ {n:'コイン 2000',cost:8,f:()=>{S.coin+=2000;}}];
+function ev(){if(!S.ev)S.ev={churu:0,day:'',plays:0,clear:[0,0,0,0,0],best:[0,0,0,0,0]};
+  const t=today();if(S.ev.day!==t){S.ev.day=t;S.ev.plays=0;}return S.ev;}
+function evOpen(){const d=new Date();const ymd=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;return ymd>=EV_START&&ymd<=EV_END;}
+let evTab=0,evCat=null;
+function renderEvent(){const B=$('evBody');const E=ev();
+  if(!evCat||!S.cats[evCat])evCat=S.team[0]||ownIds()[0];
+  B.innerHTML=`<div class="evHero"><div class="t">チュール祭</div><div class="s">🐟 ${EV_START.slice(5).replace('-','/')}〜${EV_END.slice(5).replace('-','/')} 期間限定 🐟</div></div>
+   <div class="evChuru">🍡 チュール <b>${E.churu}</b> 本</div>
+   <div class="tabs" id="evTabs"></div><div id="evPane"></div>`;
+  ['くばり','勝ち抜き','交換所'].forEach((t,k)=>{const e=document.createElement('div');e.className='tab'+(k===evTab?' on':'');e.textContent=t;e.onclick=()=>{evTab=k;sfx('tap');renderEvent();};$('evTabs').appendChild(e);});
+  const P=$('evPane');
+  if(!evOpen()){P.innerHTML='<div class="evBox"><b>チュール祭は開催期間外だにゃ</b><br>次の開催をおたのしみに！</div>';}
+  else if(evTab===0){
+    P.innerHTML=`<div class="evBox"><b>チュールくばり</b>：おなかをすかせた猫をタップしてチュールをあげよう！<br>寝ている猫（💤）はタップしないでね。<br>今日あと <b>${MINI_PLAYS-E.plays}</b> 回あそべる</div><div class="evList" id="miniL"></div>`;
+    MINI.forEach((m,k)=>{const e=document.createElement('div');e.className='evRow';
+      e.innerHTML=`<div class="lv">${'★'.repeat(k+1)}</div><div><div class="t">${m.n}</div><div class="d">チュール ×${m.mul}　ハイスコア ${E.best[k]}</div></div>`;
+      const b=document.createElement('div');b.className='btn '+(E.plays>=MINI_PLAYS?'gray':'gold');b.textContent='あそぶ';b.onclick=()=>{if(E.plays>=MINI_PLAYS)return toast('今日はもう遊んだにゃ<br>また明日！');startMini(k);};e.appendChild(b);$('miniL').appendChild(e);});
+  }else if(evTab===1){
+    P.innerHTML=`<div class="evBox"><b>勝ち抜き場所</b>：チュール ${STAGE_COST} 本で 1 番挑戦。勝つとチュールと宝石がもらえる！体力は使わないよ。<br>はじめて勝つとボーナス宝石！</div>
+     <div class="evMe" id="evMe"></div><div class="evList" id="stgL"></div>`;
+    const me=$('evMe');const c=S.cats[evCat];me.appendChild(catBody(evCat));
+    me.insertAdjacentHTML('beforeend',`<div><div class="t">${NAMES[evCat-1]}</div><div class="d">${RANKS[c.rank]}　Lv${c.lv}　総合力 ${power(stats(evCat,c))}</div></div>`);
+    const cb=document.createElement('div');cb.className='btn';cb.textContent='変える';cb.onclick=()=>{const t=S.team.length?S.team:ownIds();evCat=t[(t.indexOf(evCat)+1)%t.length];renderEvent();};me.appendChild(cb);
+    STAGES.forEach((st,k)=>{const e=document.createElement('div');e.className='evRow'+(st.boss?' boss':'');
+      e.innerHTML=`<div class="lv">${k+1}</div><div><div class="t">${st.n}${E.clear[k]?' <span style="color:#7ad0ff">✔</span>':''}</div><div class="d">勝ち：🍡${st.churu}・💎${st.gem}${E.clear[k]?'':`　はじめて：💎+${st.first}`}</div></div>`;
+      const b=document.createElement('div');b.className='btn '+(E.churu>=STAGE_COST?'red':'gray');b.textContent=`🍡${STAGE_COST}`;b.onclick=()=>stageBout(k);e.appendChild(b);$('stgL').appendChild(e);});
+  }else{
+    P.innerHTML=`<div class="evBox"><b>交換所</b>：集めたチュールと交換できるよ</div><div class="evList" id="exL"></div>`;
+    const L=$('exL');
+    KESHO.forEach((k,i)=>{if(k[7]!=='ev')return;const own=S.kesho.includes(i);const e=document.createElement('div');e.className='evRow';
+      const im=keshoEl(i);im.style.width='14cqw';e.appendChild(im);
+      e.insertAdjacentHTML('beforeend',`<div><div class="t">${k[0].replace('チュール祭・','')}</div><div class="d">化粧まわし・強さ+${k[2]}%</div></div>`);
+      const b=document.createElement('div');b.className='btn '+(own?'gray':'gold');b.textContent=own?'交換ずみ':'🍡50';b.onclick=()=>{if(own)return;evBuy(50,()=>{S.kesho.push(i);},k[0]);};e.appendChild(b);L.appendChild(e);});
+    EV_SHOP.forEach(x=>{const e=document.createElement('div');e.className='evRow';e.innerHTML=`<div class="lv">🎁</div><div><div class="t">${x.n}</div><div class="d">何回でも交換できる</div></div>`;
+      const b=document.createElement('div');b.className='btn gold';b.textContent=`🍡${x.cost}`;b.onclick=()=>evBuy(x.cost,x.f,x.n);e.appendChild(b);L.appendChild(e);});
+  }
+  if(!$('event').querySelector('.fl'))for(let i=0;i<12;i++){const f=document.createElement('div');f.className='fl';f.textContent=['🐟','🍡','🐾','🌸'][i%4];
+    f.style.left=Math.random()*100+'%';f.style.animationDuration=(6+Math.random()*6)+'s';f.style.animationDelay=(-Math.random()*10)+'s';$('event').appendChild(f);}
+}
+async function evBuy(cost,fn,name){const E=ev();if(E.churu<cost)return toast('チュールが足りないにゃ');
+  const i=await modal(`<h3>交換する？</h3>${name}<br>🍡 ${cost} 本`,[{t:'交換',c:'gold'},{t:'やめる',c:'gray'}]);if(i!==0)return;
+  E.churu-=cost;fn();save();jingle('gachaN');toast(`${name}<br>を手に入れた！`);renderEvent();}
+function stageBout(k){const E=ev(),st=STAGES[k];if(E.churu<STAGE_COST)return toast('チュールが足りないにゃ<br>「くばり」で集めよう');
+  E.churu-=STAGE_COST;save();const id=evCat,c=S.cats[id];
+  let opp=makeOpp(st.rank,Date.now()%1e6);
+  if(st.boss){const bc=newCat();bc.lv=45;bc.rank=9;bc.nat=60;for(const s_ of ['pow','spd','wt','tec'])bc.t[s_]=trainCap(100,bc,s_);opp={id:100,c:bc,st:stats(100,bc),name:'チュール大王',style:1};}
+  startBout({me:{id,c,name:NAMES[id-1]},opp,bg:BASHO[S.basho.i][2],day:`チュール祭 勝ち抜き ${k+1}「${st.n}」`,
+    onEnd:(win)=>{if(!win)return'チュール祭：また挑戦してにゃ';let g=st.gem,txt='';if(!E.clear[k]){E.clear[k]=1;g+=st.first;txt='　はじめてボーナス！';}
+      E.churu+=st.churu;S.gem+=g;save();return`🍡+${st.churu}　💎+${g}${txt}`;}});
+  waitCutThen(()=>{show('event');renderEvent();});}
+// ---- チュールくばり（ミニゲーム）----
+let MG=null;
+async function startMini(k){const m=MINI[k],E=ev();E.plays++;save();
+  const ov=$('mini');ov.classList.add('on');const g=$('miniGrid');g.innerHTML='';
+  const holes=[];for(let i=0;i<9;i++){const h=document.createElement('div');h.className='hole';g.appendChild(h);holes.push(h);}
+  MG={k,score:0,end:Date.now()+m.time*1000,run:true};
+  $('miniLv').textContent=`${'★'.repeat(k+1)} ${m.n}`;
+  const upd=()=>{$('miniScore').textContent=MG.score;$('miniTime').textContent=Math.max(0,Math.ceil((MG.end-Date.now())/1000));};
+  $('miniStart').style.display='flex';$('miniStart').textContent='よーい…';await sleep(800);$('miniStart').textContent='スタート！';sfx('don');await sleep(500);$('miniStart').style.display='none';
+  MG.end=Date.now()+m.time*1000;upd();
+  const pool=ownIds().length>3?ownIds():[1,2,3,4,5,6,7,8,9,10];
+  const tick=setInterval(upd,200);
+  const spawn=async()=>{while(MG&&MG.run&&Date.now()<MG.end){
+      const busy=holes.filter(h=>h.dataset.on).length;
+      if(busy<m.max){const free=holes.filter(h=>!h.dataset.on);const h=free[Math.floor(Math.random()*free.length)];
+        const sleepy=Math.random()<m.sleep;h.dataset.on='1';h.innerHTML='';const cc=catBody(pool[Math.floor(Math.random()*pool.length)]);cc.className+=' mc'+(sleepy?' zz':'');h.appendChild(cc);
+        h.insertAdjacentHTML('beforeend',sleepy?'<div class="bub">💤</div>':'<div class="bub">🍡?</div>');
+        let done=false;
+        h.onclick=()=>{if(done||!MG||!MG.run)return;done=true;
+          if(sleepy){MG.score=Math.max(0,MG.score-2);h.classList.add('bad');sfx('lose');}else{MG.score++;h.classList.add('good');sfx('tap');}
+          upd();setTimeout(()=>{h.classList.remove('good','bad');h.innerHTML='';delete h.dataset.on;h.onclick=null;},220);};
+        setTimeout(()=>{if(!done){done=true;h.innerHTML='';delete h.dataset.on;h.onclick=null;}},m.show*(0.85+Math.random()*.3));}
+      await sleep(m.gap*(0.7+Math.random()*.6));}};
+  spawn();
+  while(Date.now()<MG.end)await sleep(100);
+  MG.run=false;clearInterval(tick);upd();holes.forEach(h=>{h.innerHTML='';h.onclick=null;});
+  const got=Math.floor(MG.score*m.mul/2);E.churu+=got;let best='';if(MG.score>E.best[k]){E.best[k]=MG.score;best='<br><b style="color:#c0392b">ハイスコア更新！</b>';}save();jingle(got>0?'chanko':'lose');
+  await modal(`<h3>おしまい！</h3>あげたチュール <b>${MG.score}</b> 本${best}<br>ごほうび：🍡 <b>${got}</b> 本`,[{t:'OK',c:'gold'}]);
+  ov.classList.remove('on');MG=null;renderEvent();}
 // ---- 稽古する力士をえらぶ ----
 function renderKeikoSel(){const B=$('ksBody');tickHP();
   B.innerHTML=`<div class="sum">稽古させる力士をえらんでね　体力 ${S.hp}/${HP_MAX}</div>`;sortTabs(B,renderKeikoSel);
@@ -1280,7 +1421,7 @@ async function endBasho(){const b=BASHO[S.basho.i];let html=`<h3>${b[0]} 結果<
     else if(r.w<=2&&c.rank>0){c.rank--;msg='負け越し';}else msg='負け越し';
     if(r.d.length===0)msg='休場';
     html+=`<div style="margin:1.4cqw 0"><b>${NAMES[id-1]}</b> ${r.w}勝${r.l}敗　${msg}<br>${RANKS[old]} → <b style="color:${c.rank>old?'#c0392b':c.rank<old?'#2c5ea8':'#333'}">${RANKS[c.rank]}</b></div>`;});
-  if(yusho){const left=KESHO.map((_,i)=>i).filter(i=>!S.kesho.includes(i));if(left.length){const g=left[Math.floor(rnd()*left.length)];S.kesho.push(g);html+=`<div style="margin-top:2cqw;color:#c0392b"><b>優勝のほうび！</b> 化粧まわし「${KESHO[g][0]}」をもらった</div>`;}}
+  if(yusho){const left=KESHO.map((_,i)=>i).filter(i=>!S.kesho.includes(i)&&KESHO[i][7]!=='ev');if(left.length){const g=left[Math.floor(rnd()*left.length)];S.kesho.push(g);html+=`<div style="margin-top:2cqw;color:#c0392b"><b>優勝のほうび！</b> 化粧まわし「${KESHO[g][0]}」をもらった</div>`;}}
   S.gem+=gemSum;S.stats.bashos++;S.basho={i:(S.basho.i+1)%6,day:0,rec:{}};save();
   html+=`<div style="margin-top:2cqw">ほうび：宝石 +${gemSum}</div><div style="margin-top:1cqw">次は <b>${BASHO[S.basho.i][0]}</b> だにゃ</div>`;
   if(yusho||S.team.some(id=>S.cats[id].rank>0))bgm('victory');
