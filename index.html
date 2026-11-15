@@ -498,6 +498,8 @@ button{font-family:inherit}
 #evTabs .evT.on .ic{animation:evBob 1.2s ease-in-out infinite}
 #evTabs .evT.on::after{content:'';position:absolute;left:50%;bottom:-2.6cqw;transform:translateX(-50%);border:1.6cqw solid transparent;border-top-color:#ffe58a}
 @keyframes evBob{50%{transform:translateY(-1cqw) rotate(-6deg)}}
+.vTap{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:4;display:none;padding:4cqw 7cqw;border-radius:8cqw;background:rgba(0,0,0,.6);color:#fff;font-size:5cqw;font-weight:900;border:.5cqw solid #fff;white-space:nowrap}
+.vTap.on{display:block}
 </style>
 </head>
 <body>
@@ -631,8 +633,8 @@ button{font-family:inherit}
   </div>
 
   <div id="modal"><div id="mBox"></div></div>
-  <div id="evMovie"><video id="evVid" muted playsinline webkit-playsinline preload="none"></video><div class="skip" id="evSkip">スキップ ▶</div></div>
-  <div id="party"><video id="pVid" muted playsinline webkit-playsinline preload="none"></video><div class="lz"></div><div class="lz b"></div>
+  <div id="evMovie"><video id="evVid" muted playsinline webkit-playsinline preload="none"></video><div class="skip" id="evSkip">スキップ ▶</div><div class="vTap" id="evTap">▶ タップで再生</div></div>
+  <div id="party"><video id="pVid" muted playsinline webkit-playsinline preload="none"></video><div class="lz"></div><div class="lz b"></div><div class="vTap" id="pTap">▶ タップで再生</div>
     <div class="pTop"><img id="pBack" src="img/btn30_modoru.webp?v=5" alt="戻る"><div class="pTit">🎉 チュールパーティー</div><div style="width:15cqw"></div></div>
     <div class="pHint">画面をタップしてもりあげよう！</div>
     <div class="pBot"><div class="btn" id="pNext">次の動画 ▶</div><div class="btn gold" id="pBall">🪩 ミラーボール</div></div></div>
@@ -1211,12 +1213,18 @@ function evMovie(force){if(!evOpen())return;const E=ev();const d=new Date().toDa
   const ov=$('evMovie'),v=$('evVid');let done=false;
   const end=()=>{if(done)return;done=true;ov.classList.remove('show');setTimeout(()=>{ov.classList.remove('on');v.pause();v.removeAttribute('src');v.load();},420);};
   v.src='movie/churu_op.mp4?v=2';v.muted=true;v.currentTime=0;ov.classList.add('on');requestAnimationFrame(()=>ov.classList.add('show'));
-  v.onended=end;v.onerror=end;$('evSkip').onclick=()=>{sfx('tap');end();};
-  const p=v.play();if(p&&p.catch)p.catch(end);}
+  v.onended=end;v.onerror=()=>{vidErr(v);end();};$('evSkip').onclick=()=>{sfx('tap');end();};
+  vidPlay(v,$('evTap'));}
+// 動画を再生（自動再生が止められたら「タップで再生」を出す）
+function vidPlay(v,tap){tap.classList.remove('on');v.muted=true;v.setAttribute('muted','');v.playsInline=true;
+  const p=v.play();if(p&&p.catch)p.catch(e=>{if(v.error)return;tap.classList.add('on');
+    tap.onclick=ev_=>{ev_.stopPropagation();tap.classList.remove('on');const q=v.play();if(q&&q.catch)q.catch(()=>{if(!v.error)tap.classList.add('on');});};});}
+function vidErr(v){const f=(v.currentSrc||v.src||'').split('/').slice(-2).join('/').split('?')[0];
+  toast(`動画が読みこめなかったにゃ<br><span style="font-size:3cqw">${f}</span>`);}
 // ---- チュールパーティー会場（動画は音なし・曲はevent.mp3）----
 const PARTY_VIDS=['movie/churu_op.mp4?v=2','movie/dj_meow.mp4?v=1'];let pIdx=0;
 function openParty(){const ov=$('party'),v=$('pVid');ov.classList.add('on');bgm('event');
-  const play=()=>{v.src=PARTY_VIDS[pIdx%PARTY_VIDS.length];v.muted=true;const p=v.play();if(p&&p.catch)p.catch(()=>{});};
+  const play=()=>{v.src=PARTY_VIDS[pIdx%PARTY_VIDS.length];v.onerror=()=>vidErr(v);vidPlay(v,$('pTap'));};
   v.onended=()=>{pIdx++;play();};play();
   const close=()=>{v.pause();v.removeAttribute('src');v.load();ov.classList.remove('on');ov.querySelectorAll('.fx').forEach(e=>e.remove());};
   $('pBack').onclick=e=>{e.stopPropagation();sfx('tap');close();};
