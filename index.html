@@ -436,9 +436,22 @@ button{font-family:inherit}
 .evMe .body85{width:18cqw}.evMe .t{font-weight:900;font-size:4.4cqw}.evMe .d{font-size:3.2cqw}.evMe .btn{margin-left:auto;font-size:3.6cqw;padding:1.2cqw 3cqw}
 #mini{position:absolute;inset:0;z-index:20;display:none;flex-direction:column;align-items:center;background:radial-gradient(circle at 50% 40%,#ffd6e5,#d44c8a 55%,#4a0f3a)}
 #mini.on{display:flex}
-.mHead{display:flex;justify-content:space-around;width:100%;padding:16cqw 3cqw 3cqw;color:#fff;font-size:5cqw;font-weight:900;text-shadow:0 0 1cqw #000}
+#mini{overflow-y:auto}#mini.done .mStick{display:none}#mini.done #miniRes{margin-top:1.5cqw}
+#miniBack{position:absolute;left:2cqw;top:2cqw;width:15cqw;display:none;cursor:pointer;z-index:3}#mini.done #miniBack{display:block}
+.mHead{display:flex;justify-content:space-around;width:100%;padding:15cqw 3cqw 1cqw;color:#fff;font-size:5cqw;font-weight:900;text-shadow:0 0 1cqw #000}
 .mHead b{color:#ffd34d;font-size:7cqw}
-#miniGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:3cqw;width:92cqw;margin-top:4cqw}
+#miniGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2cqw;width:84cqw;margin-top:3cqw;background:linear-gradient(#ffe8a0,#e8a812);padding:2cqw;border-radius:4cqw;border:.8cqw solid #fff3c4;box-shadow:0 2cqw 4cqw rgba(0,0,0,.4)}
+.sc{aspect-ratio:1;border-radius:2.4cqw;background:#fffaf0;display:flex;align-items:center;justify-content:center;transition:.2s}
+.sc .ci{width:45%;aspect-ratio:120/240;background:url(img/churu_icons.webp?v=1) no-repeat;background-size:500% 100%}
+.sc.hit{background:#fff3a0;box-shadow:0 0 0 1cqw #e0434f inset;animation:hitP .5s ease-in-out 3}
+@keyframes hitP{50%{transform:scale(1.08)}}
+#miniCv{position:absolute;display:none;touch-action:none;border-radius:2.4cqw;z-index:3}
+.mTitle{font-size:9cqw;font-weight:900;color:#fff4c2;-webkit-text-stroke:.5cqw #8a1050;paint-order:stroke fill;text-shadow:0 .8cqw 0 #3a0628}
+#miniAll{margin-top:4cqw;font-size:4.4cqw}
+#miniRes{margin-top:3cqw;text-align:center;color:#fff;font-size:4.4cqw;font-weight:900;text-shadow:0 0 1cqw #000;line-height:1.6}
+#miniRes .win{font-size:12cqw;color:#ffd34d;-webkit-text-stroke:.5cqw #8a1050;paint-order:stroke fill;animation:pop .6s ease-out}
+#miniRes .lose{font-size:9cqw;color:#c9d0e4}
+#miniRes b{color:#ffd34d;font-size:7cqw}
 .hole{aspect-ratio:1;border-radius:50%;background:radial-gradient(ellipse at 50% 80%,#5a1a3a 40%,#8a2a5a 70%,#c45a8a);box-shadow:inset 0 -2cqw 3cqw rgba(0,0,0,.5);position:relative;overflow:hidden;cursor:pointer}
 .hole .mc{position:absolute;left:8%;width:84%;bottom:-6%;animation:popUp .18s ease-out}
 .hole .mc.zz{filter:grayscale(.6) brightness(.85)}
@@ -447,6 +460,44 @@ button{font-family:inherit}
 .hole.good{box-shadow:0 0 0 1cqw #ffd34d,0 0 4cqw #ffd34d}
 .hole.bad{box-shadow:0 0 0 1cqw #3d6fd0}
 #miniStart{position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-size:14cqw;font-weight:900;color:#fff4c2;-webkit-text-stroke:.8cqw #8a1050;paint-order:stroke fill}
+.cIco{display:inline-block;width:2.6em;height:.55em;background:url(img/nyao_churu.webp?v=1) center/100% 100% no-repeat;vertical-align:middle;margin:0 .15em;border-radius:.1em;filter:drop-shadow(0 .05em .08em rgba(0,0,0,.4))}
+.mStick{width:62cqw;margin-top:1cqw;filter:drop-shadow(0 1cqw 1.4cqw rgba(0,0,0,.45));transform:rotate(-4deg)}
+#evMovie{position:absolute;inset:0;z-index:90;background:#000;display:none;opacity:0;transition:opacity .4s}
+#evMovie.on{display:block}#evMovie.show{opacity:1}
+#evMovie video{width:100%;height:100%;object-fit:cover;display:block}
+#evMovie .skip{position:absolute;right:3cqw;top:3cqw;padding:1.6cqw 4cqw;border-radius:5cqw;background:rgba(0,0,0,.55);color:#fff;font-size:3.6cqw;font-weight:900;border:.4cqw solid rgba(255,255,255,.7)}
+#party{position:absolute;inset:0;z-index:85;background:#000;display:none;overflow:hidden}
+#party.on{display:block}
+#party video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .5s}
+#party .lz{position:absolute;inset:-40%;pointer-events:none;mix-blend-mode:screen;opacity:.35;background:conic-gradient(from 0deg,transparent 0 8%,#ff3cc8 9%,transparent 11% 30%,#3cc8ff 31%,transparent 33% 55%,#ffe03c 56%,transparent 58% 78%,#8a3cff 79%,transparent 81%);animation:lzR 6s linear infinite}
+#party .lz.b{animation-direction:reverse;animation-duration:9s;opacity:.25}
+@keyframes lzR{to{transform:rotate(360deg)}}
+#party .pTop{position:absolute;left:0;right:0;top:0;display:flex;align-items:center;justify-content:space-between;padding:2.5cqw 3cqw;background:linear-gradient(#000a,transparent);z-index:3}
+#party .pTop img{width:15cqw;cursor:pointer}
+#party .pTit{color:#fff;font-weight:900;font-size:5cqw;text-shadow:0 0 1.5cqw #ff3cc8,0 0 3cqw #ff3cc8;letter-spacing:.3cqw}
+#party .pBot{position:absolute;left:0;right:0;bottom:0;display:flex;gap:2.4cqw;justify-content:center;padding:3cqw 3cqw 4cqw;background:linear-gradient(transparent,#000b);z-index:3}
+#party .pBot .btn{font-size:3.6cqw;padding:2cqw 4cqw}
+#party .pHint{position:absolute;left:0;right:0;bottom:17cqw;text-align:center;color:#fff;font-size:3.4cqw;font-weight:900;text-shadow:0 0 1cqw #000;z-index:3;pointer-events:none;animation:pHint 2s ease-in-out infinite}
+@keyframes pHint{50%{opacity:.35}}
+#party .fx{position:absolute;z-index:2;pointer-events:none;font-size:9cqw;animation:fxUp 1.6s ease-out forwards}
+@keyframes fxUp{0%{transform:translate(-50%,-50%) scale(.3);opacity:1}100%{transform:translate(calc(-50% + var(--dx)),-260%) scale(1.3) rotate(var(--r));opacity:0}}
+#party.flash::after{content:'';position:absolute;inset:0;background:radial-gradient(circle,#fff6,transparent 70%);z-index:1;pointer-events:none;animation:fl .3s ease-out}
+@keyframes fl{from{opacity:1}to{opacity:0}}
+.evParty{display:block;margin:0 auto 3cqw;width:fit-content;font-size:4.2cqw!important;background:linear-gradient(90deg,#ff3cc8,#8a3cff,#3cc8ff)!important;color:#fff!important;text-shadow:0 0 1cqw #0008;animation:pHint 2.4s ease-in-out infinite}
+#evHome{letter-spacing:0;position:absolute;right:2cqw;top:50%;transform:translateY(-50%);font-size:3.4cqw;padding:1.4cqw 3cqw;z-index:2}
+.evNav{display:flex;gap:2.4cqw;justify-content:center;margin:5cqw 0 3cqw}.evNav .btn{font-size:3.6cqw;padding:2.2cqw 4cqw}
+#evTabs{display:grid;grid-template-columns:repeat(3,1fr);gap:2.2cqw;margin:1cqw 0 4cqw}
+#evTabs .evT{position:relative;border-radius:3.5cqw;padding:2.4cqw 1cqw 2cqw;text-align:center;cursor:pointer;color:#fff;
+ background:linear-gradient(160deg,#5a1f6e,#2e0d3d);border:.5cqw solid #b77ad0;box-shadow:0 1cqw 0 #1a0624,inset 0 .6cqw 0 #ffffff22;transition:transform .12s}
+#evTabs .evT:active{transform:translateY(.8cqw);box-shadow:0 .2cqw 0 #1a0624}
+#evTabs .evT .ic{font-size:8cqw;line-height:1.1;filter:drop-shadow(0 .5cqw .5cqw #0006)}
+#evTabs .evT .nm{font-size:4.2cqw;font-weight:900;letter-spacing:.2cqw;margin-top:.6cqw}
+#evTabs .evT .sb{font-size:2.6cqw;opacity:.8;margin-top:.3cqw}
+#evTabs .evT.k0{--c1:#ff7bb5;--c2:#d43b84}#evTabs .evT.k1{--c1:#ffb24a;--c2:#d4561e}#evTabs .evT.k2{--c1:#6fd6a0;--c2:#1f8f6a}
+#evTabs .evT.on{background:linear-gradient(160deg,var(--c1),var(--c2));border-color:#ffe58a;box-shadow:0 1cqw 0 #5a1238,0 0 3cqw var(--c1);transform:translateY(-.6cqw)}
+#evTabs .evT.on .ic{animation:evBob 1.2s ease-in-out infinite}
+#evTabs .evT.on::after{content:'';position:absolute;left:50%;bottom:-2.6cqw;transform:translateX(-50%);border:1.6cqw solid transparent;border-top-color:#ffe58a}
+@keyframes evBob{50%{transform:translateY(-1cqw) rotate(-6deg)}}
 </style>
 </head>
 <body>
@@ -507,8 +558,8 @@ button{font-family:inherit}
   <section id="hensei" class="screen panelScreen hide"><div class="head"><img class="back" src="img/btn30_modoru.webp?v=5" alt="戻る">力士編成</div><div class="body" id="hsBody"></div></section>
   <section id="detail" class="screen panelScreen hide"><div class="head"><img class="back" src="img/btn30_modoru.webp?v=5" alt="戻る">力士</div><div class="body" id="dBody"></div></section>
   <section id="shop" class="screen panelScreen hide"><div class="head"><img class="back" src="img/btn30_modoru.webp?v=5" alt="戻る">化粧まわし屋</div><div class="body" id="shBody"></div></section>
-  <section id="event" class="screen hide"><div class="head"><img class="back" src="img/btn30_modoru.webp?v=5" alt="戻る">チュール祭</div><div class="body" id="evBody"></div>
-    <div id="mini"><div class="mHead"><span id="miniLv"></span><span>⏱ <b id="miniTime">20</b></span><span>🍡 <b id="miniScore">0</b></span></div><div id="miniGrid"></div><div id="miniStart"></div></div></section>
+  <section id="event" class="screen hide"><div class="head"><img class="back" src="img/btn30_modoru.webp?v=5" alt="戻る">チュール祭<div class="btn" id="evHome">🏠 ホーム</div></div><div class="body" id="evBody"></div>
+    <div id="mini"><img id="miniBack" src="img/btn30_modoru.webp?v=5" alt="戻る"><div class="mHead"><span id="miniLv"></span></div><img class="mStick" src="img/nyao_churu.webp?v=1" alt=""><div class="mTitle">チュールスクラッチ</div><div id="miniGrid"></div><canvas id="miniCv"></canvas><div class="btn" id="miniAll">ぜんぶけずる</div><div id="miniRes"></div></div></section>
   <section id="keikoSel" class="screen panelScreen hide"><div class="head"><img class="back" src="img/btn30_modoru.webp?v=5" alt="戻る">稽古する力士</div><div class="body" id="ksBody"></div></section>
   <section id="keiko" class="screen panelScreen hide"><div class="head"><img class="back" src="img/btn30_modoru.webp?v=5" alt="戻る">稽古</div><div class="body" id="kBody"></div></section>
   <section id="chankoS" class="screen panelScreen hide"><div class="head"><img class="back" src="img/btn30_modoru.webp?v=5" alt="戻る">ちゃんこ</div><div class="body" id="cBody"></div></section>
@@ -580,6 +631,11 @@ button{font-family:inherit}
   </div>
 
   <div id="modal"><div id="mBox"></div></div>
+  <div id="evMovie"><video id="evVid" muted playsinline webkit-playsinline preload="none"></video><div class="skip" id="evSkip">スキップ ▶</div></div>
+  <div id="party"><video id="pVid" muted playsinline webkit-playsinline preload="none"></video><div class="lz"></div><div class="lz b"></div>
+    <div class="pTop"><img id="pBack" src="img/btn30_modoru.webp?v=5" alt="戻る"><div class="pTit">🎉 チュールパーティー</div><div style="width:15cqw"></div></div>
+    <div class="pHint">画面をタップしてもりあげよう！</div>
+    <div class="pBot"><div class="btn" id="pNext">次の動画 ▶</div><div class="btn gold" id="pBall">🪩 ミラーボール</div></div></div>
   <div id="toast"></div>
 </div></div>
 
@@ -695,7 +751,8 @@ function modal(html,btns=[{t:'とじる'}]){
     b.appendChild(row);$('modal').classList.add('on');});}
 let cur='title';const hist=[];
 function show(id,push=true){
-  if(push&&cur!==id&&cur!=='title')hist.push(cur);
+  if(push&&cur!==id&&cur!=='title'&&cur!=='bout')hist.push(cur);
+  while(hist.length&&hist[hist.length-1]===id)hist.pop();
   document.querySelectorAll('.screen').forEach(e=>e.classList.toggle('hide',e.id!==id));cur=id;screenBgm(id);
   if(id==='home'){hist.length=0;refreshHome();playHome();}else homeRun++;
 }
@@ -893,7 +950,7 @@ function refreshHome(){refreshHUD();refreshNews();$('hName').textContent=S.name;
 const GO={
   gift:openGift,help:openHelp,settings:openSettings,banzuke:()=>{drawBanzuke();show('banzuke');},
   hensei:()=>{renderHensei();show('hensei');},zukan:()=>{renderZukan();show('zukan');},friend:()=>{renderFriend();show('friend');},
-  event:()=>{renderEvent();show('event');},seiseki:()=>{renderSeiseki();show('seiseki');},
+  event:()=>{renderEvent();show('event');evMovie();},seiseki:()=>{renderSeiseki();show('seiseki');},
   heya:()=>{renderHeya();show('heya');},shop:()=>{renderShop();show('shop');},keikoPick:()=>{if(!ownIds().length)return;renderKeikoSel();show('keikoSel');},
   basho:()=>{renderBasho();show('basho');},gacha:()=>{renderGacha();show('gacha');}
 };
@@ -1133,12 +1190,13 @@ const STAGES=[
  {n:'つよい',rank:4,churu:4,gem:20,first:40},
  {n:'すごい',rank:7,churu:7,gem:35,first:80},
  {n:'チュール大王',rank:9,churu:12,gem:60,first:150,boss:true}];
+const CHURU_N=['まぐろかつお','ささみ','まぐろ海鮮','とりささみ','金のチュール'];
 const MINI=[
- {n:'かんたん',time:20,show:1500,gap:850,max:1,sleep:0,mul:1},
- {n:'ふつう',time:20,show:1200,gap:700,max:2,sleep:.15,mul:1.2},
- {n:'むずかしい',time:20,show:950,gap:560,max:2,sleep:.25,mul:1.5},
- {n:'げきむず',time:20,show:780,gap:460,max:3,sleep:.3,mul:2},
- {n:'にゃんこ神',time:20,show:620,gap:380,max:3,sleep:.35,mul:2.5}];
+ {n:'かんたん',kinds:3,win:.75,gold:0,base:3},
+ {n:'ふつう',kinds:4,win:.6,gold:.03,base:5},
+ {n:'むずかしい',kinds:4,win:.48,gold:.05,base:8},
+ {n:'げきむず',kinds:5,win:.38,gold:.07,base:12},
+ {n:'にゃんこ神',kinds:5,win:.3,gold:.1,base:18}];
 const EV_SHOP=[
  {n:'宝石 30',cost:10,f:()=>{S.gem+=30;}},
  {n:'宝石 100',cost:30,f:()=>{S.gem+=100;}},
@@ -1147,18 +1205,41 @@ function ev(){if(!S.ev)S.ev={churu:0,day:'',plays:0,clear:[0,0,0,0,0],best:[0,0,
   const t=today();if(S.ev.day!==t){S.ev.day=t;S.ev.plays=0;}return S.ev;}
 function evOpen(){const d=new Date();const ymd=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;return ymd>=EV_START&&ymd<=EV_END;}
 let evTab=0,evCat=null;
+// ---- チュール祭オープニング動画（1日1回・音なし／曲はevent.mp3）----
+function evMovie(force){if(!evOpen())return;const E=ev();const d=new Date().toDateString();
+  if(!force&&E.movie===d)return;E.movie=d;save();
+  const ov=$('evMovie'),v=$('evVid');let done=false;
+  const end=()=>{if(done)return;done=true;ov.classList.remove('show');setTimeout(()=>{ov.classList.remove('on');v.pause();v.removeAttribute('src');v.load();},420);};
+  v.src='movie/churu_op.mp4?v=2';v.muted=true;v.currentTime=0;ov.classList.add('on');requestAnimationFrame(()=>ov.classList.add('show'));
+  v.onended=end;v.onerror=end;$('evSkip').onclick=()=>{sfx('tap');end();};
+  const p=v.play();if(p&&p.catch)p.catch(end);}
+// ---- チュールパーティー会場（動画は音なし・曲はevent.mp3）----
+const PARTY_VIDS=['movie/churu_op.mp4?v=2','movie/dj_meow.mp4?v=1'];let pIdx=0;
+function openParty(){const ov=$('party'),v=$('pVid');ov.classList.add('on');bgm('event');
+  const play=()=>{v.src=PARTY_VIDS[pIdx%PARTY_VIDS.length];v.muted=true;const p=v.play();if(p&&p.catch)p.catch(()=>{});};
+  v.onended=()=>{pIdx++;play();};play();
+  const close=()=>{v.pause();v.removeAttribute('src');v.load();ov.classList.remove('on');ov.querySelectorAll('.fx').forEach(e=>e.remove());};
+  $('pBack').onclick=e=>{e.stopPropagation();sfx('tap');close();};
+  $('pNext').onclick=e=>{e.stopPropagation();sfx('tap');pIdx++;play();};
+  $('pBall').onclick=e=>{e.stopPropagation();sfx('rare');const r=ov.getBoundingClientRect();for(let i=0;i<14;i++)setTimeout(()=>pFx(Math.random()*r.width,r.height*(.3+Math.random()*.5),['🪩','✨','💖','🐟'][i%4]),i*70);ov.classList.remove('flash');void ov.offsetWidth;ov.classList.add('flash');};
+  ov.onpointerdown=e=>{if(e.target.closest('.btn,img'))return;const r=ov.getBoundingClientRect();pFx(e.clientX-r.left,e.clientY-r.top);sfx('tap');};}
+function pFx(x,y,ch){const ov=$('party');const f=document.createElement('div');f.className='fx';
+  f.textContent=ch||['🐾','💖','🐟','✨','🎵','🍡'][Math.floor(Math.random()*6)];
+  f.style.left=x+'px';f.style.top=y+'px';f.style.setProperty('--dx',(Math.random()*40-20)+'px');f.style.setProperty('--r',(Math.random()*60-30)+'deg');
+  ov.appendChild(f);setTimeout(()=>f.remove(),1700);}
 function renderEvent(){const B=$('evBody');const E=ev();
   if(!evCat||!S.cats[evCat])evCat=S.team[0]||ownIds()[0];
   B.innerHTML=`<div class="evHero"><div class="t">チュール祭</div><div class="s">🐟 ${EV_START.slice(5).replace('-','/')}〜${EV_END.slice(5).replace('-','/')} 期間限定 🐟</div></div>
-   <div class="evChuru">🍡 チュール <b>${E.churu}</b> 本</div>
-   <div class="tabs" id="evTabs"></div><div id="evPane"></div>`;
-  ['くばり','勝ち抜き','交換所'].forEach((t,k)=>{const e=document.createElement('div');e.className='tab'+(k===evTab?' on':'');e.textContent=t;e.onclick=()=>{evTab=k;sfx('tap');renderEvent();};$('evTabs').appendChild(e);});
+   <div class="evChuru"><i class="cIco"></i> チュール <b>${E.churu}</b> 本</div>
+   <div class="btn evParty" id="evPartyB">🎉 チュールパーティー会場へ</div><div id="evTabs"></div><div id="evPane"></div>`;
+  [['🎟️','スクラッチ','チュールを集める'],['🏆','勝ち抜き','宝石をもらう'],['🎁','交換所','まわしと交換']].forEach((t,k)=>{const e=document.createElement('div');e.className=`evT k${k}`+(k===evTab?' on':'');e.innerHTML=`<div class="ic">${t[0]}</div><div class="nm">${t[1]}</div><div class="sb">${t[2]}</div>`;e.onclick=()=>{evTab=k;sfx('tap');renderEvent();};$('evTabs').appendChild(e);});
+  $('evPartyB').onclick=()=>{sfx('tap');openParty();};
   const P=$('evPane');
   if(!evOpen()){P.innerHTML='<div class="evBox"><b>チュール祭は開催期間外だにゃ</b><br>次の開催をおたのしみに！</div>';}
   else if(evTab===0){
-    P.innerHTML=`<div class="evBox"><b>チュールくばり</b>：おなかをすかせた猫をタップしてチュールをあげよう！<br>寝ている猫（💤）はタップしないでね。<br>今日あと <b>${MINI_PLAYS-E.plays}</b> 回あそべる</div><div class="evList" id="miniL"></div>`;
+    P.innerHTML=`<div class="evBox"><b>チュールスクラッチ</b>：指でこすってけずろう！<br>同じチュールが<b>たて・よこ・ななめ</b>に3つそろえば当たり！<br>金のチュールがそろうと3倍！<br>今日あと <b>${MINI_PLAYS-E.plays}</b> 回あそべる</div><div class="evList" id="miniL"></div>`;
     MINI.forEach((m,k)=>{const e=document.createElement('div');e.className='evRow';
-      e.innerHTML=`<div class="lv">${'★'.repeat(k+1)}</div><div><div class="t">${m.n}</div><div class="d">チュール ×${m.mul}　ハイスコア ${E.best[k]}</div></div>`;
+      e.innerHTML=`<div class="lv">${'★'.repeat(k+1)}</div><div><div class="t">${m.n}</div><div class="d">当たり <i class="cIco"></i>${m.base}〜　最高 <i class="cIco"></i>${E.best[k]}</div></div>`;
       const b=document.createElement('div');b.className='btn '+(E.plays>=MINI_PLAYS?'gray':'gold');b.textContent='あそぶ';b.onclick=()=>{if(E.plays>=MINI_PLAYS)return toast('今日はもう遊んだにゃ<br>また明日！');startMini(k);};e.appendChild(b);$('miniL').appendChild(e);});
   }else if(evTab===1){
     P.innerHTML=`<div class="evBox"><b>勝ち抜き場所</b>：チュール ${STAGE_COST} 本で 1 番挑戦。勝つとチュールと宝石がもらえる！体力は使わないよ。<br>はじめて勝つとボーナス宝石！</div>
@@ -1167,61 +1248,83 @@ function renderEvent(){const B=$('evBody');const E=ev();
     me.insertAdjacentHTML('beforeend',`<div><div class="t">${NAMES[evCat-1]}</div><div class="d">${RANKS[c.rank]}　Lv${c.lv}　総合力 ${power(stats(evCat,c))}</div></div>`);
     const cb=document.createElement('div');cb.className='btn';cb.textContent='変える';cb.onclick=()=>{const t=S.team.length?S.team:ownIds();evCat=t[(t.indexOf(evCat)+1)%t.length];renderEvent();};me.appendChild(cb);
     STAGES.forEach((st,k)=>{const e=document.createElement('div');e.className='evRow'+(st.boss?' boss':'');
-      e.innerHTML=`<div class="lv">${k+1}</div><div><div class="t">${st.n}${E.clear[k]?' <span style="color:#7ad0ff">✔</span>':''}</div><div class="d">勝ち：🍡${st.churu}・💎${st.gem}${E.clear[k]?'':`　はじめて：💎+${st.first}`}</div></div>`;
-      const b=document.createElement('div');b.className='btn '+(E.churu>=STAGE_COST?'red':'gray');b.textContent=`🍡${STAGE_COST}`;b.onclick=()=>stageBout(k);e.appendChild(b);$('stgL').appendChild(e);});
+      e.innerHTML=`<div class="lv">${k+1}</div><div><div class="t">${st.n}${E.clear[k]?' <span style="color:#7ad0ff">✔</span>':''}</div><div class="d">勝ち：<i class="cIco"></i>${st.churu}・💎${st.gem}${E.clear[k]?'':`　はじめて：💎+${st.first}`}</div></div>`;
+      const b=document.createElement('div');b.className='btn '+(E.churu>=STAGE_COST?'red':'gray');b.innerHTML=`<i class="cIco"></i>${STAGE_COST}`;b.onclick=()=>stageBout(k);e.appendChild(b);$('stgL').appendChild(e);});
   }else{
     P.innerHTML=`<div class="evBox"><b>交換所</b>：集めたチュールと交換できるよ</div><div class="evList" id="exL"></div>`;
     const L=$('exL');
     KESHO.forEach((k,i)=>{if(k[7]!=='ev')return;const own=S.kesho.includes(i);const e=document.createElement('div');e.className='evRow';
       const im=keshoEl(i);im.style.width='14cqw';e.appendChild(im);
       e.insertAdjacentHTML('beforeend',`<div><div class="t">${k[0].replace('チュール祭・','')}</div><div class="d">化粧まわし・強さ+${k[2]}%</div></div>`);
-      const b=document.createElement('div');b.className='btn '+(own?'gray':'gold');b.textContent=own?'交換ずみ':'🍡50';b.onclick=()=>{if(own)return;evBuy(50,()=>{S.kesho.push(i);},k[0]);};e.appendChild(b);L.appendChild(e);});
+      const b=document.createElement('div');b.className='btn '+(own?'gray':'gold');b.innerHTML=own?'交換ずみ':'<i class="cIco"></i>50';b.onclick=()=>{if(own)return;evBuy(50,()=>{S.kesho.push(i);},k[0]);};e.appendChild(b);L.appendChild(e);});
     EV_SHOP.forEach(x=>{const e=document.createElement('div');e.className='evRow';e.innerHTML=`<div class="lv">🎁</div><div><div class="t">${x.n}</div><div class="d">何回でも交換できる</div></div>`;
-      const b=document.createElement('div');b.className='btn gold';b.textContent=`🍡${x.cost}`;b.onclick=()=>evBuy(x.cost,x.f,x.n);e.appendChild(b);L.appendChild(e);});
+      const b=document.createElement('div');b.className='btn gold';b.innerHTML=`<i class="cIco"></i>${x.cost}`;b.onclick=()=>evBuy(x.cost,x.f,x.n);e.appendChild(b);L.appendChild(e);});
   }
+  const nav=document.createElement('div');nav.className='evNav';
+  const nb1=document.createElement('div');nb1.className='btn gold';nb1.textContent='🐟 イベントホームへ';nb1.onclick=()=>{sfx('tap');evTab=0;renderEvent();B.scrollTop=0;$('event').querySelector('.body').scrollTop=0;};
+  const nb2=document.createElement('div');nb2.className='btn';nb2.textContent='🏠 ホームへ';nb2.onclick=()=>{sfx('tap');show('home');};
+  nav.appendChild(nb1);nav.appendChild(nb2);B.appendChild(nav);
+  $('evHome').onclick=e=>{e.stopPropagation();sfx('tap');show('home');};
   if(!$('event').querySelector('.fl'))for(let i=0;i<12;i++){const f=document.createElement('div');f.className='fl';f.textContent=['🐟','🍡','🐾','🌸'][i%4];
     f.style.left=Math.random()*100+'%';f.style.animationDuration=(6+Math.random()*6)+'s';f.style.animationDelay=(-Math.random()*10)+'s';$('event').appendChild(f);}
 }
 async function evBuy(cost,fn,name){const E=ev();if(E.churu<cost)return toast('チュールが足りないにゃ');
-  const i=await modal(`<h3>交換する？</h3>${name}<br>🍡 ${cost} 本`,[{t:'交換',c:'gold'},{t:'やめる',c:'gray'}]);if(i!==0)return;
+  const i=await modal(`<h3>交換する？</h3>${name}<br><i class="cIco"></i> ${cost} 本`,[{t:'交換',c:'gold'},{t:'やめる',c:'gray'}]);if(i!==0)return;
   E.churu-=cost;fn();save();jingle('gachaN');toast(`${name}<br>を手に入れた！`);renderEvent();}
-function stageBout(k){const E=ev(),st=STAGES[k];if(E.churu<STAGE_COST)return toast('チュールが足りないにゃ<br>「くばり」で集めよう');
+function stageBout(k){const E=ev(),st=STAGES[k];if(E.churu<STAGE_COST)return toast('チュールが足りないにゃ<br>「スクラッチ」で集めよう');
   E.churu-=STAGE_COST;save();const id=evCat,c=S.cats[id];
   let opp=makeOpp(st.rank,Date.now()%1e6);
   if(st.boss){const bc=newCat();bc.lv=45;bc.rank=9;bc.nat=60;for(const s_ of ['pow','spd','wt','tec'])bc.t[s_]=trainCap(100,bc,s_);opp={id:100,c:bc,st:stats(100,bc),name:'チュール大王',style:1};}
   startBout({me:{id,c,name:NAMES[id-1]},opp,bg:BASHO[S.basho.i][2],day:`チュール祭 勝ち抜き ${k+1}「${st.n}」`,
     onEnd:(win)=>{if(!win)return'チュール祭：また挑戦してにゃ';let g=st.gem,txt='';if(!E.clear[k]){E.clear[k]=1;g+=st.first;txt='　はじめてボーナス！';}
-      E.churu+=st.churu;S.gem+=g;save();return`🍡+${st.churu}　💎+${g}${txt}`;}});
+      E.churu+=st.churu;S.gem+=g;save();return`<i class="cIco"></i>+${st.churu}　💎+${g}${txt}`;}});
   waitCutThen(()=>{show('event');renderEvent();});}
-// ---- チュールくばり（ミニゲーム）----
-let MG=null;
+// ---- チュールスクラッチ ----
+const SC_LINES=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+function scratchCard(m){
+  const pick=()=>{if(m.gold&&Math.random()<m.gold)return 4;return Math.floor(Math.random()*Math.min(m.kinds,4));};
+  const hasLine=c=>SC_LINES.some(L=>c[L[0]]===c[L[1]]&&c[L[1]]===c[L[2]]);
+  let c;
+  if(Math.random()<m.win){c=[];for(let i=0;i<9;i++)c.push(pick());const L=SC_LINES[Math.floor(Math.random()*8)];
+    const sym=(m.gold&&Math.random()<m.gold*2)?4:Math.floor(Math.random()*Math.min(m.kinds,4));L.forEach(i=>c[i]=sym);}
+  else{let n=0;do{c=[];for(let i=0;i<9;i++)c.push(pick());n++;}while(hasLine(c)&&n<200);}
+  return c;}
 async function startMini(k){const m=MINI[k],E=ev();E.plays++;save();
-  const ov=$('mini');ov.classList.add('on');const g=$('miniGrid');g.innerHTML='';
-  const holes=[];for(let i=0;i<9;i++){const h=document.createElement('div');h.className='hole';g.appendChild(h);holes.push(h);}
-  MG={k,score:0,end:Date.now()+m.time*1000,run:true};
-  $('miniLv').textContent=`${'★'.repeat(k+1)} ${m.n}`;
-  const upd=()=>{$('miniScore').textContent=MG.score;$('miniTime').textContent=Math.max(0,Math.ceil((MG.end-Date.now())/1000));};
-  $('miniStart').style.display='flex';$('miniStart').textContent='よーい…';await sleep(800);$('miniStart').textContent='スタート！';sfx('don');await sleep(500);$('miniStart').style.display='none';
-  MG.end=Date.now()+m.time*1000;upd();
-  const pool=ownIds().length>3?ownIds():[1,2,3,4,5,6,7,8,9,10];
-  const tick=setInterval(upd,200);
-  const spawn=async()=>{while(MG&&MG.run&&Date.now()<MG.end){
-      const busy=holes.filter(h=>h.dataset.on).length;
-      if(busy<m.max){const free=holes.filter(h=>!h.dataset.on);const h=free[Math.floor(Math.random()*free.length)];
-        const sleepy=Math.random()<m.sleep;h.dataset.on='1';h.innerHTML='';const cc=catBody(pool[Math.floor(Math.random()*pool.length)]);cc.className+=' mc'+(sleepy?' zz':'');h.appendChild(cc);
-        h.insertAdjacentHTML('beforeend',sleepy?'<div class="bub">💤</div>':'<div class="bub">🍡?</div>');
-        let done=false;
-        h.onclick=()=>{if(done||!MG||!MG.run)return;done=true;
-          if(sleepy){MG.score=Math.max(0,MG.score-2);h.classList.add('bad');sfx('lose');}else{MG.score++;h.classList.add('good');sfx('tap');}
-          upd();setTimeout(()=>{h.classList.remove('good','bad');h.innerHTML='';delete h.dataset.on;h.onclick=null;},220);};
-        setTimeout(()=>{if(!done){done=true;h.innerHTML='';delete h.dataset.on;h.onclick=null;}},m.show*(0.85+Math.random()*.3));}
-      await sleep(m.gap*(0.7+Math.random()*.6));}};
-  spawn();
-  while(Date.now()<MG.end)await sleep(100);
-  MG.run=false;clearInterval(tick);upd();holes.forEach(h=>{h.innerHTML='';h.onclick=null;});
-  const got=Math.floor(MG.score*m.mul/2);E.churu+=got;let best='';if(MG.score>E.best[k]){E.best[k]=MG.score;best='<br><b style="color:#c0392b">ハイスコア更新！</b>';}save();jingle(got>0?'chanko':'lose');
-  await modal(`<h3>おしまい！</h3>あげたチュール <b>${MG.score}</b> 本${best}<br>ごほうび：🍡 <b>${got}</b> 本`,[{t:'OK',c:'gold'}]);
-  ov.classList.remove('on');MG=null;renderEvent();}
+  const ov=$('mini');ov.classList.remove('done');ov.classList.add('on');ov.scrollTop=0;$('miniLv').textContent=`${'★'.repeat(k+1)} ${m.n}`;
+  const card=scratchCard(m);const g=$('miniGrid');g.innerHTML='';
+  card.forEach(v=>{const c=document.createElement('div');c.className='sc';c.innerHTML=`<div class="ci" style="background-position:${v/4*100}% 0"></div>`;g.appendChild(c);});
+  $('miniRes').innerHTML='';$('miniAll').style.display='';
+  const cv=$('miniCv'),ctx=cv.getContext('2d');const r=g.getBoundingClientRect();const dpr=window.devicePixelRatio||1;
+  cv.width=r.width*dpr;cv.height=r.height*dpr;cv.style.width=r.width+'px';cv.style.height=r.height+'px';cv.style.left=g.offsetLeft+'px';cv.style.top=g.offsetTop+'px';cv.style.display='block';
+  const W=cv.width,H=cv.height;const gr=ctx.createLinearGradient(0,0,W,H);gr.addColorStop(0,'#d9d9e3');gr.addColorStop(.5,'#ffffff');gr.addColorStop(1,'#b8b8c8');
+  ctx.globalCompositeOperation='source-over';ctx.fillStyle=gr;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='rgba(150,80,130,.55)';ctx.font=`900 ${W/13}px sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';
+  for(let i=0;i<9;i++){const x=(i%3+.5)*W/3,y=(Math.floor(i/3)+.5)*H/3;ctx.fillText('🐾',x,y-W/30);ctx.font=`900 ${W/20}px sans-serif`;ctx.fillText('けずる',x,y+W/16);ctx.font=`900 ${W/13}px sans-serif`;}
+  ctx.globalCompositeOperation='destination-out';
+  let done=false,down=false,last=null;
+  const pos=e=>{const b=cv.getBoundingClientRect();const t=e.touches?e.touches[0]:e;return[(t.clientX-b.left)*dpr,(t.clientY-b.top)*dpr];};
+  const rub=(a,b)=>{ctx.lineWidth=W/9;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();};
+  let cnt=0;
+  const check=()=>{if(done)return;const d=ctx.getImageData(0,0,W,H).data;let ok=0;
+    for(let i=0;i<9;i++){let clear=0,tot=0;const x0=Math.floor((i%3)*W/3),y0=Math.floor(Math.floor(i/3)*H/3);
+      for(let y=y0+6;y<y0+H/3-6;y+=6)for(let x=x0+6;x<x0+W/3-6;x+=6){tot++;if(d[(y*W+x)*4+3]<40)clear++;}
+      if(clear/tot>.55)ok++;}
+    if(ok===9)finish();};
+  const st=e=>{if(done)return;down=true;last=pos(e);rub(last,last);e.preventDefault();};
+  const mv=e=>{if(!down||done)return;const p=pos(e);rub(last,p);last=p;e.preventDefault();if(++cnt%8===0){sfx('tap');check();}};
+  const en=()=>{down=false;check();};
+  cv.onmousedown=st;cv.onmousemove=mv;window.addEventListener('mouseup',en);cv.ontouchstart=st;cv.ontouchmove=mv;cv.ontouchend=en;
+  $('miniAll').onclick=()=>{if(done)return;ctx.fillRect(0,0,W,H);finish();};
+  async function finish(){done=true;ov.classList.add('done');$('miniBack').onclick=()=>{sfx('tap');ov.classList.remove('on','done');renderEvent();};ctx.fillRect(0,0,W,H);cv.style.display='none';$('miniAll').style.display='none';window.removeEventListener('mouseup',en);
+    const hits=SC_LINES.filter(L=>card[L[0]]===card[L[1]]&&card[L[1]]===card[L[2]]);
+    let got=0;hits.forEach(L=>{got+=m.base*(card[L[0]]===4?3:1);L.forEach(i=>g.children[i].classList.add('hit'));});
+    E.churu+=got;let best='';if(got>E.best[k]){E.best[k]=got;}save();
+    if(got){jingle(hits.some(L=>card[L[0]]===4)?'gachaR':'win');$('miniRes').innerHTML=`<div class="win">当たり！</div>${hits.map(L=>CHURU_N[card[L[0]]]).join('・')} がそろった<br><i class="cIco"></i> <b>${got}</b> 本ゲット！`;}
+    else{jingle('lose');$('miniRes').innerHTML='<div class="lose">ざんねん…</div>そろわなかったにゃ';}
+    const b=document.createElement('div');b.className='btn gold';b.textContent='OK';b.textContent='🐟 イベントホームへ';b.onclick=()=>{sfx('tap');ov.classList.remove('on','done');evTab=0;renderEvent();};
+    const h=document.createElement('div');h.className='btn';h.textContent='🏠 ホームへ';h.onclick=()=>{sfx('tap');ov.classList.remove('on','done');show('home');};
+    const w=document.createElement('div');w.className='mBtns';w.appendChild(b);w.appendChild(h);$('miniRes').appendChild(w);}
+}
 // ---- 稽古する力士をえらぶ ----
 function renderKeikoSel(){const B=$('ksBody');tickHP();
   B.innerHTML=`<div class="sum">稽古させる力士をえらんでね　体力 ${S.hp}/${HP_MAX}</div>`;sortTabs(B,renderKeikoSel);
