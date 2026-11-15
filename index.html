@@ -500,6 +500,19 @@ button{font-family:inherit}
 @keyframes evBob{50%{transform:translateY(-1cqw) rotate(-6deg)}}
 .vTap{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:4;display:none;padding:4cqw 7cqw;border-radius:8cqw;background:rgba(0,0,0,.6);color:#fff;font-size:5cqw;font-weight:900;border:.5cqw solid #fff;white-space:nowrap}
 .vTap.on{display:block}
+.lbH{font-size:6.4cqw;font-weight:900;color:#8a1050;text-align:center;margin-bottom:.5cqw}
+.lbS{text-align:center;font-size:3.2cqw;color:#5a3a20;margin-bottom:3cqw}
+.lbG{display:grid;grid-template-columns:repeat(4,1fr);gap:2cqw;margin-bottom:2cqw}
+.lbC{position:relative;border-radius:2.6cqw;background:#fffaf0;border:.5cqw solid #e2c88f;padding:1.6cqw .6cqw 1.4cqw;text-align:center;min-height:21cqw}
+.lbC .d{font-size:2.6cqw;font-weight:900;color:#a0784a}.lbC .i{font-size:7cqw;line-height:1.3}.lbC .n{font-size:2.9cqw;font-weight:900;color:#3b1a4f}
+.lbC.big{grid-column:span 2;background:linear-gradient(160deg,#fff2c4,#ffd76a);border-color:#e8a020}
+.lbC.got{opacity:.55}.lbC.got::after,.lbC.now.stamp::after{content:'';position:absolute;left:50%;top:50%;width:13cqw;height:13cqw;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Cg%20fill%3D%27%23e0245e%27%3E%3Cellipse%20cx%3D%2750%27%20cy%3D%2766%27%20rx%3D%2722%27%20ry%3D%2719%27/%3E%3Cellipse%20cx%3D%2722%27%20cy%3D%2742%27%20rx%3D%279%27%20ry%3D%2712%27%20transform%3D%27rotate%28-20%2022%2042%29%27/%3E%3Cellipse%20cx%3D%2739%27%20cy%3D%2725%27%20rx%3D%279%27%20ry%3D%2712%27%20transform%3D%27rotate%28-6%2039%2025%29%27/%3E%3Cellipse%20cx%3D%2761%27%20cy%3D%2725%27%20rx%3D%279%27%20ry%3D%2712%27%20transform%3D%27rotate%286%2061%2025%29%27/%3E%3Cellipse%20cx%3D%2778%27%20cy%3D%2742%27%20rx%3D%279%27%20ry%3D%2712%27%20transform%3D%27rotate%2820%2078%2042%29%27/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;opacity:.85;transform:translate(-50%,-50%) rotate(-15deg);filter:drop-shadow(0 0 .3cqw #fff)}
+.lbC.now{border-color:#e83c8a;box-shadow:0 0 0 .6cqw #ff9cc8,0 0 3cqw #ff5aa5;animation:lbPulse 1s ease-in-out infinite}
+.lbC.now.stamp{animation:none}.lbC.now.stamp::after{animation:lbStamp .45s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes lbPulse{50%{transform:scale(1.05)}}
+@keyframes lbStamp{0%{transform:translate(-50%,-50%) scale(3) rotate(-15deg);opacity:0}100%{transform:translate(-50%,-50%) scale(1) rotate(-15deg);opacity:1}}
+.lbEv{text-align:center;font-size:3.3cqw;font-weight:900;color:#c0306f;background:#ffe3ef;border-radius:2cqw;padding:1.4cqw;margin-bottom:1cqw}
+.lbI{height:7.5cqw;width:auto;vertical-align:middle}#toast .lbI{height:5cqw}
 </style>
 </head>
 <body>
@@ -756,7 +769,7 @@ function show(id,push=true){
   if(push&&cur!==id&&cur!=='title'&&cur!=='bout')hist.push(cur);
   while(hist.length&&hist[hist.length-1]===id)hist.pop();
   document.querySelectorAll('.screen').forEach(e=>e.classList.toggle('hide',e.id!==id));cur=id;screenBgm(id);
-  if(id==='home'){hist.length=0;refreshHome();playHome();}else homeRun++;
+  if(id==='home'){hist.length=0;refreshHome();playHome();setTimeout(loginBonus,700);}else homeRun++;
 }
 function goBack(){const p=hist.pop()||'home';show(p,false);if(RENDER[p])RENDER[p]();}
 document.querySelectorAll('.back').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();sfx('tap');goBack();}));
@@ -945,6 +958,23 @@ hCat.addEventListener('click',e=>{e.stopPropagation();hCat.classList.remove('boi
   for(let i=0;i<3;i++){const h=document.createElement('div');h.className='heart';h.textContent='❤';h.style.color=['#ff6fa3','#ff9cc2','#e8457a'][i];
     h.style.left=(40+rnd()*20)+'%';h.style.top=(42+rnd()*8)+'%';h.style.animationDelay=(i*.12)+'s';$('home').appendChild(h);setTimeout(()=>h.remove(),1500);}});
 function topRank(){let r=0;Object.values(S.cats).forEach(c=>r=Math.max(r,c.rank));return r;}
+// ---- ログインボーナス（7日でひとまわり・休んでもリセットなし）----
+const LOGIN=[{t:'coin',n:500},{t:'gem',n:20},{t:'coin',n:1000},{t:'hp',n:0},{t:'gem',n:30},{t:'coin',n:2000},{t:'gem',n:100}];
+const LB_IC={coin:'<img class="lbI" src="img/btn41_coin.webp?v=5" alt="">',gem:'<img class="lbI" src="img/btn42_gem.webp?v=5" alt="">',hp:'<img class="lbI" src="img/btn44_lightning.webp?v=5" alt="">'};
+function lbName(r){return r.t==='hp'?'体力MAX':(r.t==='coin'?'コイン ':'宝石 ')+fmt(r.n);}
+let lbBusy=false;
+async function loginBonus(force){if(lbBusy||cur!=='home'||$('modal').classList.contains('on'))return;
+  if(!S.login)S.login={last:'',day:0,total:0};const L=S.login,t=today();
+  if(!force&&L.last===t)return;
+  lbBusy=true;const day=L.day%7;const r=LOGIN[day];const evOn=typeof evOpen==='function'&&evOpen();
+  L.last=t;L.day=day+1;L.total=(L.total||0)+1;
+  if(r.t==='coin')S.coin+=r.n;else if(r.t==='gem')S.gem+=r.n;else{S.hp=Math.max(S.hp,HP_MAX);S.hpAt=Date.now();}
+  if(evOn){ev().churu+=5;}
+  save();
+  let cells='';LOGIN.forEach((x,i)=>{cells+=`<div class="lbC${i===6?' big':''}${i<day?' got':''}${i===day?' now':''}" data-i="${i}"><div class="d">${i+1}日目</div><div class="i">${LB_IC[x.t]}</div><div class="n">${lbName(x)}</div></div>`;});
+  const p=modal(`<div class="lbH">🎁 ログインボーナス</div><div class="lbS">今日で <b>${L.total}</b> 日目のログインだにゃ！</div><div class="lbG">${cells}</div>${evOn?'<div class="lbEv">🐟 チュール祭ボーナス：チュール +5本</div>':''}`,[{t:'うけとる',c:'gold'}]);
+  setTimeout(()=>{const c=document.querySelector('.lbC.now');if(c){c.classList.add('stamp');sfx('don');setTimeout(()=>jingle(day===6?'gachaR':'gachaN'),250);}},500);
+  await p;refreshHUD();toast(`${LB_IC[r.t]} ${lbName(r)} をもらった！${evOn?'<br>🐟 チュール +5本':''}`);lbBusy=false;}
 function refreshHome(){refreshHUD();refreshNews();$('hName').textContent=S.name;$('hRank').textContent='最高位 '+RANKS[topRank()];
   const b=BASHO[S.basho.i];$('bashoTag').innerHTML=`${b[0]}　${S.basho.day>=7?'千秋楽まで終了':DAYN[S.basho.day]}`+(rookie()?`<br><span style="color:#7ad0ff;font-size:2.9cqw">🔰新弟子期間 あと${ROOKIE_BASHO-(S.stats.bashos||0)}場所：経験2倍・稽古の体力2・取組は体力0</span>`:'');}
 
