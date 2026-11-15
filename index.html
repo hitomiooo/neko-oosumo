@@ -525,6 +525,9 @@ button{font-family:inherit}
 .dmR .btn{font-size:3.4cqw;padding:1.8cqw 3cqw;white-space:nowrap}
 .dmR.done{opacity:.6}.dmR.all{background:linear-gradient(160deg,#fff2c4,#ffd76a);border-color:#e8a020}
 .dmI{height:5cqw;width:auto;vertical-align:middle}
+.rlL{max-height:58cqh;overflow-y:auto;text-align:left}
+.rlR{display:flex;gap:2.4cqw;padding:1.8cqw 1cqw;border-bottom:.3cqw dashed #d8c39a;font-size:3.3cqw;color:#3b1a4f}
+.rlR .dt{flex:none;width:19cqw;color:#8a6a40;font-size:3cqw;padding-top:.3cqw}.rlR .tx{flex:1;min-width:0;line-height:1.5}
 </style>
 </head>
 <body>
@@ -987,11 +990,16 @@ async function loginBonus(force){if(lbBusy||cur!=='home'||!S.started&&!Object.ke
   L.last=t;L.day=day+1;L.total=(L.total||0)+1;
   if(r.t==='coin')S.coin+=r.n;else if(r.t==='gem')S.gem+=r.n;else{S.hp=Math.max(S.hp,HP_MAX);S.hpAt=Date.now();}
   if(evOn){ev().churu+=5;}
+  rlog(`ログインボーナス ${day+1}日目`,plainRw(LB_IC[r.t])+' '+lbName(r)+(evOn?'・チュール5本':''));
   save();
   let cells='';LOGIN.forEach((x,i)=>{cells+=`<div class="lbC${i===6?' big':''}${i<day?' got':''}${i===day?' now':''}" data-i="${i}"><div class="d">${i+1}日目</div><div class="i">${LB_IC[x.t]}</div><div class="n">${lbName(x)}</div></div>`;});
   const p=modal(`<div class="lbH">🎁 ログインボーナス</div><div class="lbS">今日で <b>${L.total}</b> 日目のログインだにゃ！</div><div class="lbG">${cells}</div>${evOn?'<div class="lbEv">🐟 チュール祭ボーナス：チュール +5本</div>':''}`,[{t:'うけとる',c:'gold'}]);
   setTimeout(()=>{const c=document.querySelector('.lbC.now');if(c){c.classList.add('stamp');sfx('don');setTimeout(()=>jingle(day===6?'gachaR':'gachaN'),250);}},500);
-  await p;refreshHUD();toast(`${LB_IC[r.t]} ${lbName(r)} をもらった！${evOn?'<br>🐟 チュール +5本':''}`);lbBusy=false;}
+  await p;refreshHUD();toast(`${LB_IC[r.t]} ${lbName(r)} をもらった！${evOn?'<br>🐟 チュール +5本':''}`);lbBusy=false;
+  setTimeout(dailyIntro,1200);}
+// ログボのあと、その日はじめてなら「今日の特訓」を見せる
+function dailyIntro(){const D=dm();if(D.shown||cur!=='home')return;if($('modal').classList.contains('on')){setTimeout(dailyIntro,1500);return;}
+  D.shown=1;save();openDaily();}
 // ---- 今日の特訓（デイリー）----
 const DAILY=[{k:'keiko',n:'稽古を3回する',g:3,r:{gem:3}},{k:'bout',n:'取組を2回する',g:2,r:{gem:3}},{k:'chanko',n:'ちゃんこを1回食べる',g:1,r:{coin:500}},{k:'friend',n:'手合せを1回する',g:1,r:{gem:2}}];
 const DAILY_ALL={gem:2};  // 宝石は1日あわせて10個
@@ -1011,8 +1019,8 @@ function openDaily(){const D=dm();const allGot=DAILY.every(m=>D.got[m.k]);
     <div class="btn ${D.all?'gray':allGot?'gold':'gray'}" data-k="all">${D.all?'うけとった':allGot?'うけとる':'まだ'}</div></div>`;
   modal(h,[{t:'とじる'}]);
   $('mBox').querySelectorAll('.dmR .btn').forEach(b=>b.onclick=()=>{const k=b.dataset.k;const D=dm();
-    if(k==='all'){if(D.all||!DAILY.every(m=>D.got[m.k]))return;D.all=1;giveRw(DAILY_ALL);jingle('gachaR');toast('ぜんぶ達成ボーナス！<br>'+rwHtml(DAILY_ALL));}
-    else{const m=DAILY.find(x=>x.k===k);if(D.got[k]||(D.c[k]||0)<m.g)return;D.got[k]=1;giveRw(m.r);jingle('gachaN');toast(rwHtml(m.r)+' をもらった！');}
+    if(k==='all'){if(D.all||!DAILY.every(m=>D.got[m.k]))return;D.all=1;giveRw(DAILY_ALL);rlog('今日の特訓 ぜんぶ達成',plainRw(rwHtml(DAILY_ALL)));jingle('gachaR');toast('ぜんぶ達成ボーナス！<br>'+rwHtml(DAILY_ALL));}
+    else{const m=DAILY.find(x=>x.k===k);if(D.got[k]||(D.c[k]||0)<m.g)return;D.got[k]=1;giveRw(m.r);rlog('今日の特訓「'+m.n+'」',plainRw(rwHtml(m.r)));jingle('gachaN');toast(rwHtml(m.r)+' をもらった！');}
     save();refreshHUD();refreshDailyDot();openDaily();});}
 function refreshHome(){refreshHUD();refreshDailyDot();refreshNews();$('hName').textContent=S.name;$('hRank').textContent='最高位 '+RANKS[topRank()];
   const b=BASHO[S.basho.i];$('bashoTag').innerHTML=`${b[0]}　${S.basho.day>=7?'千秋楽まで終了':DAYN[S.basho.day]}`+(rookie()?`<br><span style="color:#7ad0ff;font-size:2.9cqw">🔰新弟子期間 あと${ROOKIE_BASHO-(S.stats.bashos||0)}場所：経験2倍・稽古の体力2・取組は体力0</span>`:'');}
@@ -1495,7 +1503,7 @@ const ACTLINE=[['ぐいぐい押し込む！','突っ張りの連打！','頭か
 // opts:{me:{id,c,name},opp:{id,c,name,style},bg,day,auto,seed,onEnd}
 // 取組の早送り（その1番だけ）
 function bw(ms){return new Promise(r=>{const t0=Date.now();const iv=setInterval(()=>{const lim=(BT&&BT.fast)?Math.min(ms,ms*.15):ms;if(Date.now()-t0>=lim){clearInterval(iv);r();}},30);});}
-function skipBout(){if(!BT||BT.over||BT.fast)return;BT.fast=true;$('tachi').classList.remove('on');$('bSkip').classList.add('on');
+function skipBout(){if(!BT||BT.over||BT.fast||BT.live)return;BT.fast=true;$('tachi').classList.remove('on');$('bSkip').classList.add('on');
   if(!BT.auto&&!BT.scripted){BT.auto=true;$('bCtrl').style.visibility='hidden';autoRun();}sfx('tap');}
 async function startBout(o){
   BT={...o,g:0,n:0,busy:true};
@@ -1507,12 +1515,13 @@ async function startBout(o){
   $('bLog').textContent='';setGauge(0);$('kimaCard').classList.remove('on');
   $('bCtrl').style.visibility=o.auto?'hidden':'visible';
   show('bout');
-  $('bSkip').classList.remove('on');
+  $('bSkip').classList.remove('on');$('bSkip').style.display='';$('bAuto').style.display='';
   await bw(500);if(!BT.fast){$('tachi').classList.add('on');const td=$('tachi').querySelector('div');td.style.animation='none';void td.offsetWidth;td.style.animation='';sfx('don');}
   await bw(1500);$('tachi').classList.remove('on');BT.busy=false;
   if(o.auto)autoRun();
 }
 async function step(a){
+  if(BT&&BT.live){if(BT.pick)BT.pick(a);return;}
   if(!BT||BT.busy||BT.done)return;BT.busy=true;const R=BT.R||rnd;
   const b=aiPick(BT.opp.style,R);BT.n++;
   const d=exchange(a,b,BT.stM,BT.stO,BT.me.c.nat,BT.opp.c.nat,R,BT.me.c,BT.opp.c);
@@ -1528,7 +1537,7 @@ async function autoRun(){const R=BT.R||rnd;while(BT&&!BT.done){if(!BT.busy)await
 document.querySelectorAll('#bAct .btn').forEach(b=>b.addEventListener('click',()=>step(+b.dataset.a)));
 $('bSkip').onclick=e=>{e.stopPropagation();skipBout();};
 $('tachi').onclick=()=>skipBout();
-$('bAuto').onclick=()=>{if(!BT||BT.done)return;BT.auto=true;$('bCtrl').style.visibility='hidden';autoRun();};
+$('bAuto').onclick=()=>{if(!BT||BT.done||BT.live)return;BT.auto=true;$('bCtrl').style.visibility='hidden';autoRun();};
 async function finish(win){
   BT.done=true;if(!friendMode&&BT.day!=='運営テスト')dailyAdd('bout');const R=BT.R||rnd;
   const learned=win?BT.me.c.waza:BT.opp.c.waza;
@@ -1636,7 +1645,7 @@ function renderSeiseki(){const t=S.stats;const learned=new Set();Object.values(S
 function today(){const d=new Date();return`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;}
 async function openGift(){const oy=Math.floor(rnd()*20);
   if(S.gift===today())return modal(`<h3>贈り物</h3><div style="width:36cqw;margin:0 auto">${oyaHTML(oy)}</div>今日の贈り物はもう受け取ったにゃ。<br>また明日来てね！`);
-  S.gift=today();S.coin+=300;S.gem+=30;tickHP();S.hp=HP_MAX;save();refreshHUD();sfx('rare');
+  S.gift=today();S.coin+=300;S.gem+=30;tickHP();S.hp=HP_MAX;rlog('親方の贈り物','🪙コイン 300・💎宝石 30・⚡体力満タン');save();refreshHUD();sfx('rare');
   modal(`<h3>今日の贈り物</h3><div style="width:36cqw;margin:0 auto">${oyaHTML(oy)}</div>親方からの差し入れだにゃ！<br><b>コイン300・宝石30</b><br>体力も満タンになった！`,[{t:'ごっつぁんです',c:'gold'}]);}
 const NEWS_VER=2;
 function refreshNews(){const b=$('newsBtn');if(b)b.classList.toggle('read',(S.newsSeen||0)>=NEWS_VER);b.src=(S.newsSeen||0)>=NEWS_VER?'img/btn24b_oshirase_read.webp?v=2':'img/btn24_oshirase.webp?v=5';}
@@ -1649,13 +1658,20 @@ function openHelp(){S.newsSeen=NEWS_VER;save();refreshNews();modal(`<h3>あそ�
   ・<b>化粧まわし屋</b>：コインで化粧まわしを買って力士につけると、取組で強くなる（勝ちやすくなる）。1つの化粧まわしは1匹がつけられる。<br>
   ・<b>新弟子期間</b>：はじめの3場所は経験2倍、稽古の体力2、本場所の取組は体力を使わない。<br>
   ・体力は2分で1回復。<b>贈り物</b>は1日1回。</div>`);}
+// ---- 受け取り履歴（設定から見られる・最新100件）----
+function rlog(src,txt){if(!S.rlog)S.rlog=[];S.rlog.unshift({t:Date.now(),s:src,r:txt});if(S.rlog.length>100)S.rlog.length=100;}
+function plainRw(h){return String(h).replace(/<img[^>]*btn41_coin[^>]*>/g,'🪙').replace(/<img[^>]*btn42_gem[^>]*>/g,'💎').replace(/<img[^>]*btn44_lightning[^>]*>/g,'⚡').replace(/<[^>]+>/g,'');}
+function openRlog(){const L=S.rlog||[];const pad=n=>String(n).padStart(2,'0');
+  const rows=L.length?L.map(x=>{const d=new Date(x.t);return`<div class="rlR"><div class="dt">${d.getMonth()+1}/${d.getDate()} ${pad(d.getHours())}:${pad(d.getMinutes())}</div><div class="tx"><b>${x.s}</b><br>${x.r}</div></div>`;}).join(''):'<div style="text-align:center;padding:6cqw 0;color:#7a5a30">まだ受け取った記録はないにゃ</div>';
+  modal(`<h3>受け取り履歴</h3><div style="text-align:center;margin-bottom:2cqw;font-size:3cqw;color:#8a6a40">新しい順・最新100件まで</div><div class="rlL">${rows}</div>`,[{t:'設定にもどる',c:'gold'},{t:'とじる',c:'gray'}]).then(i=>{if(i===0)openSettings();});}
 async function openSettings(){const i=await modal(`<h3>設定</h3>部屋の名前<br><input class="inp" id="nmIn" maxlength="10" value="${S.name}"><br><br>効果音：<b>${S.sound?'オン':'オフ'}</b>　音楽：<b>${S.bgm?'オン':'オフ'}</b><br><span style="font-size:3.2cqw">クラウド保存：${cloudOK?'<b style="color:#1d6a37">オン</b>':'オフ（この画面では使えません）'}</span>`,
-  [{t:'保存',c:'gold'},{t:S.sound?'効果音をオフ':'効果音をオン'},{t:S.bgm?'音楽をオフ':'音楽をオン'},{t:'データを消す',c:'red'},{t:'とじる',c:'gray'}]);
+  [{t:'保存',c:'gold'},{t:S.sound?'効果音をオフ':'効果音をオン'},{t:S.bgm?'音楽をオフ':'音楽をオン'},{t:'受け取り履歴',c:'blue'},{t:'データを消す',c:'red'},{t:'とじる',c:'gray'}]);
   const v=document.getElementById('nmIn')?document.getElementById('nmIn').value:S.name;
   if(i===0){S.name=(v||'にゃんこ部屋').slice(0,10);save();refreshHome();toast('保存したにゃ');}
   if(i===1){S.sound=!S.sound;save();openSettings();}
   if(i===2){S.bgm=!S.bgm;save();const c=curBgm;curBgm='_';bgm(S.bgm?(SCREEN_BGM[cur]||'home'):null);openSettings();}
-  if(i===3){const j=await modal('<h3>本当に消す？</h3>集めた猫も育てた記録もぜんぶ消えます。',[{t:'消す',c:'red'},{t:'やめる',c:'gray'}]);if(j===0){localStorage.removeItem(KEY);location.reload();}}}
+  if(i===3){openRlog();}
+  if(i===4){const j=await modal('<h3>本当に消す？</h3>集めた猫も育てた記録もぜんぶ消えます。',[{t:'消す',c:'red'},{t:'やめる',c:'gray'}]);if(j===0){localStorage.removeItem(KEY);location.reload();}}}
 
 // ================= 手合せ（友だち対戦・Firebase）=================
 const FB_CONF={apiKey:"AIzaSyAjFsULSU8JfpdTSGaWvx3gIJu1pn580aA",authDomain:"neko-oosumo.firebaseapp.com",databaseURL:"https://neko-oosumo-default-rtdb.asia-southeast1.firebasedatabase.app",projectId:"neko-oosumo",storageBucket:"neko-oosumo.firebasestorage.app",messagingSenderId:"228949454246",appId:"1:228949454246:web:881df8f72b939bd1ff3367"};
@@ -1710,32 +1726,73 @@ function fromData(d){const c=newCat();Object.assign(c,{lv:d.lv,star:d.star||0,na
 async function runFriend(v,host){
   friendMode=true;
   const mine=host?v.host:v.guest,their=host?v.guest:v.host;const R=mulberry(v.seed);
-  await modal(`<h3>手合せ はじまり！</h3><b>${mine.name}</b><br>VS<br><b>${their.name}</b><br><span class="small" style="color:#5a1d7a">3番勝負・取組はおまかせで進むよ</span>`,[{t:'はっけよい',c:'gold'}]);
-  let w=0,l=0;
+  await modal(`<h3>手合せ はじまり！</h3><b>${mine.name}</b><br>VS<br><b>${their.name}</b><br><span class="small" style="color:#5a1d7a">3番勝負・自分で技をえらんで戦うよ<br>10秒えらばないと「押す」になるにゃ</span>`,[{t:'はっけよい',c:'gold'}]);
+  let w=0,l=0;const ref=FR&&FR.ref;
   for(let i=0;i<3;i++){const hm=v.host.team[i%v.host.team.length],gm=v.guest.team[i%v.guest.team.length];
-    const hc=fromData(hm),gc=fromData(gm);
-    // 同じ乱数で同じ結果になるように、ホスト目線で計算して表示だけ入れかえる
-    const res=await new Promise(done=>{
-      const meD=host?hm:gm,opD=host?gm:hm,meC=host?hc:gc,opC=host?gc:hc;
-      const r=simBout(hm.id,hc,gm.id,gc,R);  // true=ホスト勝ち
-      const meWin=host?r.win:!r.win;
-      playScripted({me:{id:meD.id,c:meC,name:NAMES[meD.id-1]},opp:{id:opD.id,c:opC,name:NAMES[opD.id-1],style:styleOf(opD.id)},
-        bg:BASHO[(v.seed+i)%6][2],day:`手合せ 第${i+1}番　${mine.name} 対 ${their.name}`,script:r,meIsHost:host,meWin,done});});
+    const hc=fromData(hm),gc=fromData(gm);const meD=host?hm:gm,opD=host?gm:hm,meC=host?hc:gc,opC=host?gc:hc;
+    const res=await playLive({ref,host,seed:v.seed,i,hm,hc,gm,gc,
+      me:{id:meD.id,c:meC,name:NAMES[meD.id-1]},opp:{id:opD.id,c:opC,name:NAMES[opD.id-1],style:styleOf(opD.id)},
+      bg:BASHO[(v.seed+i)%6][2],day:`手合せ 第${i+1}番　${mine.name} 対 ${their.name}`});
     if(res)w++;else l++;}
   const win=w>l;S.stats[win?'fw':'fl']++;dailyAdd('friend');
   if(S.fDay!==today()){S.fDay=today();S.fCnt=0;}
-  const canReward=(S.fCnt||0)<3;const rw=canReward?(win?15:5):0;if(canReward){S.fCnt=(S.fCnt||0)+1;S.gem+=rw;}save();
+  const canReward=(S.fCnt||0)<3;const rw=canReward?(win?15:5):0;if(canReward){S.fCnt=(S.fCnt||0)+1;S.gem+=rw;rlog('手合せのほうび（'+(win?'勝ち':'負け')+'）','💎宝石 '+rw);}save();
   friendMode=false;
   if(host&&FR){try{FR.ref.remove();}catch(e){}}FR=null;
   await modal(`<h3>手合せ 結果</h3><div style="font-size:7cqw;font-weight:900;color:${win?'#c0392b':'#2c5ea8'}">${w}勝${l}敗　${win?'勝ち！':'負け…'}</div>${rw?`ほうび：宝石 +${rw}<br><span style="font-size:3.4cqw">今日のほうび あと${3-S.fCnt}回</span>`:'今日のほうびは3回もらったにゃ<br><span style="font-size:3.4cqw">（手合せはこのまま遊べるよ）</span>'}`,[{t:'OK',c:'gold'}]);
   show('home');}
+// ---- 手合せ：自分で戦う（スキップなし・10秒で自動「押す」）----
+const LIVE_SEC=10;
+async function playLive(o){const role=o.host?'h':'g',oth=o.host?'g':'h',sgn=o.host?1:-1;
+  BT={me:o.me,opp:o.opp,g:0,n:0,busy:true,live:true,done:false};
+  $('bout').style.backgroundImage=`url(img/dohyo_${o.bg}.webp?v=5)`;const stM=stats(o.me.id,o.me.c),stO=stats(o.opp.id,o.opp.c);
+  const stH=stats(o.hm.id,o.hc),stG=stats(o.gm.id,o.gc);
+  $('iL').innerHTML=infoHTML(o.me.name,o.me.id,o.me.c,stM);$('iR').innerHTML=infoHTML(o.opp.name,o.opp.id,o.opp.c,stO);
+  setFighter($('fL'),o.me.id,o.me.c.rank,false);setFighter($('fR'),o.opp.id,o.opp.c.rank,true);
+  $('bDay').textContent=o.day;$('bLog').textContent='';setGauge(0);$('kimaCard').classList.remove('on');
+  $('bCtrl').style.visibility='visible';$('bAuto').style.display='none';$('bSkip').style.display='none';show('bout');
+  $('bHint').textContent='自分で技をえらんでね　押す＞組む＞引く＞押す';
+  await sleep(500);$('tachi').classList.add('on');sfx('don');await sleep(1500);$('tachi').classList.remove('on');
+  const btns=[...document.querySelectorAll('#bAct .btn')];const lock=on=>btns.forEach(b=>{b.style.opacity=on?.45:1;b.style.pointerEvents=on?'none':'';});
+  let g=0,n=0,lastAct=0;
+  while(true){
+    const path=`b${o.i}/t${n}`;
+    // 自分の技をえらぶ（10秒で自動「押す」）
+    const myA=await new Promise(res=>{let left=LIVE_SEC,done=false;lock(false);
+      const fin=a=>{if(done)return;done=true;clearInterval(iv);BT.pick=null;lock(true);res(a);};
+      BT.pick=a=>{sfx('tap');fin(a);};
+      const show_=()=>{$('bHint').innerHTML=`技をえらんでね　のこり <b style="color:#ffd34d;font-size:4.6cqw">${left}</b> 秒<br><span style="font-size:2.8cqw">えらばないと「押す」になるよ</span>`;};show_();
+      const iv=setInterval(()=>{left--;if(left<=0){$('bHint').textContent='時間切れ！「押す」にしたにゃ';fin(0);}else show_();},1000);});
+    try{if(o.ref)await o.ref.child(path+'/'+role).set(myA);}catch(e){}
+    $('bHint').textContent=`「${ACTN[myA]}」をえらんだ！相手を待っています…`;
+    // 相手を待つ（25秒こなければ相手は「押す」あつかい）
+    const opA=await new Promise(res=>{let done=false;const r=o.ref?o.ref.child(path+'/'+oth):null;
+      const fin=a=>{if(done)return;done=true;clearTimeout(to);if(r)r.off('value',cb);res(a);};
+      const cb=s=>{const x=s.val();if(x!==null&&x!==undefined)fin(+x);};
+      const to=setTimeout(async()=>{try{if(r){const t=await r.transaction(c=>c===null||c===undefined?0:c);fin(+(t.snapshot.val()||0));return;}}catch(e){}fin(0);},25000);
+      if(r)r.on('value',cb);else fin(aiPick(o.opp.style,rnd));});
+    // ホスト目線で同じ計算 → どちらの画面でも同じ結果
+    const hA=o.host?myA:opA,gA=o.host?opA:myA;const R=mulberry(o.seed+o.i*1000+n*7+1);
+    const dh=exchange(hA,gA,stH,stG,o.hc.nat,o.gc.nat,R,o.hc,o.gc);const d=dh*sgn;g+=d;n++;
+    const act=d>0?myA:opA;lastAct=dh>0?hA:gA;
+    $('bLog').innerHTML=`<span style="color:#ffb3b3">${ACTN[myA]}</span> vs <span style="color:#b3c8ff">${ACTN[opA]}</span>　${d>0?o.me.name:o.opp.name}が${ACTLINE[act][Math.floor(R()*3)]}`;
+    setGauge(g);sfx('hit');shake('shakeS');const el=d>0?$('fR'):$('fL');el.classList.remove('hit');void el.offsetWidth;el.classList.add('hit');
+    $('bigWord').textContent=d>0?'ドン！':'グッ…';fire('bigWord');await sleep(800);
+    if(Math.abs(g)>=100||n>=7)break;}
+  const gh=g*sgn;const hostWin=gh>0||(gh===0&&power(stH)>=power(stG));const meWin=o.host?hostWin:!hostWin;
+  BT.done=true;BT.pick=null;$('bHint').textContent='';
+  const R2=mulberry(o.seed+o.i*1000+999);const k=kimarite(lastAct,hostWin?o.hc.waza:o.gc.waza,R2);
+  const kc=$('kimaCard');kc.innerHTML='';let kname;
+  if(k.hi!==undefined){kname=HIWAZA[k.hi];kc.appendChild(hiwEl(k.hi));}else{kname=WAZA[k.w];kc.appendChild(wazaEl(k.w));}
+  setGauge(meWin?140:-140);await sleep(350);kc.classList.add('on');sfx('don');shake('shake');$('bLog').innerHTML=`決まり手は <b style="color:#ffd34d">${kname}</b>`;
+  await sleep(1400);kc.classList.remove('on');lock(false);await cutIn(meWin,kname,'');return meWin;}
 function simBout(idA,cA,idB,cB,R){const sA=stats(idA,cA),sB=stats(idB,cB);let g=0,n=0;const steps=[];
   while(Math.abs(g)<100&&n<7){const a=aiPick(styleOf(idA),R),b=aiPick(styleOf(idB),R);const d=exchange(a,b,sA,sB,cA.nat,cB.nat,R,cA,cB);g+=d;n++;steps.push({a,b,d,line:Math.floor(R()*3)});}
   const win=g>0||(g===0&&power(sA)>=power(sB));const last=steps[steps.length-1];const wAct=win?(last.d>0?last.a:last.b):(last.d>0?last.a:last.b);
   const k=kimarite(wAct,win?cA.waza:cB.waza,R);return{steps,win,k};}
 async function playScripted(o){
   const sgn=o.meIsHost?1:-1;
-  BT={me:o.me,opp:o.opp,g:0,n:0,busy:true,auto:true,done:false,scripted:true};$('bSkip').classList.remove('on');
+  BT={me:o.me,opp:o.opp,g:0,n:0,busy:true,auto:true,done:false,scripted:true};$('bSkip').classList.remove('on');$('bSkip').style.display='';
   $('bout').style.backgroundImage=`url(img/dohyo_${o.bg}.webp?v=5)`;const stM=stats(o.me.id,o.me.c),stO=stats(o.opp.id,o.opp.c);
   $('iL').innerHTML=infoHTML(o.me.name,o.me.id,o.me.c,stM);$('iR').innerHTML=infoHTML(o.opp.name,o.opp.id,o.opp.c,stO);
   setFighter($('fL'),o.me.id,o.me.c.rank,false);setFighter($('fR'),o.opp.id,o.opp.c.rank,true);
