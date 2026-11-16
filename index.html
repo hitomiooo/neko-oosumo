@@ -662,7 +662,7 @@ button{font-family:inherit}
 #pawCut.me::before{background:linear-gradient(90deg,transparent,#8a1030e6 15%,#8a1030e6 85%,transparent)}
 #pawCut video{display:none;object-fit:cover;position:relative;height:84%;aspect-ratio:1;border-radius:6cqw;border:1cqw solid #e8b84a;box-shadow:0 0 0 .6cqw #5a1470,0 1.6cqw 2.4cqw #000a;background:#fff}
 #pawCut b{position:absolute;bottom:4%;font-size:10cqw;font-weight:900;color:#fff4c2;-webkit-text-stroke:.7cqw #5a1470;paint-order:stroke fill}
-#pawCut.go{animation:pawIn 1.3s ease-out forwards}#pawCut.op.go{animation-duration:.95s}
+#pawCut.go{animation:pawIn 1.45s ease-out forwards}#pawCut.op.go{animation-duration:.95s}
 #pawCut.go video{animation:pawPop .35s ease-out}
 #pawCut.me video{border-color:#ff3b4e!important;box-shadow:0 0 0 .7cqw #fff,0 0 0 1.6cqw #c0102a,0 0 4cqw #ff3b4ecc!important}
 #pawCut.op video{border-color:#3b8cff!important;box-shadow:0 0 0 .7cqw #fff,0 0 0 1.6cqw #1040b0,0 0 4cqw #3b8cffcc!important}
@@ -673,6 +673,17 @@ button{font-family:inherit}
 @keyframes pawIn{0%{opacity:0}12%{opacity:1}78%{opacity:1}100%{opacity:0}}
 @keyframes pawPush{0%{transform:translateY(18%) scale(.8)}35%{transform:translateY(-4%) scale(1.06)}55%{transform:translateY(0) scale(1)}100%{transform:translateY(-6%) scale(.96)}}
 @keyframes pawRecv{0%{transform:scale(.6)}30%{transform:scale(1.18)}45%{transform:scale(1.05)}100%{transform:scale(1.1)}}
+#pawCut .hs{display:none;position:relative;height:88%;aspect-ratio:1;background-repeat:no-repeat;background-position:0 0;filter:drop-shadow(0 1.2cqw 1.6cqw #000a)}
+#hsP{background-image:url(img/harite_push_sheet.webp?v=3);background-size:2300% 100%}
+#hsR{background-image:url(img/harite_recv_sheet.webp?v=1);background-size:1400% 100%}
+#hsP.run{animation:hsP 1.47s steps(22) forwards}#hsR.run{animation:hsR .93s steps(13) forwards}
+@keyframes hsP{to{background-position:100% 0}}@keyframes hsR{to{background-position:100% 0}}
+#pawCut.me::after,#pawCut.op::after{content:'';position:absolute;width:70cqw;height:70cqw;border-radius:50%;z-index:-1}
+#pawCut{isolation:isolate}
+#pawCut.me::after{background:radial-gradient(circle,#ff3b4ecc,#ff3b4e44 45%,transparent 70%)}
+#pawCut.op::after{background:radial-gradient(circle,#3b8cffcc,#3b8cff44 45%,transparent 70%)}
+#pawCut.me::before{border-color:#ff3b4e!important}#pawCut.op::before{border-color:#3b8cff!important}
+#pawCut.op::before{background:linear-gradient(90deg,transparent,#102a6ee6 15%,#102a6ee6 85%,transparent)!important}
 </style>
 </head>
 <body>
@@ -786,7 +797,7 @@ button{font-family:inherit}
     </div>
     <div id="bSkip">スキップ ▶▶</div>
     <div id="bigWord"></div>
-    <div id="pawCut"><video id="hvP" src="movie/harite_push.mp4?v=1" muted playsinline webkit-playsinline preload="auto"></video><video id="hvR" src="movie/harite_recv.mp4?v=1" muted playsinline webkit-playsinline preload="auto"></video><span class="lb"></span><b></b></div>
+    <div id="pawCut"><div class="hs" id="hsP"></div><div class="hs" id="hsR"></div><span class="lb"></span><b></b></div>
     <div id="kimaCard"></div>
     <div id="tachi"><img src="img/tachiai.webp?v=5" alt=""><div>はっけよい！</div></div>
   </section>
@@ -926,11 +937,9 @@ const fmt=n=>n.toLocaleString();
 function shake(cls){stage.classList.remove('shake','shakeS');void stage.offsetWidth;stage.classList.add(cls);}
 // 張り手カットイン：自分が押した＝肉球のうしろ姿、相手に押された＝こちらに向かってくる肉球
 let pawN=0;
-document.addEventListener('pointerdown',function unlockHv(){['hvP','hvR'].forEach(id=>{const v=$(id);if(!v)return;const p=v.play();if(p&&p.then)p.then(()=>{v.pause();v.currentTime=0;}).catch(()=>{});});document.removeEventListener('pointerdown',unlockHv);},{once:true});
-function pawCut(win){const e=$('pawCut');const v=$(win?'hvP':'hvR'),o=$(win?'hvR':'hvP');o.style.display='none';v.style.display='block';
-  try{v.pause();v.currentTime=0;const pr=v.play();if(pr&&pr.catch)pr.catch(()=>{});}catch(_){}
+function pawCut(win){const e=$('pawCut');const v=$(win?'hsP':'hsR'),o=$(win?'hsR':'hsP');o.style.display='none';v.style.display='block';v.classList.remove('run');void v.offsetWidth;v.classList.add('run');
   e.querySelector('b').textContent=win?'ドン！':'グッ…';e.querySelector('.lb').textContent=win?'攻め！':'受け…';e.className='on '+(win?'me':'op');void e.offsetWidth;e.classList.add('go');
-  clearTimeout(e._t);e._t=setTimeout(()=>e.className='',win?1300:950);}
+  clearTimeout(e._t);e._t=setTimeout(()=>e.className='',win?1450:950);}
 // 画像を先に読みこんでおく
 
 function fire(id){const e=$(id);e.classList.remove('go');void e.offsetWidth;e.classList.add('go');}
