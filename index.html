@@ -684,6 +684,18 @@ button{font-family:inherit}
 #pawCut.op::after{background:radial-gradient(circle,#3b8cffcc,#3b8cff44 45%,transparent 70%)}
 #pawCut.me::before{border-color:#ff3b4e!important}#pawCut.op::before{border-color:#3b8cff!important}
 #pawCut.op::before{background:linear-gradient(90deg,transparent,#102a6ee6 15%,#102a6ee6 85%,transparent)!important}
+.shBtn{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;margin:2.4cqw auto 0;padding:2cqw 6cqw;border-radius:6cqw;background:linear-gradient(#ff6aa8,#d81f6a);color:#fff;font-weight:900;font-size:4.2cqw;border:.6cqw solid #ffe27a;box-shadow:0 1cqw 0 #7a0a3a,0 0 3cqw #ff6aa888;cursor:pointer;line-height:1.2;text-shadow:0 .3cqw 0 #7a0a3a}
+.shBtn small{font-size:2.6cqw;color:#fff3b0;font-weight:900}
+.shBtn:active{transform:translateY(.6cqw);box-shadow:0 .3cqw 0 #7a0a3a}
+.shWrap{text-align:center}
+#gShard{position:absolute;right:3cqw;top:21cqw;z-index:3;font-size:3.4cqw;padding:1.4cqw 3cqw;background:linear-gradient(#8a5ad0,#5a2a9a);color:#fff;border:.5cqw solid #e8b84a}
+#gShard.ready{background:linear-gradient(#ff6aa8,#d81f6a);animation:lbPulse 1.2s ease-in-out infinite}
+#gShN{font-weight:900;color:#ffe27a}
+.shG{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2cqw;max-height:96cqw;overflow-y:auto;padding:1cqw}
+.shC{min-width:0;overflow:hidden;background:#2b1040;border-radius:2.4cqw;padding:1.4cqw;cursor:pointer;border:.5cqw solid #6b3a8c;color:#fff}
+.shC.r5{border-color:#ffd76a}.shC.r4{border-color:#ff7bd0}.shC.r3{border-color:#b07cf0}
+.shC .cardWrap .card{width:100%!important;height:auto;aspect-ratio:280/360}.shC .nm{font-size:2.8cqw;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.shC .tt{font-size:2.6cqw}
+.shC.off{opacity:.55}
 </style>
 </head>
 <body>
@@ -760,7 +772,7 @@ button{font-family:inherit}
   <!-- ガチャ -->
   <section id="gacha" class="screen hide">
     <div class="head"><img class="back" src="img/btn30_modoru.webp?v=5" alt="戻る">力士ガチャ</div>
-    <div class="btn gray" id="gRate">確率</div>
+    <div class="btn gray" id="gRate">確率</div><div class="btn" id="gShard">🧩 かけら交換<span id="gShN"></span></div>
     <div id="gMachine"><img id="gImg" src="img/gacha_machine.webp?v=5" alt=""></div>
     <div id="gInfo"></div>
     <div id="gBtns">
@@ -1203,7 +1215,7 @@ const GO={
 };
 document.querySelectorAll('#home [data-go]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();sfx('tap');GO[b.dataset.go]();}));
 $('bzBack').addEventListener('click',e=>{e.stopPropagation();show('home');});
-const RENDER={chankoSel:()=>renderChankoSel(),chankoS:()=>renderChanko(),koubou:()=>renderKoubou(),hanko:()=>renderHanko(),event:()=>renderEvent(),shop:()=>renderShop(),zukan:renderZukan,heya:renderHeya,hensei:renderHensei,detail:()=>renderDetail(),basho:renderBasho,seiseki:renderSeiseki,gacha:renderGacha};
+const RENDER={keikoSel:()=>renderKeikoSel(),chankoSel:()=>renderChankoSel(),chankoS:()=>renderChanko(),koubou:()=>renderKoubou(),hanko:()=>renderHanko(),event:()=>renderEvent(),shop:()=>renderShop(),zukan:renderZukan,heya:renderHeya,hensei:renderHensei,detail:()=>renderDetail(),basho:renderBasho,seiseki:renderSeiseki,gacha:renderGacha};
 
 // ---- お金・体力の説明 ----
 function moneyInfo(kind){sfx('tap');
@@ -1255,13 +1267,16 @@ function oyaHTML(i){const e=oyaEl(i);e.style.width='100%';return e.outerHTML;}
 const ownIds=()=>Object.keys(S.cats).map(Number).sort((a,b)=>a-b);
 function renderGacha(){
   $('gInfo').innerHTML=`宝石 <b style="color:#7ad0ff">${fmt(S.gem)}</b>　／　★16以上まで あと <b style="color:#ff9cd8">${100-S.pity}</b> 回<br><span class="small">10連は★6以上が1匹かならず出る</span>`;
+  $('gShN').textContent=` ${S.shard||0}`;$('gShN').parentNode.classList.toggle('ready',(S.shard||0)>=SHARD_COST&&shardList().length>0);
   $('g1').toggleAttribute('disabled',S.gem<10);$('g10').toggleAttribute('disabled',S.gem<100);}
 function pickTier(min=1){let r=rnd(),s=0;const w=TIER_W.slice(min-1);const tot=w.reduce((a,b)=>a+b,0);r*=tot;
   for(let k=0;k<w.length;k++){s+=w[k];if(r<s)return k+min;}return 20;}
 function pull(min=1){S.pity++;let t;if(S.pity>=100){t=pickTier(16);}else t=pickTier(min);if(t>=16)S.pity=0;
   const id=(t-1)*5+1+Math.floor(rnd()*5);return id;}
-function gain(id){let res;if(!S.cats[id]){S.cats[id]=newCat();res='new';}
-  else if(S.cats[id].star<5){S.cats[id].star++;res='star';}else{S.gem+=5;res='gem';}
+function gain(id){let res;
+  if(!S.cats[id]){S.cats[id]=newCat();res='new';}
+  else{S.shard=(S.shard||0)+1;   // かぶったら、かけら1つ
+    if(S.cats[id].star<5){S.cats[id].star++;res='star';}else{S.gem+=5;res='gem';}}
   S.dex[id]=true;if(S.team.length<3&&!S.team.includes(id))S.team.push(id);return res;}
 const tierCol=t=>t>=20?5:t>=16?4:t>=11?3:t>=6?2:1;
 const CAPC=['','#c08850','#dfe6f5','#ffd34d','#ff6fd0','#ffffff'];
@@ -1321,8 +1336,29 @@ async function doGacha(n){const opt={};
     const cnt=[0,0,0,0,0,0];ids.forEach(id=>cnt[tierCol(tierOf(id))]++);
     R.insertAdjacentHTML('beforeend',`<div class="gLab">あたらしい力士 ${nn}匹！</div><div class="gSum">${[5,4,3,2,1].filter(k=>cnt[k]).map(k=>rareBadge(k===5?20:k===4?16:k===3?11:k===2?6:1)+`×${cnt[k]}`).join('　')}</div>`);}
   const b=document.createElement('div');b.className='mBtns';
-  const ok=document.createElement('div');ok.className='btn gold';ok.textContent='OK';ok.onclick=e=>{e.stopPropagation();ov.className='';renderGacha();};b.appendChild(ok);R.appendChild(b);
+  const ok=document.createElement('div');ok.className='btn gold';ok.textContent='OK';ok.onclick=e=>{e.stopPropagation();ov.className='';renderGacha();};b.appendChild(ok);
+  const brag=ids.slice().sort((a,c)=>tierOf(c)-tierOf(a))[0];
+  if(tierOf(brag)>=15){const w=document.createElement('div');w.className='shWrap';w.innerHTML=shareBtnHTML().replace('📣 シェアする','📣 自慢する');w.firstChild.onclick=e=>{e.stopPropagation();shareGacha(brag);};R.appendChild(w);}
+  R.appendChild(b);
 }
+// ---- かけら交換：かぶったらかけら1つ、20個で持っていない猫と交換（URは交換できない）----
+const SHARD_COST=20;
+function shardList(){const L=[];for(let id=1;id<=100;id++)if(!S.cats[id]&&tierOf(id)<20)L.push(id);return L;}
+function openShard(){const L=shardList(),n=S.shard||0;
+  let h=`<h3>🧩 かけら交換</h3><div style="font-size:3.3cqw">かけら <b style="font-size:5cqw;color:#c0306f">${n}</b> 個　（${SHARD_COST}個で1匹）</div>
+  <div style="margin:1cqw 0 2cqw;font-size:2.9cqw;color:#5a3a20;line-height:1.5">ガチャで同じ猫がかぶると、かけらが1つたまるよ<br>まだ持っていない猫と交換できる（UR・★20は交換できない）</div>`;
+  if(!L.length)h+='<div style="padding:4cqw 0">交換できる猫はもういないにゃ！</div>';
+  h+='<div class="shG">';L.slice().sort((a,b)=>tierOf(b)-tierOf(a)).forEach(id=>{const t=tierOf(id);
+    h+=`<div class="shC r${tierCol(t)}${n>=SHARD_COST?'':' off'}" data-id="${id}"><div class="cardWrap"></div><div class="nm">${NAMES[id-1]}</div><div class="tt">${rareBadge(t)} ★${t}</div></div>`;});
+  h+='</div>';
+  modal(h,[{t:'とじる',c:'gray'}]);
+  $('mBox').querySelectorAll('.shC').forEach(e=>{const id=+e.dataset.id;e.querySelector('.cardWrap').appendChild(catCard(id));
+    e.onclick=async()=>{if((S.shard||0)<SHARD_COST)return toast(`かけらがあと ${SHARD_COST-(S.shard||0)} 個足りないにゃ`);
+      const k=await modal(`<h3>交換する？</h3><div style="width:34cqw;margin:2cqw auto"></div>「${NAMES[id-1]}」（★${tierOf(id)}）<br>かけら ${SHARD_COST}個 で交換`,[{t:'交換する',c:'gold'},{t:'やめる',c:'gray'}]);
+      if(k!==0)return openShard();
+      S.shard-=SHARD_COST;gain(id);rlog('かけら交換',`${NAMES[id-1]}（★${tierOf(id)}）`);save();jingle(tierOf(id)>=11?'gachaR':'gachaN');
+      toast(`🎉 ${NAMES[id-1]} が仲間になった！`);renderGacha();openShard();};});}
+$('gShard').onclick=()=>{sfx('tap');openShard();};
 $('gSkipBtn').onclick=e=>{e.stopPropagation();gSkip=true;};
 $('g1').onclick=()=>doGacha(1);$('g10').onclick=()=>doGacha(10);
 $('gRate').onclick=()=>{let h='<h3>出る確率（1回あたり）</h3><table style="width:100%;font-size:3.4cqw;border-collapse:collapse">';
@@ -1904,7 +1940,15 @@ async function endBasho(){const b=BASHO[S.basho.i];let html=`<h3>${b[0]} 結果<
   html+=`<div style="margin-top:2cqw">ほうび：宝石 +${gemSum}</div><div style="margin-top:1cqw">次は <b>${BASHO[S.basho.i][0]}</b> だにゃ</div>`;
   if(yusho||S.team.some(id=>S.cats[id].rank>0))bgm('victory');
   if(yusho)html=`<img src="img/btn09_yushosen.webp?v=5" style="width:40cqw" alt="">`+html;
-  await modal(html,[{t:'OK',c:'gold'}]);show('home');}
+  const bn=BASHO[(S.basho.i+5)%6][0];
+  let memo=null;S.team.forEach(id=>{const c=S.cats[id],r=bashoRec(id);
+    if(r.w===7&&!memo)memo={kind:'yusho',id,rank:c.rank,title:`${bn} 全勝優勝！`,sub:`${RANKS[c.rank]}　7戦全勝`,line1:NAMES[id-1],line2:`${S.name}`,text:`にゃんこ大相撲の${bn}で「${NAMES[id-1]}」が全勝優勝！`};});
+  if(!memo)S.team.forEach(id=>{const c=S.cats[id];if(!memo&&c.rank>=8&&!(S.rankShared||{})[id+'_'+c.rank])memo={kind:'rank',id,rank:c.rank,title:`${RANKS[c.rank]}昇進！`,sub:c.rank===9?'ついに番付の頂点へ':'あと一歩で横綱',line1:NAMES[id-1],line2:`${S.name}`,text:`にゃんこ大相撲で「${NAMES[id-1]}」が${RANKS[c.rank]}に昇進！`,_k:id+'_'+c.rank};});
+  if(memo){const k=await modal(html+`<div style="margin-top:2cqw;color:#8a1050"><b>記念カードを作れるよ！</b></div>`,[{t:'OK',c:'gold'},{t:'📣 記念カードをシェア',c:'red'}]);
+    if(memo._k){S.rankShared=S.rankShared||{};S.rankShared[memo._k]=1;save();}
+    if(k===1)await shareCard(memo);}
+  else await modal(html,[{t:'OK',c:'gold'}]);
+  show('home');}
 
 // ================= 番付表 =================
 const BZ={rows:[[268,451],[451,615],[615,760],[760,899],[899,1025],[1025,1145],[1145,1256],[1256,1360],[1360,1458],[1458,1552]],cols:[1,2,2,2,4,5,6,7,8,8],center:[411,529],inner:[58,882]};
@@ -1953,14 +1997,63 @@ function plainRw(h){return String(h).replace(/<img[^>]*btn41_coin[^>]*>/g,'🪙'
 function openRlog(){const L=S.rlog||[];const pad=n=>String(n).padStart(2,'0');
   const rows=L.length?L.map(x=>{const d=new Date(x.t);return`<div class="rlR"><div class="dt">${d.getMonth()+1}/${d.getDate()} ${pad(d.getHours())}:${pad(d.getMinutes())}</div><div class="tx"><b>${x.s}</b><br>${x.r}</div></div>`;}).join(''):'<div style="text-align:center;padding:6cqw 0;color:#7a5a30">まだ受け取った記録はないにゃ</div>';
   modal(`<h3>受け取り履歴</h3><div style="text-align:center;margin-bottom:2cqw;font-size:3cqw;color:#8a6a40">新しい順・最新100件まで</div><div class="rlL">${rows}</div>`,[{t:'設定にもどる',c:'gold'},{t:'とじる',c:'gray'}]).then(i=>{if(i===0)openSettings();});}
+// ================= シェア（自慢カード・記念カード・1日1回ごほうび） =================
+const SHARE_URL='https://hitomiooo.github.io/neko-oosumo/';
+const SHARE_GEM=5;
+function loadImg(src){return new Promise((ok,ng)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=ng;i.src=src;});}
+async function makeCard(o){ // o:{id,rank,title,sub,line,kind:'gacha'|'yusho'|'rank'|'invite'}
+  const W=1080,H=1350,cv=document.createElement('canvas');cv.width=W;cv.height=H;const g=cv.getContext('2d');
+  const F='"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif';
+  const bg=g.createRadialGradient(W/2,H*.42,80,W/2,H*.5,H*.75);
+  const col=o.kind==='yusho'?['#b8132e','#5a0718']:o.kind==='rank'?['#1f5ed8','#0b1f5a']:['#7a2a9a','#240634'];
+  bg.addColorStop(0,col[0]);bg.addColorStop(1,col[1]);g.fillStyle=bg;g.fillRect(0,0,W,H);
+  // 光のすじ
+  g.save();g.translate(W/2,H*.44);for(let k=0;k<24;k++){g.rotate(Math.PI/12);g.fillStyle=k%2?'#ffffff10':'#ffd76a14';g.beginPath();g.moveTo(0,0);g.lineTo(-60,-900);g.lineTo(60,-900);g.fill();}g.restore();
+  // 金のふち
+  g.lineWidth=18;g.strokeStyle='#e8b84a';g.strokeRect(24,24,W-48,H-48);g.lineWidth=4;g.strokeStyle='#fff3b0';g.strokeRect(48,48,W-96,H-96);
+  // タイトル
+  g.textAlign='center';g.fillStyle='#ffe9a8';g.font=`900 64px ${F}`;g.strokeStyle='#3a0a2a';g.lineWidth=10;g.strokeText(o.title,W/2,150);g.fillText(o.title,W/2,150);
+  if(o.sub){g.font=`700 40px ${F}`;g.fillStyle='#fff';g.fillText(o.sub,W/2,212);}
+  // 猫
+  try{if(o.id){const r=GROW_IDS.indexOf(o.id);let img,sx,sy,sw,sh;
+      if(r>=0){img=await loadImg('img/growth.webp?v=5');sw=img.width/10;sh=img.height/14;sx=(o.rank||0)*sw;sy=r*sh;}
+      else{const k=Math.floor((o.id-1)/10),i=(o.id-1)%10;img=await loadImg(`img/neko${k}.webp?v=5`);sw=img.width/10;sh=img.height;sx=i*sw;sy=0;}
+      const dh=760,dw=dh*sw/sh;g.shadowColor='#000a';g.shadowBlur=40;g.drawImage(img,sx,sy,sw,sh,W/2-dw/2,250,dw,dh);g.shadowBlur=0;}
+    else{const img=await loadImg('img/gate_logo.webp?v=1');const dw=820,dh=dw*img.height/img.width;g.drawImage(img,W/2-dw/2,330,dw,dh);}}catch(e){}
+  // 名前の帯
+  g.fillStyle='#1a0420cc';g.fillRect(70,1030,W-140,150);g.strokeStyle='#e8b84a';g.lineWidth=6;g.strokeRect(70,1030,W-140,150);
+  g.fillStyle='#fff';g.font=`900 70px ${F}`;g.fillText(o.line1||'',W/2,1105);
+  g.fillStyle='#ffd76a';g.font=`700 38px ${F}`;g.fillText(o.line2||'',W/2,1160);
+  // 下：ゲーム名とアドレス
+  g.fillStyle='#ffe9a8';g.font=`900 46px ${F}`;g.fillText('にゃんこ大相撲',W/2,1240);
+  g.fillStyle='#fff';g.font=`600 30px sans-serif`;g.fillText(SHARE_URL.replace('https://',''),W/2,1288);
+  return cv;}
+async function shareCard(o){let blob=null;try{const cv=await makeCard(o);blob=await new Promise(r=>cv.toBlob(r,'image/png'));}catch(e){}
+  const text=`${o.text}\n#にゃんこ大相撲\n${SHARE_URL}`;let done=false;
+  try{if(blob&&navigator.canShare){const f=new File([blob],'nyanko_oozumou.png',{type:'image/png'});
+      if(navigator.canShare({files:[f]})){await navigator.share({files:[f],text,title:'にゃんこ大相撲'});done=true;}}
+    if(!done&&navigator.share){await navigator.share({text,title:'にゃんこ大相撲',url:SHARE_URL});done=true;}}
+  catch(e){if(e&&e.name==='AbortError')return;}
+  if(!done){ // パソコンなど：画像を保存＋文章をコピー
+    if(blob){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='nyanko_oozumou.png';document.body.appendChild(a);a.click();a.remove();}
+    try{await navigator.clipboard.writeText(text);}catch(e){}
+    toast('画像を保存して、文章をコピーしたにゃ<br>LINEやXにはりつけてね');done=true;}
+  shareReward();}
+function shareReward(){const t=today();if(S.shareDay===t)return;S.shareDay=t;S.gem+=SHARE_GEM;rlog('シェアのごほうび',`💎宝石 ${SHARE_GEM}`);save();refreshHUD();
+  setTimeout(()=>toast(`🎁 シェアありがとう！<br>宝石 +${SHARE_GEM}（1日1回）`,2400),600);}
+function shareBtnHTML(){return `<div class="shBtn">📣 シェアする${S.shareDay===today()?'':`<small>今日は宝石+${SHARE_GEM}</small>`}</div>`;}
+function shareGacha(id){const t=tierOf(id);shareCard({kind:'gacha',id,rank:S.cats[id]?S.cats[id].rank:0,title:'ガチャで当たった！',sub:`${RARE[tierCol(t)]}　★${t}`,line1:NAMES[id-1],line2:`${S.name} にやってきた`,text:`にゃんこ大相撲で ★${t}「${NAMES[id-1]}」が出た！`});}
+function shareInvite(){const top=ownIds().sort((a,b)=>tierOf(b)-tierOf(a))[0];
+  shareCard({kind:'invite',id:top||0,rank:top?S.cats[top].rank:0,title:'いっしょに遊ぼう！',sub:'猫の力士を育てる相撲ゲーム',line1:S.name,line2:top?`いちばんの力士：${NAMES[top-1]}（★${tierOf(top)}）`:'',text:'猫の力士を育てる相撲ゲーム「にゃんこ大相撲」、いっしょに遊ぼう！'});}
 async function openSettings(){const i=await modal(`<h3>設定</h3>部屋の名前<br><input class="inp" id="nmIn" maxlength="10" value="${S.name}"><br><br>効果音：<b>${S.sound?'オン':'オフ'}</b>　音楽：<b>${S.bgm?'オン':'オフ'}</b><br><span style="font-size:3.2cqw">クラウド保存：${cloudOK?'<b style="color:#1d6a37">オン</b>':'オフ（この画面では使えません）'}</span>`,
-  [{t:'保存',c:'gold'},{t:S.sound?'効果音をオフ':'効果音をオン'},{t:S.bgm?'音楽をオフ':'音楽をオン'},{t:'受け取り履歴',c:'blue'},{t:'データを消す',c:'red'},{t:'とじる',c:'gray'}]);
+  [{t:'保存',c:'gold'},{t:S.sound?'効果音をオフ':'効果音をオン'},{t:S.bgm?'音楽をオフ':'音楽をオン'},{t:'受け取り履歴',c:'blue'},{t:'📣 友だちにすすめる',c:'red'},{t:'データを消す',c:'red'},{t:'とじる',c:'gray'}]);
   const v=document.getElementById('nmIn')?document.getElementById('nmIn').value:S.name;
   if(i===0){S.name=(v||'にゃんこ部屋').slice(0,10);save();refreshHome();toast('保存したにゃ');}
   if(i===1){S.sound=!S.sound;save();openSettings();}
   if(i===2){S.bgm=!S.bgm;save();const c=curBgm;curBgm='_';bgm(S.bgm?(SCREEN_BGM[cur]||'home'):null);openSettings();}
   if(i===3){openRlog();}
-  if(i===4){const j=await modal('<h3>本当に消す？</h3>集めた猫も育てた記録もぜんぶ消えます。',[{t:'消す',c:'red'},{t:'やめる',c:'gray'}]);if(j===0){localStorage.removeItem(KEY);location.reload();}}}
+  if(i===4){shareInvite();}
+  if(i===5){const j=await modal('<h3>本当に消す？</h3>集めた猫も育てた記録もぜんぶ消えます。',[{t:'消す',c:'red'},{t:'やめる',c:'gray'}]);if(j===0){localStorage.removeItem(KEY);location.reload();}}}
 
 // ================= 手合せ（友だち対戦・Firebase）=================
 const FB_CONF={apiKey:"AIzaSyAjFsULSU8JfpdTSGaWvx3gIJu1pn580aA",authDomain:"neko-oosumo.firebaseapp.com",databaseURL:"https://neko-oosumo-default-rtdb.asia-southeast1.firebasedatabase.app",projectId:"neko-oosumo",storageBucket:"neko-oosumo.firebasestorage.app",messagingSenderId:"228949454246",appId:"1:228949454246:web:881df8f72b939bd1ff3367"};
