@@ -696,6 +696,7 @@ button{font-family:inherit}
 .shC.r5{border-color:#ffd76a}.shC.r4{border-color:#ff7bd0}.shC.r3{border-color:#b07cf0}
 .shC .cardWrap .card{width:100%!important;height:auto;aspect-ratio:280/360}.shC .nm{font-size:2.8cqw;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.shC .tt{font-size:2.6cqw}
 .shC.off{opacity:.55}
+#gImg{width:100%;display:block;border-radius:4cqw;border:.7cqw solid #e8b84a;box-shadow:0 0 0 .5cqw #5a1470,0 1.6cqw 3cqw #000a}
 </style>
 </head>
 <body>
@@ -773,7 +774,7 @@ button{font-family:inherit}
   <section id="gacha" class="screen hide">
     <div class="head"><img class="back" src="img/btn30_modoru.webp?v=5" alt="戻る">力士ガチャ</div>
     <div class="btn gray" id="gRate">確率</div><div class="btn" id="gShard">🧩 かけら交換<span id="gShN"></span></div>
-    <div id="gMachine"><img id="gImg" src="img/gacha_machine.webp?v=5" alt=""></div>
+    <div id="gMachine"><img id="gImg" src="img/gacha_machine2.webp?v=1" alt=""></div>
     <div id="gInfo"></div>
     <div id="gBtns">
       <div class="btn gold" id="g1">1回ひく（宝石10）</div>
@@ -1294,8 +1295,8 @@ async function doGacha(n){const opt={};
   const res=ids.map(id=>gain(id));save();
   const best=Math.max(...ids.map(tierOf));
   // ガチャ機がゆれる
-  const gm=$('gMachine'),gi=$('gImg');gi.src='img/gacha_anim.webp?v=5';gm.classList.remove('shake');void gm.offsetWidth;gm.classList.add('shake');sfx('don');
-  await sleep(1200);gi.src='img/gacha_machine.webp?v=5';
+  const gm=$('gMachine');let gi=$('gImg');{const ni=gi.cloneNode();ni.src='img/gacha_anim2.webp?v=2';gi.replaceWith(ni);gi=ni;}gm.classList.remove('shake');void gm.offsetWidth;gm.classList.add('shake');sfx('don');
+  await sleep(2000);gi.src='img/gacha_machine2.webp?v=1';
   const ov=$('gOverlay'),cap=$('gCaps'),R=$('gResult'),one=$('gReveal');ov.classList.add('on');ov.className='on';
   R.classList.remove('on');R.innerHTML='';gSkip=false;$('gSkipBtn').style.display=n>1?'':'none';
   // 1匹ずつ
