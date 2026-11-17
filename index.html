@@ -2089,6 +2089,8 @@ function shareInvite(){const top=ownIds().sort((a,b)=>tierOf(b)-tierOf(a))[0];
 // ---- 不具合・お問い合わせ（FormSubmit経由でメールに届く）----
 // FormSubmitの確認メールで「Activate」したあと、届いた英数字の文字列に置きかえるとアドレスが隠せる
 const CONTACT_TO='musiclife.1103.123@gmail.com';
+// スプレッドシート（Google Apps Script のウェブアプリ）のURL。入れるとスプレッドシートに書きこまれ、メールも届く。空ならFormSubmitでメールだけ
+const CONTACT_GAS='https://script.google.com/macros/s/AKfycbzEiChFzvi3jipCHOSlsZXVFCEWSSXClMKnOVmv3mVXSymW_R_aOnqkAESPD72ZPQLl/exec';
 const GAME_VER='2026-11-18';
 const escH=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 async function openContact(d={}){
@@ -2111,10 +2113,17 @@ async function openContact(d={}){
     const body={_subject:`【にゃんこ大相撲】${v.k}（${v.w}）`,_template:'table',_captcha:'false',
       種類:v.k,画面:v.w,内容:v.m,返事の連絡先:v.e||'なし',部屋の名前:S.name,バージョン:GAME_VER,
       端末:navigator.userAgent,画面サイズ:`${innerWidth}×${innerHeight}`,持っている猫:ownIds().length+'匹',送った日時:new Date().toLocaleString('ja-JP')};
+    if(CONTACT_GAS){
+      const g={kind:v.k,where:v.w,msg:v.m,reply:v.e,room:S.name,ver:GAME_VER,ua:navigator.userAgent,size:`${innerWidth}×${innerHeight}`,cats:ownIds().length+'匹'};
+      const r=await fetch(CONTACT_GAS,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(g)});
+      const j=await r.json().catch(()=>({}));
+      if(!r.ok||!j.ok)throw new Error(j.error||('HTTP '+r.status));
+    }else{
     if(v.e)body._replyto=v.e;
     const r=await fetch('https://formsubmit.co/ajax/'+CONTACT_TO,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(body)});
     const j=await r.json().catch(()=>({}));
     if(!r.ok||String(j.success)!=='true')throw new Error(j.message||('HTTP '+r.status));
+    }
     L.push(now);S.ctLog=L;save();$('toast').classList.remove('on');
     modal('<h3>送ったにゃ！</h3>ありがとうございます。<br>内容を見て、直せるところから直していくにゃ。',[{t:'OK',c:'gold'}]);
   }catch(e){$('toast').classList.remove('on');
