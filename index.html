@@ -716,6 +716,13 @@ button{font-family:inherit}
 @keyframes gyTx{0%{transform:scale(2.4);opacity:0}100%{transform:none;opacity:1}}
 @keyframes gyRb{to{background-position:200% 0}}
 #bout.kaku #gauge{box-shadow:0 0 2.4cqw #ffd34d}
+
+/* 不具合・お問い合わせ */
+.ctF{text-align:left;font-size:3.3cqw}
+.ctF label{display:block;margin:2.2cqw 0 .8cqw;font-weight:800;color:#5a2a10}
+.ctF .inp{width:100%;box-sizing:border-box;font-size:3.8cqw;text-align:left;padding:1.6cqw 2.4cqw;font-weight:700}
+.ctF textarea.inp{resize:none;line-height:1.5}
+.ctN{margin-top:2cqw;font-size:2.8cqw;color:#8a6a40;line-height:1.5}
 </style>
 </head>
 <body>
@@ -2032,7 +2039,7 @@ function openRlog(){const L=S.rlog||[];const pad=n=>String(n).padStart(2,'0');
   const rows=L.length?L.map(x=>{const d=new Date(x.t);return`<div class="rlR"><div class="dt">${d.getMonth()+1}/${d.getDate()} ${pad(d.getHours())}:${pad(d.getMinutes())}</div><div class="tx"><b>${x.s}</b><br>${x.r}</div></div>`;}).join(''):'<div style="text-align:center;padding:6cqw 0;color:#7a5a30">まだ受け取った記録はないにゃ</div>';
   modal(`<h3>受け取り履歴</h3><div style="text-align:center;margin-bottom:2cqw;font-size:3cqw;color:#8a6a40">新しい順・最新100件まで</div><div class="rlL">${rows}</div>`,[{t:'設定にもどる',c:'gold'},{t:'とじる',c:'gray'}]).then(i=>{if(i===0)openSettings();});}
 // ================= シェア（自慢カード・記念カード・1日1回ごほうび） =================
-const SHARE_URL='https://hitomiooo.github.io/neko-oosumo/';
+const SHARE_URL='https://nikukyu-games.github.io/nyanko-oozumou/';
 const SHARE_GEM=5;
 function loadImg(src){return new Promise((ok,ng)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=ng;i.src=src;});}
 async function makeCard(o){ // o:{id,rank,title,sub,line,kind:'gacha'|'yusho'|'rank'|'invite'}
@@ -2079,15 +2086,51 @@ function shareBtnHTML(){return `<div class="shBtn">📣 シェアする${S.share
 function shareGacha(id){const t=tierOf(id);shareCard({kind:'gacha',id,rank:S.cats[id]?S.cats[id].rank:0,title:'ガチャで当たった！',sub:`${RARE[tierCol(t)]}　★${t}`,line1:NAMES[id-1],line2:`${S.name} にやってきた`,text:`にゃんこ大相撲で ★${t}「${NAMES[id-1]}」が出た！`});}
 function shareInvite(){const top=ownIds().sort((a,b)=>tierOf(b)-tierOf(a))[0];
   shareCard({kind:'invite',id:top||0,rank:top?S.cats[top].rank:0,title:'いっしょに遊ぼう！',sub:'猫の力士を育てる相撲ゲーム',line1:S.name,line2:top?`いちばんの力士：${NAMES[top-1]}（★${tierOf(top)}）`:'',text:'猫の力士を育てる相撲ゲーム「にゃんこ大相撲」、いっしょに遊ぼう！'});}
+// ---- 不具合・お問い合わせ（FormSubmit経由でメールに届く）----
+// FormSubmitの確認メールで「Activate」したあと、届いた英数字の文字列に置きかえるとアドレスが隠せる
+const CONTACT_TO='musiclife.1103.123@gmail.com';
+const GAME_VER='2026-11-18';
+const escH=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+async function openContact(d={}){
+  const sel=(id,arr,v)=>`<select class="inp" id="${id}">${arr.map(x=>`<option${x===v?' selected':''}>${x}</option>`).join('')}</select>`;
+  const i=await modal(`<h3>🐾 不具合・お問い合わせ</h3><div class="ctF">
+    <label>種類</label>${sel('ctK',['不具合','質問','要望','その他'],d.k)}
+    <label>どの画面で</label>${sel('ctW',['ホーム','ガチャ','本場所・取組','稽古','ちゃんこ・工房','手合せ','イベント','その他'],d.w)}
+    <label>内容（必須）</label><textarea class="inp" id="ctM" maxlength="1000" rows="5" placeholder="何があったか、くわしく教えてにゃ">${escH(d.m||'')}</textarea>
+    <label>返事がほしいときのメールアドレス（なくてもOK）</label><input class="inp" id="ctE" type="email" maxlength="100" value="${escH(d.e||'')}">
+    <div class="ctN">スマホの種類とゲームのバージョンも、いっしょに送ります。<br>すべてにお返事できないことがあります。ごめんにゃ。</div></div>`,
+    [{t:'送る',c:'gold'},{t:'やめる',c:'gray'}]);
+  const v={k:$('ctK').value,w:$('ctW').value,m:$('ctM').value.trim(),e:$('ctE').value.trim()};
+  if(i!==0)return;
+  if(!v.m){toast('内容を書いてにゃ');return openContact(v);}
+  const now=Date.now(),L=(S.ctLog||[]).filter(t=>now-t<864e5);
+  if(L.length&&now-L[L.length-1]<60e3){toast('少し待ってから送ってにゃ');return openContact(v);}
+  if(L.length>=5){modal('<h3>今日はここまで</h3>お問い合わせは1日5回までにゃ。<br>また明日送ってね。',[{t:'OK',c:'gold'}]);return;}
+  toast('送っています…',8000);
+  try{
+    const body={_subject:`【にゃんこ大相撲】${v.k}（${v.w}）`,_template:'table',_captcha:'false',
+      種類:v.k,画面:v.w,内容:v.m,返事の連絡先:v.e||'なし',部屋の名前:S.name,バージョン:GAME_VER,
+      端末:navigator.userAgent,画面サイズ:`${innerWidth}×${innerHeight}`,持っている猫:ownIds().length+'匹',送った日時:new Date().toLocaleString('ja-JP')};
+    if(v.e)body._replyto=v.e;
+    const r=await fetch('https://formsubmit.co/ajax/'+CONTACT_TO,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(body)});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok||String(j.success)!=='true')throw new Error(j.message||('HTTP '+r.status));
+    L.push(now);S.ctLog=L;save();$('toast').classList.remove('on');
+    modal('<h3>送ったにゃ！</h3>ありがとうございます。<br>内容を見て、直せるところから直していくにゃ。',[{t:'OK',c:'gold'}]);
+  }catch(e){$('toast').classList.remove('on');
+    const k=await modal(`<h3>送れなかったにゃ…</h3>電波のよいところで、もう一度ためしてね。<div class="ctN">（${escH(e.message||e)}）</div>`,[{t:'もう一度',c:'gold'},{t:'やめる',c:'gray'}]);
+    if(k===0)openContact(v);}
+}
 async function openSettings(){const i=await modal(`<h3>設定</h3>部屋の名前<br><input class="inp" id="nmIn" maxlength="10" value="${S.name}"><br><br>効果音：<b>${S.sound?'オン':'オフ'}</b>　音楽：<b>${S.bgm?'オン':'オフ'}</b><br><span style="font-size:3.2cqw">クラウド保存：${cloudOK?'<b style="color:#1d6a37">オン</b>':'オフ（この画面では使えません）'}</span>`,
-  [{t:'保存',c:'gold'},{t:S.sound?'効果音をオフ':'効果音をオン'},{t:S.bgm?'音楽をオフ':'音楽をオン'},{t:'受け取り履歴',c:'blue'},{t:'📣 友だちにすすめる',c:'red'},{t:'データを消す',c:'red'},{t:'とじる',c:'gray'}]);
+  [{t:'保存',c:'gold'},{t:S.sound?'効果音をオフ':'効果音をオン'},{t:S.bgm?'音楽をオフ':'音楽をオン'},{t:'受け取り履歴',c:'blue'},{t:'📣 友だちにすすめる',c:'red'},{t:'🐾 不具合・お問い合わせ',c:'blue'},{t:'データを消す',c:'red'},{t:'とじる',c:'gray'}]);
   const v=document.getElementById('nmIn')?document.getElementById('nmIn').value:S.name;
   if(i===0){S.name=(v||'にゃんこ部屋').slice(0,10);save();refreshHome();toast('保存したにゃ');}
   if(i===1){S.sound=!S.sound;save();openSettings();}
   if(i===2){S.bgm=!S.bgm;save();const c=curBgm;curBgm='_';bgm(S.bgm?(SCREEN_BGM[cur]||'home'):null);openSettings();}
   if(i===3){openRlog();}
   if(i===4){shareInvite();}
-  if(i===5){const j=await modal('<h3>本当に消す？</h3>集めた猫も育てた記録もぜんぶ消えます。',[{t:'消す',c:'red'},{t:'やめる',c:'gray'}]);if(j===0){localStorage.removeItem(KEY);location.reload();}}}
+  if(i===5){openContact();}
+  if(i===6){const j=await modal('<h3>本当に消す？</h3>集めた猫も育てた記録もぜんぶ消えます。',[{t:'消す',c:'red'},{t:'やめる',c:'gray'}]);if(j===0){localStorage.removeItem(KEY);location.reload();}}}
 
 // ================= 手合せ（友だち対戦・Firebase）=================
 const FB_CONF={apiKey:"AIzaSyAjFsULSU8JfpdTSGaWvx3gIJu1pn580aA",authDomain:"neko-oosumo.firebaseapp.com",databaseURL:"https://neko-oosumo-default-rtdb.asia-southeast1.firebasedatabase.app",projectId:"neko-oosumo",storageBucket:"neko-oosumo.firebasestorage.app",messagingSenderId:"228949454246",appId:"1:228949454246:web:881df8f72b939bd1ff3367"};
