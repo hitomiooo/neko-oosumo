@@ -2101,21 +2101,26 @@ function shareInvite(){const top=ownIds().sort((a,b)=>tierOf(b)-tierOf(a))[0];
 // FormSubmitの確認メールで「Activate」したあと、届いた英数字の文字列に置きかえるとアドレスが隠せる
 const CONTACT_TO='musiclife.1103.123@gmail.com';
 // スプレッドシート（Google Apps Script のウェブアプリ）のURL。入れるとスプレッドシートに書きこまれ、メールも届く。空ならFormSubmitでメールだけ
-const CONTACT_GAS='https://script.google.com/macros/s/AKfycbzEiChFzvi3jipCHOSlsZXVFCEWSSXClMKnOVmv3mVXSymW_R_aOnqkAESPD72ZPQLl/exec';
+const CONTACT_GAS='https://script.google.com/macros/s/AKfycbzaQho2-4v1R4POzER1e5LbeqSFywEpP4HUAH-3k8i5iVgBN3yIb5B1ayFgE2LEH41d/exec';
 const GAME_VER='2026-11-18';
+const CONTACT_TOKEN='nyk-2026-paw';   // スプレッドシートのスクリプトの TOKEN と同じにする
+let ctT0=0;                          // お問い合わせ画面を開いた時刻（速すぎる送信をはじく）
 const escH=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 async function openContact(d={}){
+  if(!ctT0)ctT0=Date.now();
   const sel=(id,arr,v)=>`<select class="inp" id="${id}">${arr.map(x=>`<option${x===v?' selected':''}>${x}</option>`).join('')}</select>`;
   const i=await modal(`<h3>🐾 不具合・お問い合わせ</h3><div class="ctF">
     <label>種類</label>${sel('ctK',['不具合','質問','要望','その他'],d.k)}
     <label>どの画面で</label>${sel('ctW',['ホーム','ガチャ','本場所・取組','稽古','ちゃんこ・工房','手合せ','イベント','その他'],d.w)}
     <label>内容（必須）</label><textarea class="inp" id="ctM" maxlength="1000" rows="5" placeholder="何があったか、くわしく教えてにゃ">${escH(d.m||'')}</textarea>
     <label>返事がほしいときのメールアドレス（なくてもOK）</label><input class="inp" id="ctE" type="email" maxlength="100" value="${escH(d.e||'')}">
+    <input id="ctH" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
     <div class="ctN">スマホの種類とゲームのバージョンも、いっしょに送ります。<br>すべてにお返事できないことがあります。ごめんにゃ。</div></div>`,
     [{t:'送る',c:'gold'},{t:'やめる',c:'gray'}]);
-  const v={k:$('ctK').value,w:$('ctW').value,m:$('ctM').value.trim(),e:$('ctE').value.trim()};
-  if(i!==0)return;
+  const v={k:$('ctK').value,w:$('ctW').value,m:$('ctM').value.trim(),e:$('ctE').value.trim()},hp=$('ctH').value;
+  if(i!==0){ctT0=0;return;}
   if(!v.m){toast('内容を書いてにゃ');return openContact(v);}
+  if((v.m.match(/https?:\/\/|www\./gi)||[]).length>1){toast('リンクは1つまでにしてにゃ');return openContact(v);}
   const now=Date.now(),L=(S.ctLog||[]).filter(t=>now-t<864e5);
   if(L.length&&now-L[L.length-1]<60e3){toast('少し待ってから送ってにゃ');return openContact(v);}
   if(L.length>=5){modal('<h3>今日はここまで</h3>お問い合わせは1日5回までにゃ。<br>また明日送ってね。',[{t:'OK',c:'gold'}]);return;}
@@ -2125,7 +2130,7 @@ async function openContact(d={}){
       種類:v.k,画面:v.w,内容:v.m,返事の連絡先:v.e||'なし',部屋の名前:S.name,バージョン:GAME_VER,
       端末:navigator.userAgent,画面サイズ:`${innerWidth}×${innerHeight}`,持っている猫:ownIds().length+'匹',送った日時:new Date().toLocaleString('ja-JP')};
     if(CONTACT_GAS){
-      const g={kind:v.k,where:v.w,msg:v.m,reply:v.e,room:S.name,ver:GAME_VER,ua:navigator.userAgent,size:`${innerWidth}×${innerHeight}`,cats:ownIds().length+'匹'};
+      const g={t:CONTACT_TOKEN,hp,el:Math.round((Date.now()-ctT0)/1000),kind:v.k,where:v.w,msg:v.m,reply:v.e,room:S.name,ver:GAME_VER,ua:navigator.userAgent,size:`${innerWidth}×${innerHeight}`,cats:ownIds().length+'匹'};
       const r=await fetch(CONTACT_GAS,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(g)});
       const j=await r.json().catch(()=>({}));
       if(!r.ok||!j.ok)throw new Error(j.error||('HTTP '+r.status));
@@ -2135,7 +2140,7 @@ async function openContact(d={}){
     const j=await r.json().catch(()=>({}));
     if(!r.ok||String(j.success)!=='true')throw new Error(j.message||('HTTP '+r.status));
     }
-    L.push(now);S.ctLog=L;save();$('toast').classList.remove('on');
+    L.push(now);S.ctLog=L;save();ctT0=0;$('toast').classList.remove('on');
     modal('<h3>送ったにゃ！</h3>ありがとうございます。<br>内容を見て、直せるところから直していくにゃ。',[{t:'OK',c:'gold'}]);
   }catch(e){$('toast').classList.remove('on');
     const k=await modal(`<h3>送れなかったにゃ…</h3>電波のよいところで、もう一度ためしてね。<div class="ctN">（${escH(e.message||e)}）</div>`,[{t:'もう一度',c:'gold'},{t:'やめる',c:'gray'}]);
