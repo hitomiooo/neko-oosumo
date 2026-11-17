@@ -209,7 +209,7 @@ button{font-family:inherit}
 #gBtns{position:absolute;left:0;right:0;top:72%;display:flex;flex-direction:column;align-items:center;gap:2.6cqw}
 #gBtns .btn{width:76cqw;font-size:5cqw;padding:2.6cqw}
 #gRate{position:absolute;right:3cqw;top:15cqw;font-size:3.2cqw;padding:1cqw 2.6cqw}
-#gOverlay{position:absolute;inset:0;z-index:30;background:#0c0312;display:none;flex-direction:column;align-items:center;justify-content:center}
+#gOverlay{position:absolute;inset:0;z-index:30;background:#0c0312;display:none;flex-direction:column;align-items:center;justify-content:center;justify-content:safe center;overflow-y:auto}
 #gOverlay.on{display:flex}
 #gCaps{width:40cqw;aspect-ratio:1;border-radius:50%;position:relative;cursor:pointer}
 #gCaps:before{content:"";position:absolute;inset:0;border-radius:50%;background:linear-gradient(180deg,var(--c1) 50%,#fff 50%);box-shadow:0 0 6cqw var(--c1),inset -2cqw -2cqw 4cqw rgba(0,0,0,.25)}
@@ -697,6 +697,25 @@ button{font-family:inherit}
 .shC .cardWrap .card{width:100%!important;height:auto;aspect-ratio:280/360}.shC .nm{font-size:2.8cqw;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.shC .tt{font-size:2.6cqw}
 .shC.off{opacity:.55}
 #gImg{width:100%;display:block;border-radius:4cqw;border:.7cqw solid #e8b84a;box-shadow:0 0 0 .5cqw #5a1470,0 1.6cqw 3cqw #000a}
+
+/* 行司の軍配確定演出 */
+#gyKaku{position:absolute;inset:0;z-index:40;display:none;align-items:center;justify-content:center;flex-direction:column;pointer-events:none;overflow:hidden}
+#gyKaku.on{display:flex}
+#gyKaku .fl{position:absolute;inset:0;background:#fff;opacity:0;animation:gyFl .5s ease-out}
+#gyKaku .bg{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(255,224,120,.55),rgba(80,20,70,.82) 62%);animation:gyIn .3s ease-out}
+#gyKaku .ry{position:absolute;left:50%;top:50%;width:190cqw;height:190cqw;margin:-95cqw 0 0 -95cqw;background:repeating-conic-gradient(rgba(255,215,90,.38) 0 9deg,transparent 9deg 22deg);animation:gyRot 6s linear infinite;border-radius:50%;
+  -webkit-mask:radial-gradient(circle,#000 25%,transparent 70%);mask:radial-gradient(circle,#000 25%,transparent 70%)}
+#gySp{position:relative;width:74cqw;aspect-ratio:420/469;background:url(img/gyoji_kaku_sheet.webp?v=1) 0 0/600% 500% no-repeat;animation:gyPop .55s cubic-bezier(.2,1.6,.4,1);filter:drop-shadow(0 0 3cqw rgba(255,220,120,.9))}
+#gyKaku .t1{position:relative;margin-top:2cqw;font-size:12cqw;font-weight:900;letter-spacing:.06em;color:#ffe14d;-webkit-text-stroke:.7cqw #7a1a3a;paint-order:stroke;white-space:nowrap;
+  text-shadow:0 0 2cqw #fff,0 0 5cqw #ffcc33,0 .9cqw 0 #5a0f2a;animation:gyTx .5s .35s both cubic-bezier(.2,1.6,.4,1)}
+#gyKaku .t2{position:relative;margin-top:1cqw;font-size:5.2cqw;white-space:nowrap;font-weight:800;color:#fff;-webkit-text-stroke:.35cqw #5a0f2a;paint-order:stroke;animation:gyTx .5s .6s both}
+@keyframes gyFl{0%{opacity:1}100%{opacity:0}}
+@keyframes gyIn{from{opacity:0}to{opacity:1}}
+@keyframes gyRot{to{transform:rotate(360deg)}}
+@keyframes gyPop{0%{transform:scale(.2) translateY(30cqw);opacity:0}100%{transform:none;opacity:1}}
+@keyframes gyTx{0%{transform:scale(2.4);opacity:0}100%{transform:none;opacity:1}}
+@keyframes gyRb{to{background-position:200% 0}}
+#bout.kaku #gauge{box-shadow:0 0 2.4cqw #ffd34d}
 </style>
 </head>
 <body>
@@ -811,6 +830,7 @@ button{font-family:inherit}
     <div id="bSkip">スキップ ▶▶</div>
     <div id="bigWord"></div>
     <div id="pawCut"><div class="hs" id="hsP"></div><div class="hs" id="hsR"></div><span class="lb"></span><b></b></div>
+<div id="gyKaku"><div class="bg"></div><div class="ry"></div><div class="fl"></div><div id="gySp"></div><div class="t1">軍配確定！</div><div class="t2">行司が見とどけた！勝ちが決まったにゃ</div></div>
     <div id="kimaCard"></div>
     <div id="tachi"><img src="img/tachiai.webp?v=5" alt=""><div>はっけよい！</div></div>
   </section>
@@ -1288,6 +1308,9 @@ let gSkip=false;
 function gWait(ms){return new Promise(r=>{const t0=Date.now();const iv=setInterval(()=>{if(gSkip||Date.now()-t0>=ms){clearInterval(iv);r();}},30);});}
 function gTap(el){return new Promise(r=>{if(gSkip)return r();const f=()=>{el.removeEventListener('click',f);clearInterval(iv);r();};el.addEventListener('click',f);const iv=setInterval(()=>{if(gSkip){clearInterval(iv);el.removeEventListener('click',f);r();}},50);});}
 async function doGacha(n){const opt={};
+  if(gBusy)return;gBusy=true;try{await doGacha2(n,opt);}finally{gBusy=false;}}
+let gBusy=false;
+async function doGacha2(n,opt){
   const cost=n===1?10:100;if(S.gem<cost)return;S.gem-=cost;S.stats.pulls+=n;
   const BAND=[null,[1,5],[6,10],[11,15],[16,19],[20,20]];
   const ids=[];for(let i=0;i<n;i++){if(opt.force){const b=BAND[opt.force];const t=b[0]+Math.floor(rnd()*(b[1]-b[0]+1));ids.push((t-1)*5+1+Math.floor(rnd()*5));}else ids.push(pull());}
@@ -1324,7 +1347,7 @@ async function doGacha(n){const opt={};
   // まとめ
   gSkip=false;$('gSkipBtn').style.display='none';one.classList.remove('on');one.innerHTML='';cap.style.display='none';$('gTapMsg').style.display='none';$('gCount').textContent='';
   ov.className='on lv'+tierCol(best);
-  R.classList.add('on');
+  R.innerHTML='';R.classList.add('on');
   const lab=r=>r==='new'?'<span class="newb">NEW</span>':'';
   if(n===1){const id=ids[0],t=tierOf(id),k=tierCol(t);
     R.insertAdjacentHTML('beforeend',`<div class="rbWrap">${rareBadge(t,true)}</div>`);
@@ -1791,7 +1814,7 @@ async function startBout(o){
   show('bout');
   $('bSkip').classList.remove('on');$('bSkip').style.display='';$('bAuto').style.display='';if(!friendMode)$('bStamp').classList.remove('on');
   await bw(500);if(!BT.fast){$('tachi').classList.add('on');const td=$('tachi').querySelector('div');td.style.animation='none';void td.offsetWidth;td.style.animation='';sfx('don');}
-  await bw(1500);$('tachi').classList.remove('on');BT.busy=false;
+  await bw(1500);$('tachi').classList.remove('on');$('bout').classList.remove('kaku');if(BT.kaku)await gyojiKaku();BT.busy=false;
   if(o.auto)autoRun();
 }
 // ---- 育ち具合とアドバイス ----
@@ -1833,7 +1856,8 @@ async function step(a){
   if(BT&&BT.live){if(BT.pick)BT.pick(a);return;}
   if(!BT||BT.busy||BT.done)return;BT.busy=true;const R=BT.R||rnd;
   const b=aiPick(BT.opp.style,R);BT.n++;
-  const d=exchange(a,b,BT.stM,BT.stO,BT.me.c.nat,BT.opp.c.nat,R,BT.me.c,BT.opp.c);
+  let d=exchange(a,b,BT.stM,BT.stO,BT.me.c.nat,BT.opp.c.nat,R,BT.me.c,BT.opp.c);
+  if(BT.kaku&&d<=0)d=Math.max(25,Math.abs(d));
   BT.g+=d;BT.last=d>0?a:b;(BT.hist=BT.hist||[]).push({a,b,d});
   const who=d>0?BT.me.name:BT.opp.name,act=d>0?a:b;
   $('bLog').innerHTML=`<span style="color:#ffb3b3">${ACTN[a]}</span> vs <span style="color:#b3c8ff">${ACTN[b]}</span>　${who}が${ACTLINE[act][Math.floor(R()*3)]}`;
@@ -1899,28 +1923,37 @@ function renderBasho(){const B=$('bBody');const b=BASHO[S.basho.i];const day=S.b
   else{const e=document.createElement('div');e.className='btn';e.textContent='まとめて取組（おまかせ）';e.onclick=()=>autoAll();ft.appendChild(e);}
   B.appendChild(ft);
   B.insertAdjacentHTML('beforeend',`<div class="small" style="text-align:center;margin-top:3cqw">取組1番で体力 ${boutCost()}　いまの体力 ${S.hp}/${HP_MAX}<br>勝ち越し（4勝）で番付が上がる・全勝で優勝！</div>`);}
-// 本場所の相手：関取（十両〜横綱）多め・自分の強さに合わせて少し上
+// 本場所の相手：同じ番付どうし（まれに格上）・自分の強さに合わせて少し上
 const OPP_RANK_W=[[4,.14],[5,.16],[6,.14],[7,.14],[8,.17],[9,.25]];
 function makeBashoOpp(myId,myC,seed){const R=mulberry(seed+12345);
-  let rank;if(R()<.8){let r=R(),a=0;rank=9;for(const[k,w]of OPP_RANK_W){a+=w;if(r<a){rank=k;break;}}}else rank=Math.min(9,myC.rank+1+Math.floor(R()*2));
-  rank=Math.max(rank,myC.rank);
+  // 本物の相撲と同じく同じ番付どうし（幕下なら幕下）。ごくまれに1枚上の番付と当たる
+  let rank=myC.rank;const upper=myC.rank<9&&R()<OPP_UP_P;if(upper)rank=myC.rank+1;
   const o=makeOpp(rank,seed);const c=o.c;
   // 自分の猫の強さを基準に、相手を少し強く（横綱・大関はもっと強く）
   // 基準＝その猫のレベルで8割ほど稽古した強さ（よく稽古するほど少し有利、しないと不利）
   const ref=JSON.parse(JSON.stringify(myC));for(const k of ['pow','spd','wt','tec'])ref.t[k]=Math.round(trainCap(myId,myC,k)*.8);
-  const myP=rookie()?power(stats(myId,myC)):Math.max(power(stats(myId,myC))*.9,power(stats(myId,ref)));const boost=(OPP_BOOST[rank]||1)*(rookie()?.72:1);
+  const myP=rookie()?power(stats(myId,myC)):Math.max(power(stats(myId,myC))*.9,power(stats(myId,ref)));const boost=(OPP_BOOST[rank]||1)*(upper?1.12:1)*(rookie()?.72:1);
   let tf=.6+R()*.35;const retrain=()=>{for(const k of ['pow','spd','wt','tec'])c.t[k]=Math.round(trainCap(o.id,c,k)*tf);};retrain();
   for(let n=0;n<80&&power(stats(o.id,c))>myP*boost*1.12;n++){if(c.lv>1)c.lv--;else if(tf>0)tf=Math.max(0,tf-.1);else break;retrain();}
   for(let n=0;n<60&&power(stats(o.id,c))<myP*boost;n++){c.lv++;tf=Math.max(tf,.6+R()*.35);retrain();}
   c.nat=Math.max(0,Math.round((myC.nat||0)+R()*20-(rookie()?12:2)));
   o.st=stats(o.id,c);return o;}
-const OPP_BOOST={4:1.3,5:1.37,6:1.44,7:1.5,8:1.57,9:1.66};
+const OPP_BOOST={0:1.1,1:1.14,2:1.18,3:1.24,4:1.3,5:1.37,6:1.44,7:1.5,8:1.57,9:1.66};
+const OPP_UP_P=0.06; // 格上と当たる確率
+// ---- 行司の軍配確定演出（本場所でごくまれ・出たら必ず勝ち）----
+const KAKU_P=0.03;
+async function gyojiKaku(){const g=$('gyKaku'),sp=$('gySp');g.classList.remove('on');void g.offsetWidth;g.classList.add('on');
+  sfx('don');shake('shake');let f=0;const iv=setInterval(()=>{sp.style.backgroundPosition=`${(f%6)*20}% ${Math.floor(f/6)*25}%`;f=(f+1)%30;},66);
+  setTimeout(()=>sfx('win'),700);await sleep(2800);clearInterval(iv);g.classList.remove('on');
+  $('bout').classList.add('kaku');$('bLog').innerHTML='<b style="color:#ffd34d">行司が軍配を上げた！ 勝ち確定！</b>';
+  if(S.stats){S.stats.kaku=(S.stats.kaku||0)+1;save();}}
+
 function boutFor(id,auto=false){
   if(boutCost()&&!useHP(boutCost()))return Promise.resolve();
   const c=S.cats[id],day=S.basho.day;const seed=(S.basho.i*7919+day*131+id*17+S.stats.bashos*997+Date.now())%1e9;
   const opp=makeBashoOpp(id,c,seed);
   return new Promise(res=>{
-    startBout({me:{id,c,name:NAMES[id-1]},opp,bg:BASHO[S.basho.i][2],day:`${BASHO[S.basho.i][0]} ${DAYN[day]}`,auto,
+    startBout({me:{id,c,name:NAMES[id-1]},opp,bg:BASHO[S.basho.i][2],day:`${BASHO[S.basho.i][0]} ${DAYN[day]}`,auto,kaku:Math.random()<KAKU_P,
       onEnd:(win)=>{const r=bashoRec(id);r.d.push(win?1:0);if(win){r.w++;c.w++;S.stats.w++;}else{r.l++;c.l++;S.stats.l++;}
         const kc=keshoOf(c);const coin=Math.round((win?80+c.rank*20:20)*(kc?(kc[6]==='coin'?1.2:kc[6]==='coin2'?1.5:1):1)),gem=win?2:0;S.coin+=coin;S.gem+=gem;const ups=addExp(id,c,{v:win?30:12,fromBout:true});save();
         return`コイン+${coin}${gem?'　宝石+'+gem:''}　経験+${win?30:12}${ups?'<br>レベルアップ！':''}`;}});
