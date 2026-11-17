@@ -732,6 +732,19 @@ button{font-family:inherit}
 @keyframes wob2{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
 #gCaps.open{animation:capPop 1.05s forwards}
 @keyframes capPop{0%{transform:scale(1)}15%{transform:scale(1.07)}80%{transform:scale(1.1);opacity:1}100%{transform:scale(1.35);opacity:0}}
+
+/* ガチャの行司昇格演出 */
+#gyUp{position:absolute;inset:0;z-index:5;display:none;align-items:center;justify-content:center;flex-direction:column;pointer-events:none;overflow:hidden}
+#gyUp.on{display:flex}
+#gyUp .bg{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(255,224,120,.5),rgba(40,8,50,.85) 62%);animation:gyIn .25s ease-out}
+#gyUp .ry{position:absolute;left:50%;top:50%;width:190cqw;height:190cqw;margin:-95cqw 0 0 -95cqw;background:repeating-conic-gradient(rgba(255,215,90,.38) 0 9deg,transparent 9deg 22deg);animation:gyRot 6s linear infinite;border-radius:50%;
+  -webkit-mask:radial-gradient(circle,#000 25%,transparent 70%);mask:radial-gradient(circle,#000 25%,transparent 70%)}
+#gyUp .fl{position:absolute;inset:0;background:#fff;opacity:0;animation:gyFl .5s ease-out}
+#gyUp .sp{position:relative;width:62cqw;aspect-ratio:400/435;background:url(img/gyoji_gacha_sheet.webp?v=1) 0 0/900% 100% no-repeat;animation:gyPop .5s cubic-bezier(.2,1.6,.4,1);filter:drop-shadow(0 0 3cqw rgba(255,220,120,.9))}
+#gyUp .t1{position:relative;margin-top:1cqw;font-size:11cqw;font-weight:900;color:#ffe14d;-webkit-text-stroke:.7cqw #7a1a3a;paint-order:stroke;white-space:nowrap;text-shadow:0 0 2cqw #fff,0 0 5cqw #ffcc33,0 .9cqw 0 #5a0f2a;animation:gyTx .5s .3s both cubic-bezier(.2,1.6,.4,1)}
+#gyUp .t2{position:relative;margin-top:1cqw;font-size:5cqw;font-weight:800;color:#fff;-webkit-text-stroke:.35cqw #5a0f2a;paint-order:stroke;white-space:nowrap;animation:gyTx .5s .55s both}
+#gCaps.upg{animation:capUp .6s ease-out}
+@keyframes capUp{0%{transform:scale(.6);filter:brightness(3) drop-shadow(0 0 6cqw #fff)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
 </style>
 </head>
 <body>
@@ -818,6 +831,7 @@ button{font-family:inherit}
     <div id="gOverlay">
       <div class="raysBg"></div>
       <div id="gCaps"></div>
+      <div id="gyUp"><div class="bg"></div><div class="ry"></div><div class="fl"></div><div class="sp"></div><div class="t1">軍配が上がった！</div><div class="t2">行司の力で カプセルが変わるにゃ！</div></div>
       <div id="gCount"></div><div id="gTapMsg">タップしてあける！</div><div id="gReveal"></div><div id="gSkipBtn" class="btn gray">スキップ ▶▶</div>
       <div id="gResult"></div>
     </div>
@@ -1326,7 +1340,14 @@ function gTap(el){return new Promise(r=>{if(gSkip)return r();const f=()=>{el.rem
 async function doGacha(n){const opt={};
   if(gBusy)return;gBusy=true;try{await doGacha2(n,opt);}finally{gBusy=false;}}
 let gBusy=false;
+// ---- ガチャの行司昇格演出：ときどき、低いレアのカプセルが行司の軍配で上のレアに変わる ----
+const UP_P={3:.2,4:.35,5:.5};   // SR・SSR・URのとき、昇格演出で出る確率
+const capSheet=k=>`url(img/cap_${k>=5?'gold':k>=3?'purple':'red'}_sheet.webp?v=1)`;
+async function gyojiUp(){const g=$('gyUp'),sp=g.querySelector('.sp');g.classList.remove('on');void g.offsetWidth;g.classList.add('on');
+  sfx('don');shake('shake');let f=0;const iv=setInterval(()=>{sp.style.backgroundPosition=`${f*12.5}% 0`;f=(f+1)%9;},150);
+  await gWait(2200);clearInterval(iv);g.classList.remove('on');}
 async function doGacha2(n,opt){
+  {const im=new Image();im.src='img/gyoji_gacha_sheet.webp?v=1';}
   ['red','purple','gold'].forEach(c=>{const im=new Image();im.src=`img/cap_${c}_sheet.webp?v=1`;});
   const cost=n===1?10:100;if(S.gem<cost)return;S.gem-=cost;S.stats.pulls+=n;
   const BAND=[null,[1,5],[6,10],[11,15],[16,19],[20,20]];
@@ -1344,10 +1365,15 @@ async function doGacha2(n,opt){
     const id=ids[i],t=tierOf(id),k=tierCol(t);
     one.classList.remove('on');one.innerHTML='';ov.className='on lv'+k;
     $('gCount').textContent=n>1?`${i+1} / ${n}`:'';
-    cap.style.display='';cap.className='wob';cap.style.setProperty('--c1',CAPC[k]);cap.style.setProperty('--sheet',`url(img/cap_${k>=5?'gold':k>=3?'purple':'red'}_sheet.webp?v=1)`);cap.style.backgroundPosition='0% 0';
+    const up=k>=3&&(opt.up||rnd()<UP_P[k]);const k0=up?(k>=5&&rnd()<.5?3:1):k;   // 昇格するときは低いカプセルから
+    cap.style.display='';cap.className='wob';cap.style.setProperty('--c1',CAPC[k0]);cap.style.setProperty('--sheet',capSheet(k0));cap.style.backgroundPosition='0% 0';
     $('gTapMsg').style.display='';$('gTapMsg').textContent='タップしてあける！';
     await gTap(ov);if(gSkip)break;
     // レアほどためる
+    if(up){cap.className='wob fast';$('gTapMsg').textContent='……ん？';await gWait(700);if(gSkip)break;
+      $('gTapMsg').style.display='none';await gyojiUp();if(gSkip)break;
+      cap.style.setProperty('--c1',CAPC[k]);cap.style.setProperty('--sheet',capSheet(k));cap.className='upg';sfx('win');shake('shake');await gWait(650);if(gSkip)break;
+      $('gTapMsg').style.display='';}
     if(k>=3){cap.className='wob fast';$('gTapMsg').textContent=k>=5?'……！？':k>=4?'こ、これは…！':'おっ…？';sfx('don');await gWait(k>=5?1500:k>=4?1100:700);if(gSkip)break;}
     cap.className='open';jingle(k>=3?'gachaR':'gachaN');if(k>=4)shake('shake');
     for(let f=1;f<9&&!gSkip;f++){cap.style.backgroundPosition=`${f*12.5}% 0`;await gWait(90);}
