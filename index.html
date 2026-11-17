@@ -723,6 +723,15 @@ button{font-family:inherit}
 .ctF .inp{width:100%;box-sizing:border-box;font-size:3.8cqw;text-align:left;padding:1.6cqw 2.4cqw;font-weight:700}
 .ctF textarea.inp{resize:none;line-height:1.5}
 .ctN{margin-top:2cqw;font-size:2.8cqw;color:#8a6a40;line-height:1.5}
+
+/* ガチャのカプセル（画像のコマ送り：N・Rは赤、SR・SSRは紫、URは金）*/
+#gCaps{width:66cqw;aspect-ratio:1;border-radius:0;background:var(--sheet) 0 0/900% 100% no-repeat;filter:drop-shadow(0 0 3cqw var(--c1));transform-origin:50% 88%}
+#gCaps:before{content:none}
+#gCaps.wob{animation:wob2 1s ease-in-out infinite}
+#gCaps.fast{animation:wob2 .22s ease-in-out infinite}
+@keyframes wob2{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+#gCaps.open{animation:capPop 1.05s forwards}
+@keyframes capPop{0%{transform:scale(1)}15%{transform:scale(1.07)}80%{transform:scale(1.1);opacity:1}100%{transform:scale(1.35);opacity:0}}
 </style>
 </head>
 <body>
@@ -1318,6 +1327,7 @@ async function doGacha(n){const opt={};
   if(gBusy)return;gBusy=true;try{await doGacha2(n,opt);}finally{gBusy=false;}}
 let gBusy=false;
 async function doGacha2(n,opt){
+  ['red','purple','gold'].forEach(c=>{const im=new Image();im.src=`img/cap_${c}_sheet.webp?v=1`;});
   const cost=n===1?10:100;if(S.gem<cost)return;S.gem-=cost;S.stats.pulls+=n;
   const BAND=[null,[1,5],[6,10],[11,15],[16,19],[20,20]];
   const ids=[];for(let i=0;i<n;i++){if(opt.force){const b=BAND[opt.force];const t=b[0]+Math.floor(rnd()*(b[1]-b[0]+1));ids.push((t-1)*5+1+Math.floor(rnd()*5));}else ids.push(pull());}
@@ -1334,13 +1344,14 @@ async function doGacha2(n,opt){
     const id=ids[i],t=tierOf(id),k=tierCol(t);
     one.classList.remove('on');one.innerHTML='';ov.className='on lv'+k;
     $('gCount').textContent=n>1?`${i+1} / ${n}`:'';
-    cap.style.display='';cap.className='wob';cap.style.setProperty('--c1',CAPC[k]);
+    cap.style.display='';cap.className='wob';cap.style.setProperty('--c1',CAPC[k]);cap.style.setProperty('--sheet',`url(img/cap_${k>=5?'gold':k>=3?'purple':'red'}_sheet.webp?v=1)`);cap.style.backgroundPosition='0% 0';
     $('gTapMsg').style.display='';$('gTapMsg').textContent='タップしてあける！';
     await gTap(ov);if(gSkip)break;
     // レアほどためる
     if(k>=3){cap.className='wob fast';$('gTapMsg').textContent=k>=5?'……！？':k>=4?'こ、これは…！':'おっ…？';sfx('don');await gWait(k>=5?1500:k>=4?1100:700);if(gSkip)break;}
     cap.className='open';jingle(k>=3?'gachaR':'gachaN');if(k>=4)shake('shake');
-    await gWait(430);cap.style.display='none';$('gTapMsg').style.display='none';
+    for(let f=1;f<9&&!gSkip;f++){cap.style.backgroundPosition=`${f*12.5}% 0`;await gWait(90);}
+    await gWait(330);cap.style.display='none';$('gTapMsg').style.display='none';
     const resTxt=res[i]==='new'?'<span class="nw">NEW！</span> あたらしい力士が入門した！':res[i]==='star'?'かさなって☆が上がった！':'☆最大なので宝石5個に';
     one.innerHTML=`<div class="rbWrap">${rareBadge(t,true)}<div class="rbSub">${RARE_TXT[k]}</div></div>
       <div class="gOne glow${k}"></div>
