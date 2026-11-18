@@ -1900,9 +1900,9 @@ function renderKeikoSel(){const B=$('ksBody');tickHP();
   B.appendChild(g);}
 // ---- 稽古 ----
 const KEIKO=[
- {n:'四股',d:'重さ・力が上がる',img:'img/keiko_shiko.webp?v=5',g:{wt:4,pow:2}},
+ {n:'四股',d:'重さ・力が上がる',img:'img/keiko_kamae.webp?v=5',g:{wt:4,pow:2}},
  {n:'てっぽう',d:'力がぐんと上がる',img:'img/keiko_teppo.webp?v=5',g:{pow:5}},
- {n:'すり足',d:'速さが上がる',img:'img/keiko_kamae.webp?v=5',g:{spd:5}},
+ {n:'すり足',d:'速さが上がる',img:'img/keiko_shiko.webp?v=5',g:{spd:5}},
  {n:'ぶつかり稽古',d:'技が上がる・決まり手を覚えることがある',img:'img/keiko_niramiai.webp?v=5',g:{tec:4},waza:true}];
 function renderKeiko(){const id=dId,c=S.cats[id];const B=$('kBody');const cost=keikoCost(id);
   B.innerHTML=`<div class="sum">${NAMES[id-1]}（Lv${c.lv}）の稽古　体力 ${cost} を使う${rookie()?'（🔰新弟子期間・経験2倍）':''}<br><span class="small">いまの体力 ${S.hp}/${HP_MAX}</span></div>`;
