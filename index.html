@@ -802,6 +802,14 @@ button{font-family:inherit}
 .jjCard td:first-child{color:#8a5a2a;font-weight:800;white-space:nowrap;width:30%}
 .jjCard .sr{color:#e8a020;letter-spacing:.1em}
 .jjGem{display:inline-flex;align-items:center;gap:1cqw;color:#7ad0ff;font-weight:900}
+
+/* ホームの経験値バー */
+#bashoTag .hxR{display:flex;align-items:center;gap:1.4cqw;justify-content:center;margin:0 0 .8cqw;padding-bottom:.8cqw;border-bottom:.3cqw dashed rgba(232,184,74,.6);cursor:pointer;font-size:3cqw}
+#bashoTag .hxN{color:#fff;max-width:24cqw;overflow:hidden;text-overflow:ellipsis}
+#bashoTag .hxL{color:#ffe14d}
+#bashoTag .hxB{display:inline-block;width:26cqw;height:2.2cqw;background:#1a0626;border-radius:2cqw;overflow:hidden;border:.25cqw solid rgba(126,230,255,.5)}
+#bashoTag .hxB i{display:block;height:100%;background:linear-gradient(90deg,#7ee6ff,#b07cf0)}
+#bashoTag .hxT{color:#bfe9ff;font-size:2.7cqw}
 </style>
 </head>
 <body>
@@ -1032,7 +1040,7 @@ function expLeft(c){return c.lv>=lvCap(c)?'レベル上限（番付が上がる�
 function addExp(id,c,n){
   if(persOf(id)===4&&n.fromBout)n.v*=1.5;
   const ko=keshoOf(c);const em=ko?(ko[6]==='exp'?1.2:ko[6]==='exp2'?1.4:1):1;
-  let v=Math.round(n.v*(rookie()?2:1)*em),ups=0;c.exp+=v;LAST_EXP=v;
+  let v=Math.round(n.v*(rookie()?2:1)*em),ups=0;c.exp+=v;LAST_EXP=v;addPExp(v);
   while(c.lv<lvCap(c)&&c.exp>=needExp(c.lv)){c.exp-=needExp(c.lv);c.lv++;ups++;}
   if(c.lv>=lvCap(c))c.exp=Math.min(c.exp,needExp(c.lv));
   if(ups>0){tickHP();if(S.hp<HP_MAX){S.hp=HP_MAX;S.hpAt=Date.now();}if(typeof refreshHUD==='function')refreshHUD();}   // レベルアップで体力が満タンに
@@ -1315,8 +1323,19 @@ function openDaily(){const D=dm();const allGot=DAILY.every(m=>D.got[m.k]);
     if(k==='all'){if(D.all||!DAILY.every(m=>D.got[m.k]))return;D.all=1;giveRw(DAILY_ALL);rlog('今日の特訓 ぜんぶ達成',plainRw(rwHtml(DAILY_ALL)));jingle('gachaR');toast('ぜんぶ達成ボーナス！<br>'+rwHtml(DAILY_ALL));}
     else{const m=DAILY.find(x=>x.k===k);if(D.got[k]||(D.c[k]||0)<m.g)return;D.got[k]=1;giveRw(m.r);rlog('今日の特訓「'+m.n+'」',plainRw(rwHtml(m.r)));jingle('gachaN');toast(rwHtml(m.r)+' をもらった！');}
     save();refreshHUD();refreshDailyDot();openDaily();});}
+// ---- 部屋レベル（プレイヤー全体の経験値）：力士が経験をもらうたび、同じだけ部屋にもたまる ----
+function needP(lv){return 40+lv*20;}
+const PLV_GEM=5;   // 部屋レベルアップのごほうび（宝石）＋体力満タン
+function addPExp(v){if(!(v>0))return 0;S.plv=S.plv||1;S.pexp=(S.pexp||0)+v;let up=0;
+  while(S.pexp>=needP(S.plv)){S.pexp-=needP(S.plv);S.plv++;up++;}
+  if(up){S.gem+=PLV_GEM*up;tickHP();if(S.hp<HP_MAX){S.hp=HP_MAX;S.hpAt=Date.now();}rlog('部屋レベルアップ',`Lv${S.plv}：宝石 ${PLV_GEM*up}・体力満タン`);
+    setTimeout(()=>{toast(`🏯 部屋レベルアップ！ Lv${S.plv}<br>💎宝石 +${PLV_GEM*up}　⚡体力が満タン`,2600);jingle('level');refreshHUD();if(cur==='home')refreshHome();},1800);}
+  return up;}
+function homeExpHTML(){const lv=S.plv||1,e=S.pexp||0,need=needP(lv),pc=Math.min(100,e/need*100);
+  return `<div class="hxR"><span class="hxN">🏯 部屋</span><span class="hxL">Lv${lv}</span><span class="hxB"><i style="width:${pc}%"></i></span><span class="hxT">あと${Math.max(0,need-e)}</span></div>`;}
+function plvInfo(){const lv=S.plv||1,e=S.pexp||0;modal(`<h3>🏯 部屋レベル Lv${lv}</h3>部屋の力士が稽古・取組・ちゃんこで経験をもらうと、<br>同じだけ<b>部屋の経験</b>もたまるにゃ。<br><br>いま ${e} / ${needP(lv)}（次のLvまで あと ${Math.max(0,needP(lv)-e)}）<br><br>レベルが上がるたびに<br><b>💎宝石 ${PLV_GEM}個</b>と<b>⚡体力が満タン</b>！`,[{t:'OK',c:'gold'}]);}
 function refreshHome(){refreshHUD();refreshDailyDot();refreshNews();$('hName').textContent=S.name;$('hRank').textContent='最高位 '+RANKS[topRank()];
-  const b=BASHO[S.basho.i];$('bashoTag').innerHTML=`${b[0]}　${S.basho.day>=7?'千秋楽まで終了':DAYN[S.basho.day]}`+(rookie()?`<div class="rkB"><div class="rkT">🔰 新弟子期間（あと${ROOKIE_BASHO-(S.stats.bashos||0)}場所）</div><div class="rkR"><span>稽古：体力消費 <b>2</b></span><span>取組：<b>無制限</b></span><span>経験 <b>2倍</b></span></div></div>`:'');$('bashoTag').classList.toggle('rk',rookie());}
+  const b=BASHO[S.basho.i];$('bashoTag').innerHTML=homeExpHTML()+`${b[0]}　${S.basho.day>=7?'千秋楽まで終了':DAYN[S.basho.day]}`+(rookie()?`<div class="rkB"><div class="rkT">🔰 新弟子期間（あと${ROOKIE_BASHO-(S.stats.bashos||0)}場所）</div><div class="rkR"><span>稽古：体力消費 <b>2</b></span><span>取組：<b>無制限</b></span><span>経験 <b>2倍</b></span></div></div>`:'');$('bashoTag').classList.toggle('rk',rookie());const hx=$('bashoTag').querySelector('.hxR');if(hx)hx.onclick=e=>{e.stopPropagation();sfx('tap');plvInfo();};}
 
 // ホームのボタン
 // ================= 猫神社：願掛け・おみくじ（どちらも1日1回・無料）=================
