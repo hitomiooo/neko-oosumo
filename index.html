@@ -2131,6 +2131,14 @@ const CONTACT_GAS='https://script.google.com/macros/s/AKfycbzaQho2-4v1R4POzER1e5
 const GAME_VER='2026-11-18';
 const CONTACT_TOKEN='nyk-2026-paw';   // スプレッドシートのスクリプトの TOKEN と同じにする
 let ctT0=0;                          // お問い合わせ画面を開いた時刻（速すぎる送信をはじく）
+// ---- 遊んでいる人数を数える（端末ごとに1日1回だけ「来たよ」を送る。名前などは送らない）----
+const PING_ON=true;   // テスト版（運営画面つき）では数えない
+function pingVisit(){try{
+  if(!PING_ON||!CONTACT_GAS||!/^https:/.test(location.protocol))return;
+  const t=today();if(S.pingDay===t)return;
+  const first=!S.pinged;S.pingDay=t;S.pinged=1;save();
+  fetch(CONTACT_GAS,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({t:CONTACT_TOKEN,type:'ping',isNew:first?1:0,ver:GAME_VER})}).catch(()=>{});
+}catch(e){}}
 const escH=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 async function openContact(d={}){
   if(!ctT0)ctT0=Date.now();
@@ -2351,7 +2359,7 @@ setFrame(tCat,'fall',0);
 $('gate').addEventListener('click',()=>{const a=ac();if(a&&a.resume)a.resume();musicInit();
   // iPhoneで音を出せるようにする
   try{const b=a.createBuffer(1,1,22050),src=a.createBufferSource();src.buffer=b;src.connect(a.destination);src.start(0);}catch(e){}
-  gateRun=false;$('gate').remove();cloudStart();cur='title';bgm('title');playTitle();});
+  gateRun=false;$('gate').remove();cloudStart();pingVisit();cur='title';bgm('title');playTitle();});
 </script>
 </body>
 </html>
