@@ -298,7 +298,7 @@ button{font-family:inherit}
 .tRow .nm{font-size:4.6cqw;font-weight:900}
 .tRow .rk{font-size:3.2cqw;color:#ffd96a}
 .tRow .rec{margin-left:auto;text-align:right;font-size:3.4cqw;font-family:sans-serif}
-.stars{letter-spacing:.2cqw;font-size:3.6cqw}
+.stars{display:inline-flex;gap:.8cqw;margin-top:.6cqw}.stars i{display:inline-block;width:3.2cqw;height:3.2cqw;border-radius:50%;box-sizing:border-box}.stars i.w{background:#fff;border:.5cqw solid #3b0a4f;box-shadow:0 0 0 .3cqw #fff}.stars i.l{background:#111;box-shadow:0 0 0 .3cqw #c9d0e4}
 .stars .w{color:#fff}.stars .l{color:#111;text-shadow:0 0 .3cqw #fff}
 
 /* 番付表 */
@@ -826,12 +826,13 @@ button{font-family:inherit}
 #bashoTag .hxB{display:inline-block;width:26cqw;height:2.2cqw;background:#1a0626;border-radius:2cqw;overflow:hidden;border:.25cqw solid rgba(126,230,255,.5)}
 #bashoTag .hxB i{display:block;height:100%;background:linear-gradient(90deg,#7ee6ff,#b07cf0)}
 #bashoTag .hxT{color:#bfe9ff;font-size:2.7cqw}
-.hsTeam{display:grid;grid-template-columns:repeat(3,1fr);gap:2.4cqw;background:linear-gradient(#5b2380,#3b0a4f);border:.6cqw solid #e8b84a;border-radius:3cqw;padding:2.4cqw}
-.hsSl{position:relative;background:linear-gradient(#3e1656,#250a35);border:.5cqw solid #8a5cb0;border-radius:2.4cqw;padding:1cqw 1cqw 1.6cqw;text-align:center;cursor:pointer;min-height:40cqw;color:#fff3c4}
+.hsTeam{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2.4cqw;background:linear-gradient(#5b2380,#3b0a4f);border:.6cqw solid #e8b84a;border-radius:3cqw;padding:2.4cqw}
+.hsSl{position:relative;background:linear-gradient(#3e1656,#250a35);border:.5cqw solid #8a5cb0;border-radius:2.4cqw;padding:1cqw 1cqw 1.6cqw;text-align:center;cursor:pointer;min-height:0;min-width:0;color:#fff3c4;display:flex;flex-direction:column;justify-content:flex-start}
 .hsSl.on{border-color:#ffd34d;box-shadow:0 0 0 .6cqw #ffd34d,0 0 3cqw rgba(255,211,77,.7)}
 .hsSl.wait{animation:hsW 1s ease-in-out infinite}@keyframes hsW{50%{box-shadow:0 0 0 .6cqw #7ad0ff}}
 .hsNo{font-size:3cqw;font-weight:900;color:#3b0a4f;background:#e8b84a;border-radius:2cqw;margin:0 auto 1cqw;width:fit-content;padding:0 2cqw}
-.hsNm{font-size:3cqw;font-weight:900;white-space:nowrap;overflow:hidden}.hsRk{font-size:2.5cqw;color:#ffd96a}
+.hsNm{font-size:3cqw;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hsSl .card{width:100%}.hsRk{font-size:2.5cqw;color:#ffd96a}
 .hsEmpty{font-size:4cqw;font-weight:900;color:#a98bc4;padding-top:9cqw;line-height:1.4}
 .hsX{position:absolute;right:-1cqw;top:-1.4cqw;background:#e0434f;color:#fff;font-size:2.5cqw;font-weight:900;border-radius:2cqw;padding:.2cqw 1.4cqw;font-family:sans-serif}
 .hsGuide{margin:2cqw 0 0;text-align:center;font-size:3.2cqw;font-weight:900;color:#fff3c4;background:rgba(255,255,255,.08);border-radius:2cqw;padding:1.6cqw}
@@ -1117,7 +1118,7 @@ function fire(id){const e=$(id);e.classList.remove('go');void e.offsetWidth;e.cl
 let toastT;function toast(t,ms=1500){const e=$('toast');e.innerHTML=t;e.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('on'),ms);}
 function modal(html,btns=[{t:'とじる'}]){
   return new Promise(res=>{const b=$('mBox');b.innerHTML=html;const row=document.createElement('div');row.className='mBtns';
-    btns.forEach((x,i)=>{const e=document.createElement('div');e.className='btn '+(x.c||'');e.textContent=x.t;e.onclick=()=>{$('modal').classList.remove('on');res(i);};row.appendChild(e);});
+    const t0=Date.now();btns.forEach((x,i)=>{const e=document.createElement('div');e.className='btn '+(x.c||'');e.textContent=x.t;e.onclick=()=>{if(Date.now()-t0<600)return;$('modal').classList.remove('on');res(i);};row.appendChild(e);});
     b.appendChild(row);$('modal').classList.add('on');});}
 let cur='title';const hist=[];
 function show(id,push=true){
@@ -1375,7 +1376,7 @@ function homeExpHTML(){const lv=S.plv||1,e=S.pexp||0,need=needP(lv),pc=Math.min(
   return `<div class="hxR"><span class="hxN">🏯 部屋</span><span class="hxL">Lv${lv}</span><span class="hxB"><i style="width:${pc}%"></i></span><span class="hxT">あと${Math.max(0,need-e)}</span></div>`;}
 function plvInfo(){const lv=S.plv||1,e=S.pexp||0;modal(`<h3>🏯 部屋レベル Lv${lv}</h3>稽古・取組・ちゃんこをするたびに<br><b>部屋の経験</b>がたまるにゃ。<br>（猫のレベルとは別だよ）<br>稽古 +${PEXP.keiko}（新弟子期間は +${PEXP.keikoRookie}）・取組 勝ち +${PEXP.win}／負け +${PEXP.lose}・ちゃんこ +${PEXP.chanko}<br><br>いま ${e} / ${needP(lv)}（次のLvまで あと ${Math.max(0,needP(lv)-e)}）<br><br>レベルが上がるたびに<br><b>💎宝石 ${PLV_GEM}個</b>と<b>⚡体力が満タン</b>！`,[{t:'OK',c:'gold'}]);}
 function refreshHome(){refreshHUD();refreshDailyDot();refreshNews();$('hName').textContent=S.name;$('hRank').textContent='最高位 '+RANKS[topRank()];
-  const b=BASHO[S.basho.i];$('bashoTag').innerHTML=homeExpHTML()+`${b[0]}　${S.basho.day>=7?'千秋楽まで終了':DAYN[S.basho.day]}`+(rookie()?`<div class="rkB"><div class="rkT">🔰 新弟子期間（あと${ROOKIE_BASHO-(S.stats.bashos||0)}場所）</div><div class="rkR"><span>稽古：体力消費 <b>2</b></span><span>取組：<b>無制限</b></span><span>経験 <b>2倍</b></span></div></div>`:'');$('bashoTag').classList.toggle('rk',rookie());const hx=$('bashoTag').querySelector('.hxR');if(hx)hx.onclick=e=>{e.stopPropagation();sfx('tap');plvInfo();};}
+  const b=BASHO[S.basho.i];$('bashoTag').innerHTML=homeExpHTML()+`${b[0]}　${S.basho.day>=7?'千秋楽まで終了 → <b style="color:#ffd34d">本場所で結果を見てね</b>':DAYN[S.basho.day]}`+(rookie()?`<div class="rkB"><div class="rkT">🔰 新弟子期間（あと${ROOKIE_BASHO-(S.stats.bashos||0)}場所）</div><div class="rkR"><span>稽古：体力消費 <b>2</b></span><span>取組：<b>無制限</b></span><span>経験 <b>2倍</b></span></div></div>`:'');$('bashoTag').classList.toggle('rk',rookie());const hx=$('bashoTag').querySelector('.hxR');if(hx)hx.onclick=e=>{e.stopPropagation();sfx('tap');plvInfo();};}
 
 // ホームのボタン
 // ================= 猫神社：願掛け・おみくじ（どちらも1日1回・無料）=================
@@ -1462,7 +1463,7 @@ const GO={
   hensei:()=>{renderHensei();show('hensei');},zukan:()=>{renderZukan();show('zukan');},friend:()=>{renderFriend();show('friend');},
   event:()=>{renderEvent();show('event');evMovie();},seiseki:()=>{renderSeiseki();show('seiseki');},
   heya:()=>{renderHeya();show('heya');},shop:()=>{renderShop();show('shop');},koubou:()=>{renderKoubou();show('koubou');},hanko:()=>{renderHanko();show('hanko');},chankoSel:()=>{if(!ownIds().length)return toast('まだ力士がいないにゃ');renderChankoSel();show('chankoSel');},keikoPick:()=>{if(!ownIds().length)return;renderKeikoSel();show('keikoSel');},
-  basho:()=>{renderBasho();show('basho');},gacha:()=>{renderGacha();show('gacha');}
+  basho:()=>{show('basho');renderBasho();},gacha:()=>{renderGacha();show('gacha');}
 };
 document.querySelectorAll('#home [data-go]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();sfx('tap');GO[b.dataset.go]();}));
 $('bzBack').addEventListener('click',e=>{e.stopPropagation();show('home');});
@@ -2205,7 +2206,7 @@ cut.addEventListener('click',async e=>{e.stopPropagation();if(!cut.classList.con
 
 // ================= 本場所 =================
 function bashoRec(id){return S.basho.rec[id]||(S.basho.rec[id]={w:0,l:0,d:[]});}
-function starsHTML(r){return'<span class="stars">'+r.d.map(x=>x?'<span class="w">○</span>':'<span class="l">●</span>').join('')+'</span>';}
+function starsHTML(r){return'<span class="stars">'+r.d.map(x=>x?'<i class="w"></i>':'<i class="l"></i>').join('')+'</span>';}
 function renderBasho(){const B=$('bBody');const b=BASHO[S.basho.i];const day=S.basho.day;
   B.innerHTML=`<div class="bTitle">${b[0]}</div><div class="bSub">${b[1]}　${day>=7?'全日程終了':DAYN[day]}</div>`;
   const dd=document.createElement('div');dd.className='dayDots';for(let i=0;i<7;i++)dd.insertAdjacentHTML('beforeend',`<span class="${i<day?'done':i===day?'now':''}">${i+1}</span>`);B.appendChild(dd);
@@ -2217,7 +2218,8 @@ function renderBasho(){const B=$('bBody');const b=BASHO[S.basho.i];const day=S.b
     if(day<7&&!fought){const bt=document.createElement('div');bt.className='btn red';bt.style.cssText='font-size:3.8cqw;padding:1.6cqw 2.4cqw;margin-left:1cqw';bt.textContent='取組';bt.onclick=()=>boutFor(id);row.appendChild(bt);}
     B.appendChild(row);});
   const ft=document.createElement('div');ft.className='mBtns';
-  if(day>=7){const e=document.createElement('div');e.className='btn gold';e.textContent='場所の結果を見る';e.onclick=endBasho;ft.appendChild(e);}
+  if(day>=7){const e=document.createElement('div');e.className='btn gold';e.textContent='場所の結果を見る';e.onclick=endBasho;ft.appendChild(e);
+    if(!ebBusy&&cur==='basho')setTimeout(()=>{if(cur==='basho'&&S.basho.day>=7&&!ebBusy)endBasho();},700);}
   else if(allDone){const e=document.createElement('div');e.className='btn gold';e.textContent=day===6?'千秋楽をおえる':'次の日へ';e.onclick=()=>{S.basho.day++;save();renderBasho();};ft.appendChild(e);}
   else{const e=document.createElement('div');e.className='btn';e.textContent='まとめて取組（おまかせ）';e.onclick=()=>autoAll();ft.appendChild(e);}
   B.appendChild(ft);
@@ -2262,13 +2264,19 @@ function boutFor(id,auto=false){
   });}
 function waitCutThen(fn){const iv=setInterval(()=>{if(BT&&BT.over){clearInterval(iv);fn();}},200);}
 async function autoAll(){for(const id of S.team){const r=bashoRec(id);if(r.d.length<=S.basho.day){await boutFor(id,true);if(boutCost()&&S.hp<boutCost())break;}}}
-async function endBasho(){const b=BASHO[S.basho.i];let html=`<h3>${b[0]} 結果</h3>`;let yusho=false,gemSum=0;
-  S.team.forEach(id=>{const c=S.cats[id],r=bashoRec(id);const old=c.rank;let msg='';
-    if(r.w===7){c.rank=Math.min(9,c.rank+2);msg='全勝優勝！';yusho=true;gemSum+=50;S.stats.yusho++;}
+let ebBusy=false;
+async function endBasho(){if(ebBusy||S.basho.day<7)return;ebBusy=true;try{await endBasho2();}finally{ebBusy=false;}}
+async function endBasho2(){const b=BASHO[S.basho.i];let html=`<h3>${b[0]} 結果</h3>`;let yusho=false,gemSum=0;
+  // この場所で取組をした猫（途中で入れかえた猫もふくむ）＋いまの出場の猫
+  const ids=[...new Set(S.team.concat(Object.keys(S.basho.rec).map(Number).filter(id=>S.cats[id]&&(S.basho.rec[id].d||[]).length)))];
+  ids.forEach(id=>{const c=S.cats[id],r=bashoRec(id);const old=c.rank;let msg='';const n=r.d.length;
+    if(n===0)msg='休場（番付そのまま）';
+    else if(r.w===7){c.rank=Math.min(9,c.rank+2);msg='全勝優勝！';yusho=true;gemSum+=50;S.stats.yusho++;}
     else if(r.w>=4){c.rank=Math.min(9,c.rank+1);msg='勝ち越し';gemSum+=10;}
-    else if(r.w<=2&&c.rank>0){c.rank--;msg='負け越し';}else msg='負け越し';
-    if(r.d.length===0)msg='休場';
-    html+=`<div style="margin:1.4cqw 0"><b>${NAMES[id-1]}</b> ${r.w}勝${r.l}敗　${msg}<br>${RANKS[old]} → <b style="color:${c.rank>old?'#c0392b':c.rank<old?'#2c5ea8':'#333'}">${RANKS[c.rank]}</b></div>`;});
+    else if(r.l>=5&&c.rank>0){c.rank--;msg='大きく負け越し';}
+    else if(r.l>r.w)msg='負け越し（番付そのまま）';
+    else msg=n<7?'途中出場（番付そのまま）':'五分（番付そのまま）';
+    html+=`<div style="margin:1.4cqw 0"><b>${NAMES[id-1]}</b> ${r.w}勝${r.l}敗 ${starsHTML(r)}<br>${msg}<br>${RANKS[old]} → <b style="color:${c.rank>old?'#c0392b':c.rank<old?'#2c5ea8':'#333'}">${RANKS[c.rank]}</b></div>`;});
   if(yusho){const left=KESHO.map((_,i)=>i).filter(i=>!S.kesho.includes(i)&&KESHO[i][7]!=='ev');if(left.length){const g=left[Math.floor(rnd()*left.length)];S.kesho.push(g);html+=`<div style="margin-top:2cqw;color:#c0392b"><b>優勝のほうび！</b> 化粧まわし「${KESHO[g][0]}」をもらった</div>`;}}
   S.gem+=gemSum;S.stats.bashos++;S.basho={i:(S.basho.i+1)%6,day:0,rec:{}};save();
   html+=`<div style="margin-top:2cqw">ほうび：宝石 +${gemSum}</div><div style="margin-top:1cqw">次は <b>${BASHO[S.basho.i][0]}</b> だにゃ</div>`;
