@@ -7,6 +7,10 @@
 <title>にゃんこ大相撲</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+/* スマホで連打しても拡大しない・長押しで文字選択やメニューが出ない */
+html,body,button,.btn,#stage,#stage *{touch-action:manipulation}
+body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+input,textarea,select{-webkit-user-select:text;user-select:text}
 html,body{height:100%;background:#1a0f22;overflow:hidden;font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP","Noto Serif CJK JP",serif}
 #wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
 #stage{position:relative;width:min(100vw,calc(100dvh * 0.5622));aspect-ratio:940/1672;overflow:hidden;container-type:size;background:#000}
@@ -333,9 +337,9 @@ button{font-family:inherit}
 @keyframes droop{0%{opacity:0;transform:translateY(-18cqw) rotate(-8deg)}45%{opacity:1;transform:translateY(0) rotate(-8deg)}65%{transform:translateY(-1.5cqw) rotate(-6deg)}100%{opacity:1;transform:translateY(1.5cqw) rotate(-3deg)}}
 @keyframes fadeOut{to{opacity:0}}
 #cutSub{position:absolute;left:0;right:0;top:58%;text-align:center;opacity:0;font-weight:900}
-#cutStar{display:inline-block;font-size:9cqw;width:14cqw;height:14cqw;line-height:14cqw;border-radius:50%;vertical-align:middle;margin-right:2cqw}
-#cut.win #cutStar{background:#fffaf0;color:#a8102a;border:1cqw solid #e8b84a}
-#cut.lose #cutStar{background:#111;color:#ddd;border:1cqw solid #666}
+#cutStar{display:inline-block;width:11cqw;height:11cqw;border-radius:50%;vertical-align:middle;margin-right:2.4cqw;box-sizing:border-box}
+#cut.win #cutStar{background:#fff;border:.9cqw solid #3b0a4f;box-shadow:0 0 0 .6cqw #fff,0 0 2.4cqw rgba(255,220,120,.9)}
+#cut.lose #cutStar{background:#111;border:none;box-shadow:0 0 0 .6cqw #c9d0e4}
 #cutKimari{font-size:7cqw;color:#fff;vertical-align:middle;-webkit-text-stroke:.4cqw #3b0a4f;paint-order:stroke fill}
 #cut.lose #cutKimari{-webkit-text-stroke-color:#0c0e18;color:#c9d0e4}
 #cutReward{display:block;margin-top:2cqw;font-size:4.4cqw;color:#ffd96a;-webkit-text-stroke:.3cqw #3b0a4f;paint-order:stroke fill}
@@ -1040,10 +1044,10 @@ function expLeft(c){return c.lv>=lvCap(c)?'レベル上限（番付が上がる�
 function addExp(id,c,n){
   if(persOf(id)===4&&n.fromBout)n.v*=1.5;
   const ko=keshoOf(c);const em=ko?(ko[6]==='exp'?1.2:ko[6]==='exp2'?1.4:1):1;
-  let v=Math.round(n.v*(rookie()?2:1)*em),ups=0;c.exp+=v;LAST_EXP=v;addPExp(v);
+  let v=Math.round(n.v*(rookie()?2:1)*em),ups=0;c.exp+=v;LAST_EXP=v;
   while(c.lv<lvCap(c)&&c.exp>=needExp(c.lv)){c.exp-=needExp(c.lv);c.lv++;ups++;}
   if(c.lv>=lvCap(c))c.exp=Math.min(c.exp,needExp(c.lv));
-  if(ups>0){tickHP();if(S.hp<HP_MAX){S.hp=HP_MAX;S.hpAt=Date.now();}if(typeof refreshHUD==='function')refreshHUD();}   // レベルアップで体力が満タンに
+  if(ups>0&&typeof refreshHUD==='function')refreshHUD();
   return ups;
 }
 function power(st){return st.pow+st.spd+st.wt+st.tec;}
@@ -1116,7 +1120,7 @@ function sfx(type){
 
 // ================= 音楽 =================
 // mp3：タイトル・ホーム・取組・優勝　／　コードで作る曲：稽古・ガチャ・ジングル
-const BGM_FILE={event:'bgm/event.mp3',title:'bgm/title.mp3',friend:'bgm/title.mp3',home:'bgm/home.mp3',bout:'bgm/bout.mp3',victory:'bgm/victory.mp3'};
+const BGM_FILE={event:'bgm/event.mp3',title:'bgm/title.mp3',friend:'bgm/title.mp3',home:'bgm/home.mp3',bout:'bgm/bout.mp3',victory:'bgm/victory.mp3',jinja:'bgm/jinja.mp3'};
 const SEQ_BGM={keiko:1,gacha:1};
 let musGain=null,bgmEl=null,bgmGain=null,seqGain=null,sfxBus=null,curBgm=null,seqTimer=null,friendMode=false;
 function musicInit(){
@@ -1152,7 +1156,7 @@ function bgm(name){
 }
 function stopSeqSoon(){fadeTo(seqGain,0,.4);setTimeout(()=>{if(!SEQ_BGM[curBgm])stopSeq();},450);}
 function duck(on){fadeTo(musGain,on?.25:1,on?.15:.6);}
-const SCREEN_BGM={title:'title',home:'home',zukan:'home',heya:'home',hensei:'home',detail:'home',chankoS:'home',keikoSel:'home',event:'event',shop:'home',seiseki:'home',banzuke:'home',basho:'home',friend:'home',keiko:'keiko',gacha:'gacha'};
+const SCREEN_BGM={title:'title',home:'home',zukan:'home',heya:'home',hensei:'home',detail:'home',chankoS:'home',keikoSel:'home',event:'event',shop:'home',seiseki:'home',banzuke:'home',basho:'home',friend:'home',keiko:'keiko',gacha:'gacha',jinja:'jinja'};
 function screenBgm(id){if(id==='bout')bgm(friendMode?'friend':'bout');else if(SCREEN_BGM[id])bgm(SCREEN_BGM[id]);}
 
 // ---- 楽器（WebAudio）----
@@ -1326,6 +1330,8 @@ function openDaily(){const D=dm();const allGot=DAILY.every(m=>D.got[m.k]);
 // ---- 部屋レベル（プレイヤー全体の経験値）：力士が経験をもらうたび、同じだけ部屋にもたまる ----
 function needP(lv){return 40+lv*20;}
 const PLV_GEM=5;   // 部屋レベルアップのごほうび（宝石）＋体力満タン
+// 部屋の経験は猫のレベルとは別：やったことの回数でたまる（新しい猫を育てても早く上がらない）
+const PEXP={keiko:10,keikoRookie:2,chanko:8,win:20,lose:10};   // 新弟子期間は稽古の体力が2なので、部屋の経験も2
 function addPExp(v){if(!(v>0))return 0;S.plv=S.plv||1;S.pexp=(S.pexp||0)+v;let up=0;
   while(S.pexp>=needP(S.plv)){S.pexp-=needP(S.plv);S.plv++;up++;}
   if(up){S.gem+=PLV_GEM*up;tickHP();if(S.hp<HP_MAX){S.hp=HP_MAX;S.hpAt=Date.now();}rlog('部屋レベルアップ',`Lv${S.plv}：宝石 ${PLV_GEM*up}・体力満タン`);
@@ -1333,7 +1339,7 @@ function addPExp(v){if(!(v>0))return 0;S.plv=S.plv||1;S.pexp=(S.pexp||0)+v;let u
   return up;}
 function homeExpHTML(){const lv=S.plv||1,e=S.pexp||0,need=needP(lv),pc=Math.min(100,e/need*100);
   return `<div class="hxR"><span class="hxN">🏯 部屋</span><span class="hxL">Lv${lv}</span><span class="hxB"><i style="width:${pc}%"></i></span><span class="hxT">あと${Math.max(0,need-e)}</span></div>`;}
-function plvInfo(){const lv=S.plv||1,e=S.pexp||0;modal(`<h3>🏯 部屋レベル Lv${lv}</h3>部屋の力士が稽古・取組・ちゃんこで経験をもらうと、<br>同じだけ<b>部屋の経験</b>もたまるにゃ。<br><br>いま ${e} / ${needP(lv)}（次のLvまで あと ${Math.max(0,needP(lv)-e)}）<br><br>レベルが上がるたびに<br><b>💎宝石 ${PLV_GEM}個</b>と<b>⚡体力が満タン</b>！`,[{t:'OK',c:'gold'}]);}
+function plvInfo(){const lv=S.plv||1,e=S.pexp||0;modal(`<h3>🏯 部屋レベル Lv${lv}</h3>稽古・取組・ちゃんこをするたびに<br><b>部屋の経験</b>がたまるにゃ。<br>（猫のレベルとは別だよ）<br>稽古 +${PEXP.keiko}（新弟子期間は +${PEXP.keikoRookie}）・取組 勝ち +${PEXP.win}／負け +${PEXP.lose}・ちゃんこ +${PEXP.chanko}<br><br>いま ${e} / ${needP(lv)}（次のLvまで あと ${Math.max(0,needP(lv)-e)}）<br><br>レベルが上がるたびに<br><b>💎宝石 ${PLV_GEM}個</b>と<b>⚡体力が満タン</b>！`,[{t:'OK',c:'gold'}]);}
 function refreshHome(){refreshHUD();refreshDailyDot();refreshNews();$('hName').textContent=S.name;$('hRank').textContent='最高位 '+RANKS[topRank()];
   const b=BASHO[S.basho.i];$('bashoTag').innerHTML=homeExpHTML()+`${b[0]}　${S.basho.day>=7?'千秋楽まで終了':DAYN[S.basho.day]}`+(rookie()?`<div class="rkB"><div class="rkT">🔰 新弟子期間（あと${ROOKIE_BASHO-(S.stats.bashos||0)}場所）</div><div class="rkR"><span>稽古：体力消費 <b>2</b></span><span>取組：<b>無制限</b></span><span>経験 <b>2倍</b></span></div></div>`:'');$('bashoTag').classList.toggle('rk',rookie());const hx=$('bashoTag').querySelector('.hxR');if(hx)hx.onclick=e=>{e.stopPropagation();sfx('tap');plvInfo();};}
 
@@ -1457,6 +1463,7 @@ function moneyInfo(kind){sfx('tap');
    <div class="h">回復</div>
    ・2分で1回復<br>
    ・贈り物で満タン（1日1回）<br>
+   ・部屋レベルアップで満タン<br>
    ・ちゃんこ「スタミナ」「野菜たっぷり」「みぞれ」でも回復</div>`);}
 }
 $('pCoin').onclick=e=>{e.stopPropagation();moneyInfo('coin');};
@@ -1924,14 +1931,14 @@ async function doKeiko(i){const id=dId,c=S.cats[id],k=KEIKO[i];const cost=keikoC
   const mul=(persOf(id)===0?1.3:1)*(1+c.nat/200);const out=[];
   for(const s in k.g){const cap=trainCap(id,c,s);const before=c.t[s];const add=Math.round((k.g[s]+rnd()*2)*mul);c.t[s]=Math.min(cap,c.t[s]+add);
     const d=c.t[s]-before;out.push(d>0?`${STATN[s]} +${d}`:`${STATN[s]} は今のレベルの上限`);}
-  const ups=addExp(id,c,{v:18*mul});
+  const ups=addExp(id,c,{v:18*mul});addPExp(rookie()?PEXP.keikoRookie:PEXP.keiko);
   let learned=-1;
   if(k.waza){const ch=.22+c.nat/400+tierOf(id)/200;if(rnd()<ch){const pool=[...Array(81).keys()].filter(x=>!c.waza.includes(x));
     if(pool.length){const easy=pool.filter(x=>BASIC.flat().includes(x));const src=(easy.length&&rnd()<.5)?easy:pool;learned=src[Math.floor(rnd()*src.length)];c.waza.push(learned);}}}
   save();
   const A=$('anim');$('aTxt').textContent=k.n+'！';$('aImg').src=k.img;$('aRes').innerHTML='';A.classList.add('on');sfx('don');
   await sleep(1700);
-  let html=out.join('　')+`<br>経験 +${LAST_EXP}<span class="small">（${expLeft(c)}）</span>`+(ups?`<br><span style="color:#ffd34d">レベルアップ！ Lv${c.lv}</span><br><span style="color:#7dff9a">⚡ 体力が満タンになった！</span>`:'');
+  let html=out.join('　')+`<br>経験 +${LAST_EXP}<span class="small">（${expLeft(c)}）</span>`+(ups?`<br><span style="color:#ffd34d">レベルアップ！ Lv${c.lv}</span>`:'');
   if(learned>=0){html+=`<br><span style="color:#ff9cd8">決まり手「${WAZA[learned]}」を覚えた！</span>`;sfx('rare');}
   $('aRes').innerHTML=html;if(ups&&learned<0)jingle('level');
   if(learned>=0){const w=wazaEl(learned);w.style.width='40cqw';w.style.margin='0 auto';$('aRes').appendChild(w);}
@@ -1964,14 +1971,14 @@ function renderChanko(){const id=dId,c=S.cats[id];const B=$('cBody');
     const im=chankoEl(i);im.style.width='20cqw';e.appendChild(im);e.insertAdjacentHTML('beforeend',`<div><div class="t" style="font-size:4cqw">${k[0]}${rc&&rc.i===i?' <span class="recB">親方のおすすめ</span>':''}</div><div class="d">${ef}</div></div><div class="p">${(S.ckFree||{})[i]>0?`🎁無料×${S.ckFree[i]}`:`🐾${k[1]}`}</div>`);
     e.onclick=()=>eat(i);if(rc&&rc.i===i)L.prepend(e);else L.appendChild(e);});B.appendChild(L);}
 async function eat(i){const id=dId,c=S.cats[id],k=CHANKO[i];if((S.ckFree||{})[i]>0){S.ckFree[i]--;}else{if(S.coin<k[1])return toast('コインが足りないにゃ');S.coin-=k[1];}dailyAdd('chanko');
-  const mul=persOf(id)===1?1.5:1;const out=[];let ups=0;
+  const mul=persOf(id)===1?1.5:1;const out=[];let ups=0;addPExp(PEXP.chanko);
   for(const[a,v0] of Object.entries(k[2])){const v=Math.round(v0*mul);
     if(a==='exp'){ups=addExp(id,c,{v});out.push(`経験+${LAST_EXP}`);}
     else if(a==='nat'){c.nat=Math.min(100,c.nat+v);out.push(`なつき+${v}`);}
     else if(a==='hp'){tickHP();S.hp=Math.min(HP_MAX,S.hp+v);out.push(`体力+${v}`);}
     else{const cap=trainCap(id,c,a)+10;const b=c.t[a];c.t[a]=Math.min(cap,c.t[a]+v);out.push(`${STATN[a]}+${c.t[a]-b}`);}}
   save();const A=$('anim');$('aTxt').textContent=k[0];$('aImg').src=rnd()<.5?'img/chanko_eat.webp?v=5':'img/chanko_eat2.webp?v=5';$('aRes').innerHTML='';A.classList.add('on');jingle('chanko');
-  await sleep(1500);$('aRes').innerHTML=`ごっつぁんです！<br>${out.join('　')}${ups?`<br><span style="color:#ffd34d">レベルアップ！ Lv${c.lv}</span><br><span style="color:#7dff9a">⚡ 体力が満タンになった！</span>`:''}<div class="small" style="margin-top:2cqw">タップでもどる</div>`;
+  await sleep(1500);$('aRes').innerHTML=`ごっつぁんです！<br>${out.join('　')}${ups?`<br><span style="color:#ffd34d">レベルアップ！ Lv${c.lv}</span>`:''}<div class="small" style="margin-top:2cqw">タップでもどる</div>`;
   A.onclick=()=>{A.classList.remove('on');A.onclick=null;renderChanko();};}
 
 // ================= 取組のしくみ =================
@@ -2096,7 +2103,7 @@ const cut=$('cut'),cutCat=$('cutCat');let cutRun=0,cutRes=null;
 function cutIn(win,kimarite,reward=''){
   return new Promise(async res=>{cutRes=res;const run=++cutRun;
     cut.className='';void cut.offsetWidth;cut.className=(win?'win':'lose')+' on';
-    $('cutWord').textContent=win?'勝ち':'負け';$('cutStar').textContent=win?'○':'●';
+    $('cutWord').textContent=win?'勝ち':'負け';$('cutStar').textContent='';
     $('cutKimari').textContent=win?`${kimarite}で白星！`:`${kimarite}で黒星…`;$('cutReward').innerHTML=reward;
     shake(win?'shake':'shakeS');sfx(win?'win':'lose');
     if(win){const cols=['#ffd34d','#ff7fb0','#ffffff','#b07bd8','#ff5a5a'];
@@ -2160,8 +2167,8 @@ function boutFor(id,auto=false){
   return new Promise(res=>{
     startBout({me:{id,c,name:NAMES[id-1]},opp,bg:BASHO[S.basho.i][2],day:`${BASHO[S.basho.i][0]} ${DAYN[day]}`,auto,kaku:Math.random()<KAKU_P,
       onEnd:(win)=>{const r=bashoRec(id);r.d.push(win?1:0);if(win){r.w++;c.w++;S.stats.w++;}else{r.l++;c.l++;S.stats.l++;}
-        const kc=keshoOf(c);const coin=Math.round((win?80+c.rank*20:20)*(kc?(kc[6]==='coin'?1.2:kc[6]==='coin2'?1.5:1):1)),gem=win?2:0;S.coin+=coin;S.gem+=gem;const ups=addExp(id,c,{v:win?30:12,fromBout:true});save();
-        return`コイン+${coin}${gem?'　宝石+'+gem:''}　経験+${LAST_EXP}${ups?'<br>レベルアップ！ Lv'+c.lv+'　⚡体力が満タンに！':''}<br><span class="small">${expLeft(c)}</span>`;}});
+        const kc=keshoOf(c);const coin=Math.round((win?80+c.rank*20:20)*(kc?(kc[6]==='coin'?1.2:kc[6]==='coin2'?1.5:1):1)),gem=win?2:0;S.coin+=coin;S.gem+=gem;const ups=addExp(id,c,{v:win?30:12,fromBout:true});addPExp(win?PEXP.win:PEXP.lose);save();
+        return`コイン+${coin}${gem?'　宝石+'+gem:''}　経験+${LAST_EXP}${ups?'<br>レベルアップ！ Lv'+c.lv:''}<br><span class="small">${expLeft(c)}</span>`;}});
     const chk=setInterval(()=>{if(cur!=='bout'&&!cut.classList.contains('on')){clearInterval(chk);res();}},200);
     waitCutThen(()=>{show('basho',false);renderBasho();});
   });}
@@ -2521,6 +2528,11 @@ $('gate').addEventListener('click',()=>{const a=ac();if(a&&a.resume)a.resume();m
   // iPhoneで音を出せるようにする
   try{const b=a.createBuffer(1,1,22050),src=a.createBufferSource();src.buffer=b;src.connect(a.destination);src.start(0);}catch(e){}
   gateRun=false;$('gate').remove();cloudStart();pingVisit();cur='title';bgm('title');playTitle();});
+
+// ピンチ・ダブルタップでの拡大を止める（iPhoneのSafari向け）
+['gesturestart','gesturechange','gestureend'].forEach(t=>document.addEventListener(t,e=>e.preventDefault(),{passive:false}));
+document.addEventListener('dblclick',e=>e.preventDefault(),{passive:false});
+document.addEventListener('touchmove',e=>{if(e.touches&&e.touches.length>1)e.preventDefault();},{passive:false});
 </script>
 </body>
 </html>
