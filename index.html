@@ -854,6 +854,89 @@ html,body{overscroll-behavior:none;position:fixed;inset:0;width:100%}
 .skIn{font-size:5.6cqw;text-align:center;width:70%;padding:1.6cqw;border:.6cqw solid #c9a86a;border-radius:2.4cqw;margin:1cqw 0;font-weight:900;color:#5a2a10;font-family:inherit}
 .skMy{text-align:left;max-height:38vh;overflow-y:auto;margin-top:1.6cqw}.skM{border:.4cqw solid #c9a86a;border-radius:2cqw;padding:1.4cqw 2cqw;margin:1cqw 0;cursor:pointer;background:#fff8e6}.skM.on{border-color:#c0392b;background:#ffe9e3}
 .tNm .gen{display:block;font-size:2.8cqw;color:#ffd96a}
+/* ===== 名跡帳・名跡カード ===== */
+.mzShelf{border-radius:3cqw;padding:3cqw 2.4cqw 4cqw;margin-top:1cqw;background:radial-gradient(ellipse at 50% 0,rgba(255,200,90,.25),transparent 60%),repeating-linear-gradient(90deg,#4a2412 0 6cqw,#55301a 6cqw 6.4cqw),#3a1c0c;border:.7cqw solid #c99a2e;box-shadow:inset 0 0 4cqw rgba(0,0,0,.6)}
+.mzShelf .ttl{margin:0 auto 3cqw;width:56%;text-align:center;background:linear-gradient(#5a1a5a,#3a0a3a);border:.6cqw solid #e8b53a;border-radius:3cqw;color:#ffe08a;font-weight:900;font-size:5cqw;padding:1.2cqw;text-shadow:0 .4cqw 0 #1a001a;letter-spacing:.4em}
+.mzShelf .grid2{display:grid;grid-template-columns:1fr 1fr;gap:2cqw 3cqw}
+.mzShelf .it{text-align:center;cursor:pointer}
+.mzShelf .it img{width:100%;filter:drop-shadow(0 1.2cqw 1.2cqw rgba(0,0,0,.6))}
+.mzShelf .it .n{display:inline-block;background:#fff3cf;color:#3a1206;font-weight:900;font-size:3.6cqw;padding:.5cqw 2.4cqw;border-radius:2cqw;border:.4cqw solid #c99a2e;max-width:100%;overflow:hidden;white-space:nowrap}
+.mzShelf .it .g{display:block;font-size:2.8cqw;color:#ffd96a;margin-top:.5cqw;font-family:sans-serif}
+.mzShelf .it.em{cursor:default}.mzShelf .it.em img{filter:grayscale(1) brightness(.45)}
+.mzShelf .it.em .n{background:#5a4a40;color:#bfae9a;border-color:#7a6a5a}
+.mzShelf .board{grid-column:1/-1;height:2cqw;background:linear-gradient(#d6a64a,#8a5a1a);border-radius:1cqw;margin:-.6cqw 0 1cqw;box-shadow:0 .8cqw 1cqw rgba(0,0,0,.6)}
+.mzShelf .em2{font-size:3.2cqw;color:#f3e4ff;text-align:center;line-height:1.7;margin:0 0 3cqw;font-family:sans-serif}
+
+#mzSv{position:absolute;inset:0;z-index:58;display:none;align-items:center;justify-content:safe center;flex-direction:column;background:rgba(15,4,25,.93);overflow-y:auto;padding:3cqw 0 6cqw}
+#mzSv.on{display:flex}
+#mzSv .stg{position:relative;flex:none;width:98cqw;container-type:inline-size}
+#mzSv .cl{position:absolute;left:50%;top:0;width:106%;translate:-50% -30%;transition:opacity .25s,transform .3s;z-index:3}
+#mzSv .cl.shake{animation:mzShk .5s ease-in-out}
+#mzSv .cl.gone{opacity:0;transform:scaleY(.6);pointer-events:none}
+@keyframes mzShk{20%{rotate:-4deg}40%{rotate:3deg}60%{rotate:-3deg}80%{rotate:2deg}}
+#mzSv .flash{position:absolute;left:50%;top:0;width:150%;height:60cqw;translate:-50% -30%;background:radial-gradient(ellipse,rgba(255,240,180,.95),rgba(255,200,80,.4) 30%,transparent 65%);opacity:0;pointer-events:none;z-index:4}
+#mzSv .flash.on{animation:mzFl .9s ease-out}
+@keyframes mzFl{0%{opacity:0;transform:scaleY(.3)}25%{opacity:1}100%{opacity:0;transform:scaleY(1.8)}}
+#mzSv .pap{position:relative;background:url(img/mv_top.webp?v=1) top/100% auto no-repeat,url(img/mv_bot.webp?v=1) bottom/100% auto no-repeat,url(img/mv_mid.webp?v=1) 0 0/100% 100% no-repeat;padding:15cqw 6cqw 24cqw;clip-path:inset(0 0 calc(100% - 14.5cqw) 0);opacity:0;transition:clip-path 1.2s cubic-bezier(.4,0,.2,1),opacity .1s}
+#mzSv .pap.open{opacity:1;clip-path:inset(0 0 0 0)}
+#mzSv .rb{position:absolute;left:0;width:100%;aspect-ratio:508/72;background:url(img/mv_rb2.webp?v=1) 0 0/100% 100%;top:0;opacity:0;pointer-events:none;transition:top 1.2s cubic-bezier(.4,0,.2,1);z-index:2}
+#mzSv .rb.show{opacity:1}#mzSv .rb.hide{opacity:0}
+#mzSv .pt{position:absolute;width:3cqw;height:2cqw;background:#ffb7d0;border-radius:100% 0 100% 0;opacity:0;pointer-events:none;z-index:5}
+#mzSv .pt.go{animation:mzPet 1.4s ease-out forwards}
+@keyframes mzPet{0%{opacity:1;transform:translate(0,0) rotate(0)}100%{opacity:0;transform:translate(var(--x),var(--y)) rotate(540deg)}}
+#mzSv .ttl2{display:block;width:84%;margin:-6cqw auto 1cqw}
+#mzSv .nmP{position:relative;width:100%;margin-bottom:3cqw}
+#mzSv .nmP img{display:block;width:100%}
+#mzSv .nmP .v{position:absolute;left:36%;right:3%;top:0;bottom:0;display:flex;align-items:center;justify-content:center;gap:2.4cqw;font-weight:900;color:#3a1206}
+#mzSv .nmP .v b{font-size:8cqw;letter-spacing:.1em;text-shadow:0 0 1cqw #fff;white-space:nowrap}
+#mzSv .nmP .v span{font-size:3.6cqw;color:#7a1a10;background:#fff3cf;border:.3cqw solid #c99a2e;padding:.3cqw 1.6cqw;border-radius:2cqw;white-space:nowrap}
+#mzSv .gen{display:grid;grid-template-columns:34% 1fr;gap:2.4cqw;align-items:center;margin-top:1cqw}
+#mzSv .gen .lf{position:relative;padding-top:6cqw}
+#mzSv .gen .lb{position:absolute;left:50%;top:0;translate:-50% 0;width:78%;z-index:1}
+#mzSv .gen .lb2{position:absolute;left:50%;top:0;translate:-50% 0;width:78%;height:7.4cqw;z-index:1;background:linear-gradient(#6a1a50,#3a0a30);border:.6cqw solid #f0c040;border-radius:4cqw;color:#ffe08a;font-weight:900;font-size:4.4cqw;display:flex;align-items:center;justify-content:center;box-shadow:0 .4cqw 0 #8a5a10}
+#mzSv .gen .fr{position:relative;cursor:pointer}
+#mzSv .gen .fr>img{display:block;width:100%}
+#mzSv .gen .fr .card{position:absolute;left:13%;right:13%;top:8%;bottom:9%;width:auto!important;aspect-ratio:auto}
+#mzSv .gen .fr .bn{position:absolute;left:8%;right:8%;top:40%;text-align:center;font-weight:900;color:#a89070;font-size:3.4cqw}
+#mzSv .gen .fr.cur{filter:drop-shadow(0 0 1.2cqw #ff4a6a) drop-shadow(0 0 .6cqw #ff4a6a)}
+#mzSv .gen .rt{position:relative}
+#mzSv .gen .rt img{display:block;width:100%}
+#mzSv .gen .rt .v{position:absolute;left:32%;right:4%;height:30%;display:flex;align-items:center;font-weight:900;color:#3a1206;font-size:4.6cqw;white-space:nowrap;overflow:hidden}
+#mzSv .gen .rt .v.s{font-size:4.1cqw}
+#mzSv .gen.none .rt,#mzSv .gen.none .fr{opacity:.55}
+#mzSv .arw{display:block;width:8%;margin:.6cqw 0 -.6cqw 13%}
+#mzSv .bar{display:flex;gap:2.4cqw;margin-top:3cqw;opacity:0;transition:opacity .4s;flex-wrap:wrap;justify-content:center;flex:none}
+#mzSv .bar.on{opacity:1}
+#mzSv .bar div{font-family:sans-serif;font-weight:900;font-size:3.8cqw;padding:2.4cqw 4cqw;border-radius:3cqw;background:linear-gradient(#ffe48a,#e9a91c);color:#5a1a00;border:.5cqw solid #7a3a00;cursor:pointer}
+#mzSv .bar div.off{filter:grayscale(1);opacity:.45}#mzSv .bar div.hd{display:none}
+#mzSv .hint{font-family:sans-serif;font-size:3.2cqw;color:#f3e4ff;margin-top:2cqw;opacity:.85;text-align:center;flex:none}
+
+.mzc{position:relative;width:100%;aspect-ratio:582/648;background-size:100% 100%;background-repeat:no-repeat;filter:drop-shadow(0 1.2cqw 2cqw rgba(0,0,0,.55))}
+.mzc.spring{background-image:url(img/mc_spring.webp?v=1)}.mzc.summer{background-image:url(img/mc_summer.webp?v=1)}
+.mzc.autumn{background-image:url(img/mc_autumn.webp?v=1)}.mzc.winter{background-image:url(img/mc_winter.webp?v=1)}
+.mzc .f{position:absolute;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:900;color:#3a1206;white-space:nowrap;overflow:hidden}
+.mzc .top{left:33%;top:3.3%;width:34%;height:6.2%;color:#ffe9a8;font-size:calc(var(--s)*.042);letter-spacing:.2em;text-shadow:0 .2em 0 #2a0a3a}
+.mzc .ph{left:11%;top:23.4%;width:32%;height:44.5%;white-space:normal}
+.mzc .ph .card{position:absolute;left:0;right:0;top:6%;bottom:8%;width:auto!important;aspect-ratio:auto}
+.mzc .ph .ft{position:absolute;left:0;right:0;bottom:1%;font-size:calc(var(--s)*.03);color:#7a3a10}
+.mzc .sk{left:55%;top:21%;width:38%;height:7.4%;font-size:calc(var(--s)*.06);letter-spacing:.06em}
+.mzc .noMe{position:absolute;left:68.8%;top:29.4%;width:15.8%;height:6.6%;background:radial-gradient(closest-side,#ffecbc 0,#fde6b0 70%,rgba(253,230,176,0) 100%);border-radius:30%}
+.mzc .gn{left:62%;top:29.8%;width:25.6%;height:6.2%;font-size:calc(var(--s)*.056);letter-spacing:.04em}
+.mzc .rk{left:58%;top:42.6%;width:30%;height:6.6%;font-size:calc(var(--s)*.05)}
+.mzc .rec{left:58%;top:55.8%;width:30%;height:6.6%;font-size:calc(var(--s)*.043)}
+.mzc .wz{left:56%;top:69.5%;width:34%;height:12%;font-size:calc(var(--s)*.05);flex-direction:column;line-height:1.3}
+.mzc .wz small{font-size:.6em;color:#7a3a10}
+#mzOv{position:absolute;inset:0;background:rgba(15,4,25,.9);display:none;align-items:center;justify-content:center;flex-direction:column;z-index:59;padding:4cqw}
+#mzOv.on{display:flex}
+#mzOv .box{position:relative;width:88cqw;--s:88cqw}
+#mzOv .mzc{animation:mzPop .45s cubic-bezier(.3,1.6,.5,1)}
+#mzOv .msg{font-family:sans-serif;font-weight:900;color:#ffd96a;font-size:5cqw;margin-bottom:3cqw;text-shadow:0 0 3cqw #ff9a2a;text-align:center}
+#mzOv .cl2{font-family:sans-serif;color:#fff;margin-top:4cqw;font-size:3.6cqw;opacity:.8}
+#mzOv .shine{position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);background-size:250% 100%;animation:mzShine 1.4s .3s ease-out both;mix-blend-mode:overlay;border-radius:6%}
+@keyframes mzPop{from{transform:scale(.3) rotate(-8deg);opacity:0}}
+@keyframes mzShine{from{background-position:120% 0}to{background-position:-60% 0}}
+.skP .mzB{margin-top:2cqw}
+.tab.mzT{flex-basis:100%;background:linear-gradient(#5a1a5a,#3a0a3a);color:#ffe08a;border-color:#c99a2e}
 </style>
 </head>
 <body>
@@ -1644,7 +1727,8 @@ $('gRate').onclick=()=>{let h='<h3>出る確率（1回あたり）</h3><table st
 let zTab=0;
 function renderZukan(){const B=$('zBody');B.innerHTML='';const have=Object.keys(S.dex).length;
   B.insertAdjacentHTML('beforeend',`<div class="sum">集めた力士 ${have} / 100（${Math.round(have)}%）</div>`);
-  const tabs=document.createElement('div');tabs.className='tabs';['★1-5','★6-10','★11-15','★16-20'].forEach((t,i)=>{const e=document.createElement('div');e.className='tab'+(i===zTab?' on':'');e.textContent=t;e.onclick=()=>{zTab=i;renderZukan();};tabs.appendChild(e);});B.appendChild(tabs);
+  const tabs=document.createElement('div');tabs.className='tabs';['★1-5','★6-10','★11-15','★16-20'].forEach((t,i)=>{const e=document.createElement('div');e.className='tab'+(i===zTab?' on':'');e.textContent=t;e.onclick=()=>{zTab=i;renderZukan();};tabs.appendChild(e);});{const e=document.createElement('div');e.className='tab mzT'+(zTab===9?' on':'');e.textContent='📜 名跡帳（巻物）';e.onclick=()=>{zTab=9;sfx('tap');renderZukan();};tabs.appendChild(e);}B.appendChild(tabs);
+  if(zTab===9){mzShelf(B);return;}
   const g=document.createElement('div');g.className='grid';
   for(let id=zTab*25+1;id<=zTab*25+25;id++){const own=!!S.dex[id];const c=document.createElement('div');c.className='cell r'+tierCol(tierOf(id));
     c.innerHTML=`<span class="no">${String(id).padStart(3,'0')}</span><span class="st">${RARE[tierCol(tierOf(id))]} ★${tierOf(id)}</span>`;const cc=catCard(id,own?'':'sil');c.appendChild(cc);
@@ -1749,7 +1833,7 @@ function pet(id){const c=S.cats[id];if(Date.now()-c.pet<10*60000)return toast('�
 // ---- 化粧まわし屋 ----
 // ---- 力士工房（中に工房が増えていく）----
 const KOUBOU=[{k:'shop',img:'kb_mawashi',d:'化粧まわしを買う・つける'},{k:'hanko',img:'kb_hanko',d:'手合せスタンプを手に入れる'},{k:'chankoSel',img:'kb_chanko',d:'ちゃんこ鍋を食べさせる'}];
-function renderKoubou(){const B=$('kbBody');B.innerHTML=`<div class="kbIntro">いろんな工房がそろう、力士のための工房街だにゃ</div><div class="kbGrid">${KOUBOU.map(x=>`<div class="kb" data-k="${x.k}">${x.css?`<div class="kbCss"><div class="chk" style="background-position:0% 0%"></div><div class="rb">${x.css}</div></div>`:`<img src="img/${x.img}.webp?v=1" alt="">`}<div class="d">${x.d}</div></div>`).join('')}</div><div class="kbSoon">🐾 ほかの工房も じゅんび中…</div>`;
+function renderKoubou(){const B=$('kbBody');B.innerHTML=`<div class="kbIntro">いろんな工房がそろう、力士のための工房街だにゃ</div><div class="kbGrid">${KOUBOU.map(x=>`<div class="kb" data-k="${x.k}">${x.css?`<div class="kbCss"><div class="chk" style="background-position:0% 0%"></div><div class="rb">${x.css}</div></div>`:`<img src="img/${x.img}.webp?v=2" alt="">`}<div class="d">${x.d}</div></div>`).join('')}</div><div class="kbSoon">🐾 ほかの工房も じゅんび中…</div>`;
   B.querySelectorAll('.kb').forEach(e=>e.onclick=()=>{sfx('tap');GO[e.dataset.k]();});}
 // ---- 判子工房：手合せスタンプを手に入れる ----
 const ST_FREE=[...Array(24).keys()];   // 茶トラ・ハチワレのベーススタンプ24個は無料
@@ -2263,7 +2347,7 @@ async function boutFor(id,auto=false){
   const opp=makeBashoOpp(id,c,seed);
   return new Promise(res=>{
     startBout({me:{id,c,name:nmOf(id)},opp,bg:BASHO[S.basho.i][2],day:`${BASHO[S.basho.i][0]} ${DAYN[day]}`,auto,kaku:Math.random()<KAKU_P,
-      onEnd:(win)=>{const r=bashoRec(id);r.d.push(win?1:0);if(win){r.w++;c.w++;S.stats.w++;}else{r.l++;c.l++;S.stats.l++;}
+      onEnd:(win,kn)=>{if(win&&kn){c.kc=c.kc||{};c.kc[kn]=(c.kc[kn]||0)+1;}const r=bashoRec(id);r.d.push(win?1:0);if(win){r.w++;c.w++;S.stats.w++;}else{r.l++;c.l++;S.stats.l++;}
         const kc=keshoOf(c);const coin=Math.round((win?80+c.rank*20:20)*(kc?(kc[6]==='coin'?1.2:kc[6]==='coin2'?1.5:1):1)),gem=win?2:0;S.coin+=coin;S.gem+=gem;const ups=addExp(id,c,{v:win?30:12,fromBout:true});addPExp(win?PEXP.win:PEXP.lose);save();
         return`コイン+${coin}${gem?'　宝石+'+gem:''}　経験+${LAST_EXP}${ups?'<br>レベルアップ！ Lv'+c.lv:''}<br><span class="small">${expLeft(c)}</span>`;}});
     const chk=setInterval(()=>{if(cur!=='bout'&&!cut.classList.contains('on')){clearInterval(chk);res();}},200);
@@ -2278,8 +2362,8 @@ async function endBasho2(){const b=BASHO[S.basho.i];let html=`<h3>${b[0]} 結果
   const ids=[...new Set(S.team.concat(Object.keys(S.basho.rec).map(Number).filter(id=>S.cats[id]&&(S.basho.rec[id].d||[]).length)))];
   ids.forEach(id=>{const c=S.cats[id],r=bashoRec(id);const old=c.rank;let msg='';const n=r.d.length;
     if(n===0)msg='休場（番付そのまま）';
-    else if(r.w===7){c.rank=Math.min(9,c.rank+2);msg='全勝優勝！';yusho=true;gemSum+=50;S.stats.yusho++;}
-    else if(r.w>=4){c.rank=Math.min(9,c.rank+1);msg='勝ち越し';gemSum+=10;}
+    else if(r.w===7){c.rank=Math.min(9,c.rank+2);c.maxR=Math.max(c.maxR||0,c.rank);msg='全勝優勝！';yusho=true;gemSum+=50;S.stats.yusho++;}
+    else if(r.w>=4){c.rank=Math.min(9,c.rank+1);c.maxR=Math.max(c.maxR||0,c.rank);msg='勝ち越し';gemSum+=10;}
     else if(r.l>=5&&c.rank>0){c.rank--;msg='大きく負け越し';}
     else if(r.l>r.w)msg='負け越し（番付そのまま）';
     else msg=n<7?'途中出場（番付そのまま）':'五分（番付そのまま）';
@@ -2330,10 +2414,11 @@ async function openGift(){const oy=Math.floor(rnd()*20);
   if(S.gift===today())return modal(`<h3>贈り物</h3><div style="width:36cqw;margin:0 auto">${oyaHTML(oy)}</div>今日の贈り物はもう受け取ったにゃ。<br>また明日来てね！`);
   S.gift=today();S.coin+=300;S.gem+=30;tickHP();S.hp=HP_MAX;rlog('親方の贈り物','🪙コイン 300・💎宝石 30・⚡体力満タン');save();refreshHUD();sfx('rare');
   modal(`<h3>今日の贈り物</h3><div style="width:36cqw;margin:0 auto">${oyaHTML(oy)}</div>親方からの差し入れだにゃ！<br><b>コイン300・宝石30</b><br>体力も満タンになった！`,[{t:'ごっつぁんです',c:'gold'}]);}
-const NEWS_VER=4;
+const NEWS_VER=5;
 function refreshNews(){const b=$('newsBtn');if(b)b.classList.toggle('read',(S.newsSeen||0)>=NEWS_VER);b.src=(S.newsSeen||0)>=NEWS_VER?'img/btn24b_oshirase_read.webp?v=2':'img/btn24_oshirase.webp?v=5';}
 // ---- お知らせ（更新のお知らせ）と あそびかた ----
 const NEWS=[
+ {d:'11/20',t:'名跡帳ができたよ',b:'図鑑の「📜 名跡帳」で、引退した関取の名跡が巻物になって並ぶよ。開くと代々の力士と、季節の名跡カードが見られる！'},
  {d:'11/20',t:'「にゃんペロ」になったよ',b:'猫のおやつの名前が「にゃんペロ」に変わったよ。にゃんペロ祭もよろしくにゃ！'},
  {d:'11/20',t:'四股名・引退・名跡',b:'十両に上がると四股名をつけられるよ。引退すると親方になって、名前を次の猫がつげる！'},
  {d:'11/20',t:'猫の気まぐれ',b:'ごきげんななめの日は取組をいやがるよ。なでるかにゃんペロで元気にしてあげて。'},
@@ -2362,7 +2447,7 @@ function openHelp(){S.newsSeen=NEWS_VER;save();refreshNews();modal(`<h3>あそ�
   ・4勝で番付アップ、7戦全勝で優勝！ 番付が上がると見た目も出世する猫がいるよ。<br>
   ・<b>手合せ</b>：友だちと合言葉をそろえて3対3の団体戦（体力は使わない）。スタンプも送れる。
   <div class="hpS">🏷️ 四股名・引退・名跡</div>
-  ・<b>十両</b>に上がると四股名をつけられる。<br>・強くなった関取は<b>引退</b>して親方になれる。親方1人で稽古+5%（3人まで）。<br>・引退した猫の四股名は<b>名跡</b>として残り、次に十両に上がった猫が「二代目」としてつげる（先代の得意技も受けつぐ）。<br>・猫はたまに<b>ごきげんななめ</b>で取組をいやがる。なでるかにゃんペロで機嫌を直そう。
+  ・<b>十両</b>に上がると四股名をつけられる。<br>・強くなった関取は<b>引退</b>して親方になれる。親方1人で稽古+5%（3人まで）。<br>・引退した猫の四股名は<b>名跡</b>として残り、次に十両に上がった猫が「二代目」としてつげる（先代の得意技も受けつぐ）。<br>・引退すると<b>名跡カード</b>ができて、図鑑の<b>📜 名跡帳</b>で代々の力士が見られる（カードの枠は引退した季節の絵）。<br>・猫はたまに<b>ごきげんななめ</b>で取組をいやがる。なでるかにゃんペロで機嫌を直そう。
   <div class="hpS">⛩️ 猫神社</div>
   ・<b>願掛け</b>（1日1回・無料）：健康・恋愛・金運・仕事・幸運からえらぶ。成就するとごほうび（ちゃんこ無料券・なつき度・コイン・体力満タン・宝石）。<br>
   ・<b>おみくじ</b>（1日1回・無料）：大吉は宝石10個！ 今日の運勢・ラッキーアイテムもわかる。
@@ -2701,7 +2786,7 @@ async function shikoPrompt(id,first){const c=S.cats[id];const M=myoseki().filter
   const k=await pr;if(k!==0)return false;
   const v=($('skIn').value||'').trim();if(!shikoOK(v)){toast('四股名は1〜8文字で入れてね');return shikoPrompt(id,first);}
   if(pick){c.shiko=pick.name;c.gen=pick.gen+1;pick.used=id;if(pick.waza!=null&&!c.waza.includes(pick.waza))c.waza.push(pick.waza);
-    rlog('名跡',`${NAMES[id-1]}が「${c.gen}代目 ${c.shiko}」を襲名`);toast(`🎉 ${c.gen}代目 ${c.shiko} 誕生！${pick.waza!=null?'<br>決まり手「'+WAZA[pick.waza]+'」を受けついだ':''}`,2800);jingle('level');}
+    rlog('名跡',`${NAMES[id-1]}が「${c.gen}代目 ${c.shiko}」を襲名`);setTimeout(()=>{const l=mzLines().find(x=>x.name===c.shiko);if(l){const gi=l.gens.findIndex(g=>g.cat===id&&!g.ret);if(gi>=0)mzOpenCard(c.shiko,l.gens[gi],gi,`🎉 ${MZ_NUM[gi]||gi+1}代目 ${c.shiko} 襲名！`);}},3000);toast(`🎉 ${c.gen}代目 ${c.shiko} 誕生！${pick.waza!=null?'<br>決まり手「'+WAZA[pick.waza]+'」を受けついだ':''}`,2800);jingle('level');}
   else{c.shiko=v;if(!c.gen)c.gen=1;rlog('四股名',`${NAMES[id-1]}の四股名は「${v}」`);toast(`🎉 四股名は「${v}」！`,2200);}
   save();return true;}
 function shikoPanel(id){const c=S.cats[id];const d=document.createElement('div');d.className='dWz skP';
@@ -2719,9 +2804,83 @@ async function retire(id){const c=S.cats[id];
   if(k!==0)return;
   c.oya=true;const t=S.team.indexOf(id);if(t>=0)S.team.splice(t,1);if(!S.team.length)S.team=[others[0]];
   const old=myoseki().find(m=>m.used===id);if(old)old.used=-1;   // つないだ名跡はこの猫の引退で次へ
-  myoseki().push({name:nm,gen:c.gen||1,waza:best,from:id,rank:c.rank,used:0});
+  const fv=mzFav(c);myoseki().push({name:nm,gen:c.gen||1,waza:best,from:id,rank:c.rank,used:0,maxR:Math.max(c.maxR||0,c.rank),w:c.w,l:c.l,wz:fv.w,wn:fv.n,date:today()});
   rlog('引退',`${nm}（${RANKS[c.rank]}）が引退して親方に`);save();jingle('victory');
-  await modal(`<h3>おつかれさまでした</h3><b>${nm}</b>は親方になったよ<br>名跡「${nm}」は次の関取へ…`,[{t:'OK',c:'gold'}]);renderDetail();}
+  await modal(`<h3>おつかれさまでした</h3><b>${nm}</b>は親方になったよ<br>名跡「${nm}」は次の関取へ…`,[{t:'OK',c:'gold'}]);renderDetail();
+  {const l=mzLines().find(x=>x.name===nm);if(l){const gi=l.gens.findIndex(g=>g.cat===id&&g.ret);if(gi>=0){mzOpenCard(nm,l.gens[gi],gi,'🏯 引退！名跡カードができた');jingle('level');}}}}
+// ================= 名跡帳・名跡カード =================
+const MZ_NUM=['初','二','三','四','五','六','七','八','九','十'];
+function mzSeason(d){const m=d?+String(d).split(/[-\/]/)[1]:0;if(!m)return 'spring';return m>=3&&m<=5?'spring':m>=6&&m<=8?'summer':m>=9&&m<=11?'autumn':'winter';}
+function mzDate(d){return d?String(d).replace(/-/g,'/'):'';}
+function mzGenLabel(gi){return gi===0?'初代':`${gi+1}代目`;}
+function mzFav(c){const kc=c.kc||{};let b=null,n=0;for(const k in kc)if(kc[k]>n){b=k;n=kc[k];}
+  if(b)return{w:b,n};const l=c.waza&&c.waza.length?WAZA[c.waza[c.waza.length-1]]:null;return{w:l,n:null};}
+// 名跡ごとに代々をまとめる（引退した代＋いま名乗っている当代）
+function mzLines(){const L=[],by={};
+  for(const m of myoseki()){if(!by[m.name]){by[m.name]={name:m.name,gens:[]};L.push(by[m.name]);}
+    by[m.name].gens.push({cat:m.from,rank:m.maxR!=null?Math.max(m.maxR,m.rank||0):m.rank,w:m.w,l:m.l,waza:m.wz||(m.waza!=null?WAZA[m.waza]:null),wn:m.wn,date:m.date||'',gen:m.gen||1,ret:true});}
+  for(const l of L){l.gens.sort((a,b)=>a.gen-b.gen);
+    const cur=ownIds().find(id=>{const c=S.cats[id];return c&&!c.oya&&c.shiko===l.name&&(c.gen||1)>l.gens.length;});
+    if(cur){const c=S.cats[cur],f=mzFav(c);l.gens.push({cat:cur,rank:Math.max(c.maxR||0,c.rank),w:c.w,l:c.l,waza:f.w,wn:f.n,date:'',gen:c.gen,ret:false});}}
+  return L;}
+function mzCardHTML(name,g,gi){const rec=g.w!=null?`${g.w}勝 ${g.l}敗`:'—';
+  return `<div class="mzc ${mzSeason(g.date)}"><div class="f top">名跡</div>
+  <div class="f ph"><div class="ft">${g.ret?(g.date?mzDate(g.date)+' 引退':'引退'):'当代・現役'}</div></div>
+  <div class="f sk">${name}</div><div class="noMe"></div><div class="f gn">${gi===0?'初代':`${MZ_NUM[gi]||gi+1}代目`}</div>
+  <div class="f rk">${RANKS[g.rank]||'—'}</div><div class="f rec">${rec}</div>
+  <div class="f wz">${g.waza||'—'}${g.wn?`<small>${g.wn}回</small>`:''}</div></div>`;}
+function mzOpenCard(name,g,gi,msg){const O=$('mzOv');O.querySelector('.msg').textContent=msg||'';const C=O.querySelector('.box');
+  C.innerHTML=mzCardHTML(name,g,gi)+'<div class="shine"></div>';C.querySelector('.ph').prepend(catCard(g.cat));O.classList.add('on');sfx('tap');}
+// 図鑑の「名跡帳」タブ：巻物の棚
+function mzShelf(B){const L=mzLines();const d=document.createElement('div');d.className='mzShelf';
+  let h=`<div class="ttl">名跡帳</div>`;
+  if(!L.length)h+=`<div class="em2">まだ名跡はないよ。<br>十両に上がって四股名をつけた関取が<b>引退</b>すると、<br>ここに巻物がふえるにゃ</div>`;
+  h+='<div class="grid2">';const n=Math.max(4,L.length+(L.length%2));
+  for(let i=0;i<n;i++){const l=L[i];
+    h+=l?`<div class="it" data-i="${i}"><img src="img/mv_closed_s.webp?v=1" alt=""><br><span class="n">${l.name}</span><span class="g">${l.gens.length}代</span></div>`
+        :`<div class="it em"><img src="img/mv_closed_s.webp?v=1" alt=""><br><span class="n">？？？</span><span class="g">引退でふえる</span></div>`;
+    if(i%2===1)h+='<div class="board"></div>';}
+  d.innerHTML=h+'</div>';B.appendChild(d);
+  d.querySelectorAll('.it[data-i]').forEach(e=>e.onclick=()=>mzOpen(L[+e.dataset.i]));}
+// 巻物を開く
+let mzL=null,mzPage=0,mzBusy=false;
+function mzRender(){const l=mzL,C=$('mzCt'),off=mzPage*5,cur=l.gens.length-1;
+  const fit=(t,b,mx)=>!t||t.length<=mx?b:b*mx/t.length;
+  let h=`<img class="ttl2" src="img/mv_title.webp?v=1" alt="名跡帳 継承一覧"><div class="nmP"><img src="img/mv_name.webp?v=1" alt=""><div class="v"><b style="font-size:${fit(l.name,8,4).toFixed(2)}cqw">${l.name}</b><span>${l.gens.length}代つづく</span></div></div>`;
+  for(let k=0;k<5;k++){const gi=off+k,g=l.gens[gi];if(k)h+=`<img class="arw" src="img/mv_arrow.webp?v=1" alt="">`;
+    const lab=gi<5?`<img class="lb" src="img/mv_g${gi}.webp?v=1" alt="${mzGenLabel(gi)}">`:`<div class="lb2">${mzGenLabel(gi)}</div>`;
+    h+=`<div class="gen${g?'':' none'}"><div class="lf">${lab}<div class="fr${g&&gi===cur&&!g.ret?' cur':''}" data-g="${gi}"><img src="img/mv_frame.webp?v=1" alt="">${g?'':'<div class="bn">まだいない</div>'}</div></div>
+      <div class="rt"><img src="img/mv_rows.webp?v=1" alt="">${g?`<div class="v" style="top:2%">${RANKS[g.rank]||'—'}</div><div class="v s" style="top:35%">${g.w!=null?g.w+'勝 '+g.l+'敗':'—'}</div><div class="v" style="top:68%;font-size:${fit(g.waza,4.6,5).toFixed(2)}cqw">${g.waza||'—'}</div>`:''}</div></div>`;}
+  C.innerHTML=h;
+  C.querySelectorAll('.fr[data-g]').forEach(e=>{const gi=+e.dataset.g,g=l.gens[gi];if(g){e.appendChild(catCard(g.cat));e.onclick=()=>mzOpenCard(l.name,g,gi,'');}});
+  const pages=Math.ceil(l.gens.length/5),pp=$('mzPrev'),pn=$('mzNext');
+  pp.classList.toggle('hd',pages<2);pn.classList.toggle('hd',pages<2);pp.classList.toggle('off',mzPage===0);pn.classList.toggle('off',mzPage>=pages-1);}
+function mzPetals(){const S_=$('mzStg');for(let i=0;i<18;i++){const p=document.createElement('i');p.className='pt';
+  p.style.left=(20+Math.random()*60)+'%';p.style.top='4%';const a=Math.PI*(.1+Math.random()*.8),r=25+Math.random()*45;
+  p.style.setProperty('--x',Math.cos(a)*r*(Math.random()<.5?-1:1)+'cqw');p.style.setProperty('--y',Math.sin(a)*r+'cqw');p.style.animationDelay=(Math.random()*.25)+'s';
+  S_.appendChild(p);requestAnimationFrame(()=>p.classList.add('go'));setTimeout(()=>p.remove(),1900);}}
+async function mzOpen(l){if(mzBusy||!l)return;mzBusy=true;mzL=l;mzPage=0;
+  const cl=$('mzCl'),pap=$('mzPap'),rb=$('mzRb'),bar=$('mzBar');
+  cl.className='cl';pap.className='pap';rb.className='rb';bar.className='bar';
+  pap.style.transition=rb.style.transition='none';rb.style.top='0px';
+  mzRender();$('mzHint').textContent='';$('mzSv').classList.add('on');$('mzSv').scrollTop=0;
+  await sleep(250);cl.classList.add('shake');sfx('tap');await sleep(550);
+  const f=$('mzFl');f.classList.remove('on');void f.offsetWidth;f.classList.add('on');mzPetals();sfx('rare');
+  cl.classList.add('gone');pap.style.opacity=1;rb.classList.add('show');await sleep(150);
+  pap.style.transition=rb.style.transition='';
+  requestAnimationFrame(()=>{pap.classList.add('open');rb.style.top=(pap.offsetHeight-rb.offsetHeight)+'px';});
+  await sleep(1250);pap.style.opacity='';rb.classList.add('hide');bar.classList.add('on');$('mzHint').textContent='猫をタップすると名跡カードが見られるよ';mzBusy=false;}
+async function mzClose(){if(mzBusy)return;mzBusy=true;const pap=$('mzPap'),rb=$('mzRb');$('mzBar').classList.remove('on');$('mzHint').textContent='';sfx('tap');
+  $('mzSv').scrollTo({top:0,behavior:'smooth'});
+  rb.classList.remove('hide');pap.style.opacity=1;pap.classList.remove('open');rb.style.top='0px';
+  await sleep(1250);$('mzCl').className='cl';rb.className='rb';await sleep(300);pap.style.opacity='';$('mzSv').classList.remove('on');mzBusy=false;}
+(function(){$('stage').insertAdjacentHTML('beforeend',`<div id="mzSv"><div class="stg" id="mzStg"><div class="pap" id="mzPap"><div id="mzCt"></div></div><div class="rb" id="mzRb"></div><img class="cl" id="mzCl" src="img/mv_closed.webp?v=1" alt=""><div class="flash" id="mzFl"></div></div>
+  <div class="bar" id="mzBar"><div id="mzPrev" class="hd">◀ 前の代</div><div id="mzClose">巻物をとじる</div><div id="mzNext" class="hd">次の代 ▶</div></div><div class="hint" id="mzHint"></div></div>
+  <div id="mzOv"><div class="msg"></div><div class="box"></div><div class="cl2">タップでとじる</div></div>`);
+  $('mzClose').onclick=mzClose;
+  $('mzPrev').onclick=()=>{if(mzPage>0){mzPage--;mzRender();sfx('tap');}};
+  $('mzNext').onclick=()=>{if(mzPage<Math.ceil(mzL.gens.length/5)-1){mzPage++;mzRender();sfx('tap');}};
+  $('mzOv').onclick=()=>$('mzOv').classList.remove('on');})();
 // ================= ⑤ 猫の気まぐれ =================
 async function moodOK(id,auto){const c=S.cats[id];
   if(c.moodD!==today()){c.moodD=today();const p=.06+(c.nat<40?.06:0)-(c.nat>=80?.03:0);c.sulk=Math.random()<p?today():null;save();}
